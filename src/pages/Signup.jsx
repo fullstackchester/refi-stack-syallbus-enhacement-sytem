@@ -21,11 +21,9 @@ function Signup() {
     const { signup, writeData } = useFirebase()
 
 
-
     function signupAdmin(e) {
         e.preventDefault()
         if (pass === passConf) {
-
 
             signup(email, pass)
                 .then((currentuser) => {

@@ -8,18 +8,24 @@ function Account() {
 
     const { currentUser, logout } = useFirebase()
     const [name, setName] = useState()
+    const [isAdmin, setIsAdmin] = useState(false)
     const nav = useNavigate()
 
     useEffect(() => {
 
-        return onValue(ref(database, 'users/' + currentUser.uid), snapshot => {
+        onValue(ref(database, 'users/' + currentUser.uid), snapshot => {
+            return snapshot.val().userType === 'administrator' ? setIsAdmin(true) : setIsAdmin(false)
+        })
+        const getName = onValue(ref(database, 'users/' + currentUser.uid), snapshot => {
             return setName(snapshot.val().name)
         })
+
+        return getName
 
     }, []);
 
     console.log(currentUser ? currentUser.uid : 'User has been logged out')
-
+    console.log(isAdmin)
 
 
     const LogoutUser = () => {

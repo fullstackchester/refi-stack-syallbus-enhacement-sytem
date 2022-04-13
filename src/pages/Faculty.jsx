@@ -2,7 +2,9 @@ import React from 'react'
 
 function Faculty() {
     return (
-        <div>Faculty</div>
+        <div className='w-full h-screen border'>
+        
+        </div>
     )
 }
 

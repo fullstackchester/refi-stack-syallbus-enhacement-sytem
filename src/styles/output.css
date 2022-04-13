@@ -696,8 +696,20 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 450px;
 }
 
+.w-\[220px\] {
+  width: 220px;
+}
+
+.w-\[20px\] {
+  width: 20px;
+}
+
 .flex-grow {
   flex-grow: 1;
+}
+
+.flex-grow-0 {
+  flex-grow: 0;
 }
 
 .cursor-pointer {
