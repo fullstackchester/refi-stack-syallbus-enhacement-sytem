@@ -6,7 +6,7 @@ import { FirebaseProvider } from './js/FirebaseContext'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import Subjects from './pages/Subjects'
+import Subjects from './pages/Subjects/Subjects'
 import Curriculum from './pages/Curriculum'
 import Files from './pages/Files'
 import Faculty from './pages/Faculty'
@@ -14,6 +14,8 @@ import { Profile } from './pages/Profile/Profile'
 import { ProfileEdit } from './pages/Profile/ProfileEdit'
 import NotFound from './pages/404'
 import Settings from './pages/Settings'
+import { Subject } from './pages/Subjects/Subject'
+import { SubjectEdit } from './pages/Subjects/SubjectEdit'
 
 export default function App() {
 	return (
@@ -28,7 +30,9 @@ export default function App() {
 							<Route path='curriculum' element={<Curriculum />} />
 							<Route path='files' element={<Files />} />
 							<Route path='faculty' element={<Faculty />} />
-							<Route path='subjects' element={<Subjects />} />
+							<Route exact path='subjects' element={<Subjects />} />
+							<Route exact path='subjects/:id' element={<Subject />} />
+							<Route exact path='subjects/:id/edit' element={<SubjectEdit />} />
 							<Route path='profile' element={<Profile />} />
 							<Route path='edit-profile' element={<ProfileEdit />} />
 							<Route path='settings' element={<Settings />} />

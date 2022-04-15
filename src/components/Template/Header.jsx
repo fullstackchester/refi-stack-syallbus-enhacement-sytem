@@ -1,7 +1,8 @@
 import React from 'react'
-import { HiCog } from 'react-icons/hi'
-import { IoNotifications, IoPersonCircle } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBell, faCog, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+
 
 export default function Header() {
     const nav = useNavigate()
@@ -13,15 +14,15 @@ export default function Header() {
 
     const HeaderLinks = [
         {
-            icons: <IoNotifications />,
+            icons: <FontAwesomeIcon icon={faBell} />,
             onClick: (e) => navigate(e, 'notifications')
         },
         {
-            icons: <HiCog />,
+            icons: <FontAwesomeIcon icon={faCog} />,
             onClick: (e) => navigate(e, 'settings')
         },
         {
-            icons: <IoPersonCircle />,
+            icons: <FontAwesomeIcon icon={faUserCircle} />,
             onClick: (e) => navigate(e, 'profile')
         },
     ]

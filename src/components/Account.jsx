@@ -24,10 +24,6 @@ function Account() {
 
     }, []);
 
-    console.log(currentUser ? currentUser.uid : 'User has been logged out')
-    console.log(isAdmin)
-
-
     const LogoutUser = () => {
         logout()
             .then((user) => {

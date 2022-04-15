@@ -1,38 +1,37 @@
-import React, { useState, useEffect } from 'react'
-import { NavLink, Outlet } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Outlet } from 'react-router-dom';
 import Header from './Header';
-import { IoBarChart, IoSchool, IoPeople, IoFileTray, IoBook } from 'react-icons/io5';
 import { useFirebase } from '../../js/FirebaseContext';
-import { onValue, ref } from 'firebase/database'
-import { database } from '../../js/Firebase';
-import Account from '../Account'
 import Sidebar from './Sidebar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBook, faFile, faGraduationCap, faSquarePollVertical, faUserTie } from '@fortawesome/free-solid-svg-icons'
+
 
 export default function Layout() {
     const SidebarData = [
         {
             title: 'Dashboard',
-            icon: <IoBarChart />,
+            icon: <FontAwesomeIcon icon={faSquarePollVertical} />,
             link: '/dashboard',
         },
         {
             title: 'Syllabus',
-            icon: <IoSchool />,
+            icon: <FontAwesomeIcon icon={faGraduationCap} />,
             link: '/curriculum',
         },
         {
             title: 'Faculty',
-            icon: <IoPeople />,
+            icon: <FontAwesomeIcon icon={faUserTie} />,
             link: '/faculty',
         },
         {
             title: 'Files',
-            icon: <IoFileTray />,
+            icon: <FontAwesomeIcon icon={faFile} />,
             link: '/files',
         },
         {
             title: 'Subjects',
-            icon: <IoBook />,
+            icon: <FontAwesomeIcon icon={faBook} />,
             link: '/subjects',
         },
     ]

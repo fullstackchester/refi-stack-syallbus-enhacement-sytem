@@ -55,6 +55,7 @@ export function FirebaseProvider({ children }) {
         return set(ref(database, path + id), data)
     }
 
+
     function childCount(path) {
         onValue(ref(database, path), snapshot => snapshot.val().length)
     }

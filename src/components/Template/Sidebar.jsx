@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import Account from '../Account'
 import { IoChevronForward } from 'react-icons/io5'
 
+
 function Sidebar({
     SidebarMenu
 }) {
@@ -11,10 +12,10 @@ function Sidebar({
 
     console.log(minimize)
     return (
-        <div className='w-[240px] h-screen bg-zinc-900 flex flex-col sticky top-0'>
+        <div className='w-[240px] min-w-[240px] h-screen bg-zinc-900 flex flex-col sticky top-0'>
             <header className='h-12 flex flex-row text-white items-center border-b border-zinc-50/30'>
                 <img
-                
+
                     className='h-8 w-auto'
                     src={require('../../assets/Images/logo.svg').default} />
                 <h1 className='text-md headings'>Curriculum</h1>
