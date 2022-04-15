@@ -7,20 +7,23 @@ export default function TextField(
         placeholder,
         type,
         required,
-        onChange
+        onChange,
+        value
     }
 ) {
     return (
         <div className='flex flex-col mb-3'>
             <label
                 htmlFor={name}
-                className='text-sm text-zinc-500 font-medium'>{label} {required ? <span className='h-fit text-lg text-sky-600'>*</span> : ''}</label>
+                className='text-sm text-zinc-500 font-medium'>{label} {required ? <span className='h-fit text-lg text-sky-600'>*</span> : ''}
+            </label>
             <input
                 name={name}
                 placeholder={placeholder}
                 type={type}
                 onChange={onChange}
                 required={required}
+                value={value}
                 className='w-full outline-none border border-zinc-300 rounded-md p-3
                 text-zinc-700 text-sm focus:border-sky-600 focus:ring-1 focus:ring-sky-600' />
 
@@ -36,7 +39,8 @@ export function PanelTextField(
         placeholder,
         type,
         required,
-        onChange
+        onChange,
+        formName,
     }
 ) {
     return (
@@ -48,11 +52,11 @@ export function PanelTextField(
                 name={name}
                 placeholder={placeholder}
                 type={type}
+                form={formName}
                 required={required}
                 onChange={onChange}
                 className='w-auto outline-none border border-zinc-300 rounded-md p-2
                 text-zinc-700 text-sm focus:border-sky-600 focus:ring-1 focus:ring-sky-600' />
-
         </div>
     )
 }

@@ -13,7 +13,7 @@ function Signup() {
 
     const nav = useNavigate()
     const [err, setErr] = useState()
-    const [emplyeeId, setemplyeeId] = useState()
+    const [employeeId, setEmployeeId] = useState()
     const [name, setName] = useState()
     const [email, setEmail] = useState()
     const [pass, setPass] = useState()
@@ -30,7 +30,9 @@ function Signup() {
                     // if successfully added user to auth, write the data to realtime
                     const user = {
                         uid: currentuser.user.uid,
+                        employeeId: employeeId,
                         name: name,
+                        department: '',
                         userType: 'faculty',
                         email: email
                     }
@@ -57,7 +59,7 @@ function Signup() {
             placeholder: 'HIS00AA3125',
             type: 'text',
             required: true,
-            onChange: (e) => setemplyeeId(e.target.value)
+            onChange: (e) => setEmployeeId(e.target.value)
         },
         {
             name: 'name',

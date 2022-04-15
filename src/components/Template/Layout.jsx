@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink, Outlet } from 'react-router-dom';
-import Header from '../Header';
+import Header from './Header';
 import { IoBarChart, IoSchool, IoPeople, IoFileTray, IoBook } from 'react-icons/io5';
 import { useFirebase } from '../../js/FirebaseContext';
 import { onValue, ref } from 'firebase/database'
@@ -33,7 +33,7 @@ export default function Layout() {
         {
             title: 'Subjects',
             icon: <IoBook />,
-            link: '/subject',
+            link: '/subjects',
         },
     ]
     const { currentUser, } = useFirebase()

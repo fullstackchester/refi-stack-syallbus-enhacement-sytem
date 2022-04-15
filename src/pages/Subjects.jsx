@@ -35,7 +35,7 @@ function Subjects() {
         return getSubjects
     }, [])
 
-
+    console.log(fetchSub)
 
     const AddSubjectData = [
         {
@@ -62,12 +62,16 @@ function Subjects() {
             onChange: (e) => setCreditUnit(e.target.value),
             required: true,
         },
+
+
     ]
 
     function close(e) {
         e.preventDefault()
         setVisible(visible ? false : true)
     }
+
+
 
 
     function AddSub(e) {
@@ -84,7 +88,7 @@ function Subjects() {
 
 
     return (
-        <div className='h-auto'>
+        <div className='h-auto border border-zinc-300 rounded-lg'>
             <nav className='h-14 border-b border-slate-200 flex flex-row justify-between py-2 px-4'>
                 <span className='text-xl flex items-center font-medium text-zinc-600'>Subjects</span>
 
@@ -103,18 +107,18 @@ function Subjects() {
                 submitTitle='Add subject'
                 title='New Subject'
                 inputFields={AddSubjectData} />}
-            <div className=' h-auto'>
+
+            <main className='h-auto grid grid-cols-4 gap-2 p-4'>
                 {fetchSub && fetchSub.map((val, key) => {
                     return (
-                        <ItemSubject
-                            key={key}
-                            courseCode={val.courseCode}
-                            subjectTitle={val.subjectTitle}
-                            creditUnit={val.creditUnits}
-                        />
+                        <div key={key} className='col-span-1 h-36 border p-1 flex flex-col'>
+                            <span>{val.courseCode}</span>
+                            <span>
+                                {val.subjectTitle}</span>
+                        </div>
                     )
                 })}
-            </div>
+            </main>
         </div>
     )
 }

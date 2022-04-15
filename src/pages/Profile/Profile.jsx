@@ -4,19 +4,14 @@ import { useFirebase } from '../../js/FirebaseContext'
 import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
 import { HiIdentification } from 'react-icons/hi'
-import { MdEmail, MdEdit } from 'react-icons/md'
+import { MdEmail, MdEdit, MdSupervisorAccount } from 'react-icons/md'
 
 export function Profile() {
 
 	const nav = useNavigate()
 
 	const { currentUser } = useFirebase()
-	const [user, setUser] = useState({
-		uid: '',
-		email: '',
-		name: '',
-		userType: ''
-	})
+	const [user, setUser] = useState({})
 
 	useEffect(() => {
 
@@ -24,12 +19,7 @@ export function Profile() {
 
 		const getUserData = onValue(ref(database, 'users/' + currentUser.uid), snapshot => {
 			if (snapshot.exists()) {
-				setUser({
-					uid: snapshot.val().uid,
-					email: snapshot.val().email,
-					name: snapshot.val().name,
-					userType: snapshot.val().userType,
-				})
+				setUser(snapshot.val())
 
 			} else {
 				return setUser('No data available')
@@ -64,6 +54,12 @@ export function Profile() {
 
 				</div>
 				<div className='col-span-2 row-span-1 flex items-center flex-row text-zinc-500 px-2'>
+					<MdSupervisorAccount className='h-full text-xl' />
+					<span className='text-sm font-medium p-2'>
+						{user.userType}
+					</span>
+				</div>
+				<div className='col-span-2 row-span-1 flex items-center flex-row text-zinc-500 px-2'>
 					<HiIdentification className='h-full text-xl' />
 					<span className='text-sm font-medium p-2'>
 						{user.uid}
@@ -78,9 +74,10 @@ export function Profile() {
 				<div className='col-span-2 row-span-1 flex items-center flex-row text-zinc-500 px-2'>
 					<MdEmail className='h-full text-xl' />
 					<span className='text-sm font-medium p-2'>
-						{user.userType}
+						{user.department}
 					</span>
 				</div>
+
 			</div>
 		</main>
 	)

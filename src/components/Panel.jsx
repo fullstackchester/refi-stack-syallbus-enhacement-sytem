@@ -18,11 +18,14 @@ function AddPanel(
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             spellCheck='false'
+            name='panel-form'
+            id='panel-form'
             onSubmit={onSubmit && onSubmit}
-            className='w-full h-auto bg-stone-50 p-2'>
-            <h3 className='text-lg font-medium text-zinc-500'>{title}</h3>
+            className='w-full h-auto bg-white border-b border-zinc-200 p-2'>
+
+            <h3 className='text-2xl text-zinc-500 px-2'>{title}</h3>
             {/* <PanelTextField className='w-60 flex flex-col' name='course-code' label='Course code' placeholder='IT 101' type='text' /> */}
-            <div className='p-2 flex flex-row justify-between '>
+            <div className='p-2 grid grid-cols-3 gap-3'>
 
                 {inputFields && inputFields.map((val, key) => {
                     return (
@@ -33,15 +36,25 @@ function AddPanel(
                             placeholder={val.placeholder}
                             type={val.type}
                             onChange={val.onChange}
-                            className='w-60 flex flex-col' />
+                            formName='panel-form'
+                            required={val.required}
+                            className='col-span-1 row-span-1 flex flex-col' />
                     )
                 })}
             </div>
+            <div className='px-2 py-4 flex justify-end'>
+                <button
+                    onClick={handleClose}
+                    className='bg-zinc-600 text-xs text-white p-2 outline-none rounded-md hover:bg-zinc-500 mr-3'
+                    form='panel-form'>Cancel</button>
+                <button
+                    type='submit'
+                    className='bg-sky-600 text-xs text-white p-2 outline-none rounded-md hover:bg-sky-700'
+                    form='panel-form' >{submitTitle} </button>
 
-            <div className='w-48 flex flex-row justify-evenly mt-4 place-self-end  '>
-                <button className='w-20 text-xs text-zinc-300 border border-zinc-300 p-2 rounded-lg' onClick={handleClose}>Close</button>
-                <button type='submit' className='w-20 text-xs text-white bg-sky-600 p-2 rounded-lg'>{submitTitle}</button>
             </div>
+
+
         </motion.form>
     )
 }

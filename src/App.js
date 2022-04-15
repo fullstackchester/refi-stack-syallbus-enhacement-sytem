@@ -28,7 +28,7 @@ export default function App() {
 							<Route path='curriculum' element={<Curriculum />} />
 							<Route path='files' element={<Files />} />
 							<Route path='faculty' element={<Faculty />} />
-
+							<Route path='subjects' element={<Subjects />} />
 							<Route path='profile' element={<Profile />} />
 							<Route path='edit-profile' element={<ProfileEdit />} />
 							<Route path='settings' element={<Settings />} />
