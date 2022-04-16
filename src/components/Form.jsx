@@ -15,7 +15,6 @@ const Form = ({
             className='w-full h-full flex flex-col'
             onSubmit={handleSubmit && handleSubmit} >
             {headings && <h1 className='text-3xl text-zinc-600 font-medium mb-8 text-center'>{headings}</h1>}
-            {children}
             {inputFields && inputFields.map((val, key) => {
                 return (
                     <TextField
@@ -29,13 +28,14 @@ const Form = ({
                     />
                 )
             })}
-
-            <button
-                className='bg-zinc-700 outline-none p-3 text-white text-sm rounded-lg'
-                type='submit'>{buttonTitle}</button>
+            {children}
             {handleError && <Alert
                 className='w-full'
                 alertMsg={handleError} />}
+            <button
+                className='bg-zinc-700 outline-none p-3 text-white text-sm rounded-sm'
+                type='submit'>{buttonTitle}</button>
+
         </form>
     )
 }

@@ -8,7 +8,7 @@ import {
     signOut
 } from 'firebase/auth'
 
-import { ref, push, set, onValue } from 'firebase/database'
+import { ref, push, set, onValue, remove } from 'firebase/database'
 
 
 const AuthContext = React.createContext()
@@ -27,7 +27,8 @@ export function FirebaseProvider({ children }) {
         signup,
         logout,
         writeData,
-        childCount
+        childCount,
+        deleteData,
     }
 
     useEffect(() => {
@@ -60,6 +61,10 @@ export function FirebaseProvider({ children }) {
         onValue(ref(database, path), snapshot => snapshot.val().length)
     }
 
+
+    function deleteData(path) {
+        return remove(ref(database, path))
+    }
 
 
 

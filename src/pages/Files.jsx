@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { Fragment, useState } from 'react'
 
-function Files() {
+export default function Files() {
+
     return (
-        <div>Files</div>
+        <div>
+            FILES
+        </div>
+
     )
 }
-
-export default Files

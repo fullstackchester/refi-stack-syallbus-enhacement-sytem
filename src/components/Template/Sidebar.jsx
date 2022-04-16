@@ -29,11 +29,11 @@ function Sidebar({
                         <NavLink
                             to={val.link}
                             key={key}
-                            className={({ isActive }) => isActive ? 'text-sky-300 font-light' : 'text-zinc-500'} >
+                            className={({ isActive }) => isActive ? 'text-sky-300 font-medium' : 'text-zinc-500'} >
                             <li
-                                className='w-full h-10 text-inherit  flex flex-row
+                                className='w-full h-12 text-inherit flex flex-row
                                     hover:bg-zinc-800 text-sm pl-3'>
-                                <div className='h-10 w-10 text-xl flex justify-center items-center'>{val.icon}</div>
+                                <div className='h-full w-12 text-xl flex justify-center items-center'>{val.icon}</div>
                                 <div className='p-1 flex text-md justify-center items-center'>{val.title}</div>
                             </li>
 
