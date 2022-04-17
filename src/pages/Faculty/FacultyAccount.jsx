@@ -10,10 +10,10 @@ function FacultyAccount() {
 
     useEffect(() => {
         const getFaculty = onValue(ref(database, 'users/' + faculty.id), snapshot => {
-            if (snapshot.exists()){
+            if (snapshot.exists()) {
                 return setFacultyData(snapshot.val())
             } else {
-                
+
             }
         })
         return getFaculty
@@ -25,13 +25,16 @@ function FacultyAccount() {
             <div className='w-full h-[600px] grid grid-cols-4 gap-4'>
                 <main className='col-span-3 shadow-sm bg-white rounded-lg flex flex-col'>
                     <div className='h-60 flex justify-center p-2'>
-                        <img className='h-56 w-56 border-2 rounded-[100%] bg-zinc-200' />
+                        <img
+                            alt={`${facultyData.uid}-url`}
+                            className='h-56 w-56 border-2 rounded-[100%] bg-zinc-200 text-xs
+                             overflow-auto text-center' />
                     </div>
                     <h1 className='text-2xl text-zinc-700 font-semibold text-center p-1'>{facultyData.name}</h1>
                     <h4 className='text-md text-zinc-500 font-medium text-center'>{facultyData.email}</h4>
 
                 </main>
-                <aside className='border border-pink-600 col-span-1'>
+                <aside className='col-span-1 shadow-sm bg-white rounded-lg'>
 
                 </aside>
             </div>

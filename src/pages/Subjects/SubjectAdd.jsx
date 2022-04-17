@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import Form from '../../components/Form'
 import { v4 as uuidv4 } from 'uuid'
+import { useFirebase } from '../../js/FirebaseContext'
 
 export const SubjectAdd = () => {
     const [courseCode, setCourseCode] = useState()
     const [subjectTitle, setSubjectTitle] = useState()
     const [creditUnit, setCreditUnit] = useState()
     const [courseDescription, setCourseDescription] = useState()
+    const { writeData } = useFirebase()
 
     const AddSubjectData = [
         {
@@ -55,7 +57,12 @@ export const SubjectAdd = () => {
 
     function addSubject(e) {
         e.preventDefault()
-        console.log(newSubject)
+        writeData('subject/', newSubject, newSubject.subjectId)
+            .then(() => {
+                alert('Subject added.')
+            }).catch(() => {
+                alert('Subject failed to add.')
+            });
     }
     return (
         <div className='w-full h-auto flex justify-center'>

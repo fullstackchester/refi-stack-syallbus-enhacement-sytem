@@ -48,6 +48,7 @@ export function ProfileEdit() {
             type: 'text',
             required: true,
             onChange: (e) => setEmployeeId(e.target.value),
+            initialValue: currentData.employeeId
         },
         {
             name: 'name',
@@ -56,6 +57,7 @@ export function ProfileEdit() {
             type: 'text',
             required: true,
             onChange: (e) => setName(e.target.value),
+            initialValue: currentData.name
         },
         {
             name: 'email',
@@ -63,7 +65,8 @@ export function ProfileEdit() {
             placeholder: 'johnsmith@bulsu.edu.ph',
             type: 'text',
             required: true,
-            onChange: (e) => setEmail(e.target.value)
+            onChange: (e) => setEmail(e.target.value),
+            initialValue: currentData.email
         },
     ]
 

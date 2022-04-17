@@ -25,6 +25,7 @@ const Form = ({
                         type={val.type}
                         onChange={val.onChange}
                         required={val.required}
+                        initialValue={val.initialValue ? val.initialValue : ''}
                     />
                 )
             })}

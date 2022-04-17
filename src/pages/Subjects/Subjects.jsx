@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import AddPanel from '../../components/Panel'
 import { useFirebase } from '../../js/FirebaseContext'
 import { ref, onValue } from 'firebase/database'
 import { database } from '../../js/Firebase'
-import { Link } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook, faAdd } from '@fortawesome/free-solid-svg-icons'
@@ -81,7 +79,7 @@ function Subjects() {
 
 
     return (
-        <div className='min-h-[1000px] h-auto  rounded-lg'>
+        <div className='min-h-[600px] h-auto  rounded-lg'>
             <nav className='h-14  flex flex-row justify-between py-2 px-4'>
                 <span className='text-xl flex items-center font-medium text-zinc-600 poppins'>Subjects</span>
 
@@ -95,7 +93,7 @@ function Subjects() {
             </nav>
 
             <main className=' h-auto p-4 grid grid-cols-12 gap-2'>
-                {subject && subject.map((val, key) => {
+                {subject.map((val, key) => {
                     return (
                         <Node
                             key={key}

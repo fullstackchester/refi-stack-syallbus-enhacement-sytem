@@ -1,0 +1,45 @@
+[debug] [2022-04-17T16:03:53.376Z] ----------------------------------------------------------------------
+[debug] [2022-04-17T16:03:53.379Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js emulators:start
+[debug] [2022-04-17T16:03:53.380Z] CLI Version:   10.2.2
+[debug] [2022-04-17T16:03:53.380Z] Platform:      win32
+[debug] [2022-04-17T16:03:53.380Z] Node Version:  v16.14.0
+[debug] [2022-04-17T16:03:53.382Z] Time:          Mon Apr 18 2022 00:03:53 GMT+0800 (Philippine Standard Time)
+[debug] [2022-04-17T16:03:53.382Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-04-17T16:03:53.475Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-04-17T16:03:53.475Z] > authorizing via signed-in user (markchester.danday.b@bulsu.edu.ph)
+[info] i  emulators: Starting emulators: hosting {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: hosting"}}
+[debug] [2022-04-17T16:03:53.517Z] [hub] writing locator at C:\Users\perso\AppData\Local\Temp\hub-internship-project-ccbf7.json
+[debug] [2022-04-17T16:03:53.537Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/internship-project-ccbf7/sites 
+[debug] [2022-04-17T16:03:54.826Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/internship-project-ccbf7/sites 200
+[debug] [2022-04-17T16:03:54.826Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/internship-project-ccbf7/sites {"sites":[{"name":"projects/846242990334/sites/internship-project-ccbf7","defaultUrl":"https://internship-project-ccbf7.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2022-04-17T16:03:54.827Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/internship-project-ccbf7/webApps/-/config [none]
+[debug] [2022-04-17T16:03:55.869Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/internship-project-ccbf7/webApps/-/config 200
+[debug] [2022-04-17T16:03:55.869Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/internship-project-ccbf7/webApps/-/config {"projectId":"internship-project-ccbf7","appId":"1:846242990334:web:5a8ba84158cb79fae1bdaf","databaseURL":"https://internship-project-ccbf7-default-rtdb.firebaseio.com","storageBucket":"internship-project-ccbf7.appspot.com","locationId":"us-central","apiKey":"AIzaSyDIz4R0mCpoLMr5VVI-T2ulUG0sASGWxkU","authDomain":"internship-project-ccbf7.firebaseapp.com","messagingSenderId":"846242990334","measurementId":"G-NNRKFM7W43"}
+[info] i  hosting: Serving hosting files from: build {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mbuild\u001b[22m"}}
+[info] +  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[warn] !  emulators: The Emulator UI requires a project ID to start. Configure your default project with 'firebase use' or pass the --project flag. {"metadata":{"emulator":{"name":"hub"},"message":"The Emulator UI requires a project ID to start. Configure your default project with 'firebase use' or pass the --project flag."}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+└─────────────────────────────────────────────────────────────┘
+
+┌──────────┬────────────────┐
+│ Emulator │ Host:Port      │
+├──────────┼────────────────┤
+│ Hosting  │ localhost:5000 │
+└──────────┴────────────────┘
+  Emulator Hub running at localhost:4400
+  Other reserved ports: 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[info] i  hosting: 127.0.0.1 - - [17/Apr/2022:16:04:07 +0000] "GET / HTTP/1.1" 200 971 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [17/Apr/2022:16:04:07 +0000] \"GET / HTTP/1.1\" 200 971 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [17/Apr/2022:16:04:07 +0000] "GET /static/css/main.63f11bca.css HTTP/1.1" 200 12592 "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [17/Apr/2022:16:04:07 +0000] \"GET /static/css/main.63f11bca.css HTTP/1.1\" 200 12592 \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [17/Apr/2022:16:04:07 +0000] "GET /static/js/main.8ab6d34d.js HTTP/1.1" 200 650893 "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [17/Apr/2022:16:04:07 +0000] \"GET /static/js/main.8ab6d34d.js HTTP/1.1\" 200 650893 \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [17/Apr/2022:16:04:07 +0000] "GET /favicon.ico HTTP/1.1" 200 3870 "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [17/Apr/2022:16:04:07 +0000] \"GET /favicon.ico HTTP/1.1\" 200 3870 \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [17/Apr/2022:16:04:07 +0000] "GET /manifest.json HTTP/1.1" 200 492 "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [17/Apr/2022:16:04:07 +0000] \"GET /manifest.json HTTP/1.1\" 200 492 \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [17/Apr/2022:16:04:07 +0000] "GET /logo192.png HTTP/1.1" 200 5347 "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [17/Apr/2022:16:04:07 +0000] \"GET /logo192.png HTTP/1.1\" 200 5347 \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [17/Apr/2022:16:04:19 +0000] "GET /static/media/logo.65693ea2f3449db04aa01425bfeeca94.svg HTTP/1.1" 200 2676 "http://localhost:5000/dashboard" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [17/Apr/2022:16:04:19 +0000] \"GET /static/media/logo.65693ea2f3449db04aa01425bfeeca94.svg HTTP/1.1\" 200 2676 \"http://localhost:5000/dashboard\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [17/Apr/2022:16:04:19 +0000] "GET /static/media/avatar.21beb1dda1b5ca293c3b.jpg HTTP/1.1" 200 2268071 "http://localhost:5000/dashboard" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [17/Apr/2022:16:04:19 +0000] \"GET /static/media/avatar.21beb1dda1b5ca293c3b.jpg HTTP/1.1\" 200 2268071 \"http://localhost:5000/dashboard\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36\""}}
+[debug] [2022-04-17T16:04:25.587Z] Received signal SIGHUP 1

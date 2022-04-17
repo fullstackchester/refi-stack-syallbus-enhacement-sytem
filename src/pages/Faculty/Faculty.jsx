@@ -3,8 +3,6 @@ import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAdd, faUser, faUserCog } from '@fortawesome/free-solid-svg-icons'
-import { Searchbar } from '../../components/Inputs/Searchbar'
-import { Link } from 'react-router-dom'
 import Node from '../../components/Node'
 
 
@@ -21,8 +19,6 @@ function Faculty() {
         return getFaculty
     }, [])
 
-
-    console.log(faculty)
 
     return (
         <div className='w-full h-screen'>
