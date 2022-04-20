@@ -122,13 +122,9 @@ export function ProfileEdit() {
     }
 
     return (
-        <div className='h-auto py-5 px-10'>
-            <div className='h-auto w-full border-zinc-400'>
-                <header className='h-auto min-h-[4rem] border-zinc-400 flex flex-col'>
-                    <h1 className='text-3xl font-semibold text-zinc-700 border-red-600'>Edit profile</h1>
-                    <p className='text-sm text-zinc-700 font-medium'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula enim eu odio lacinia</p>
-                </header>
-                <main className='h-auto  p-5 flex flex-col items-center bg-white'>
+        <div className='h-auto py-5 px-10 flex justify-center'>
+            <div className='h-auto w-[80%] border-zinc-400'>
+                <main className='h-auto p-5 flex flex-col items-center bg-white'>
                     <form
                         onSubmit={SaveChanges}
                         spellCheck={`false`}
@@ -210,11 +206,6 @@ export function ProfileEdit() {
 
                 {/* footer will be the place for the navigations/ buttons */}
                 <footer className='h-12 border-t border-zinc-200 flex items-center justify-end'>
-                    <button
-                        onClick={() => nav(`/profile`)}
-                        className='h-full w-14 text-md font-medium text-zinc-700 hover:bg-zinc-200 hover:text-sky-600 px-4'>
-                        <FontAwesomeIcon icon={faChevronLeft} />
-                    </button>
                     <button
                         form='edit-profile-form'
                         type='submit'

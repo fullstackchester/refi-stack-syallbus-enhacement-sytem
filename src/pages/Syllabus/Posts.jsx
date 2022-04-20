@@ -32,9 +32,10 @@ export default function Posts() {
                         <div
                             key={key}
                             className='w-[80%] h-auto bg-white border border-gray-200 mb-3 rounded-lg shadow-sm'>
-                            <div className='h-20 border-b border-zinc-200 p-3'>
-                                <Link to={`/posts/${val.postId}`} className='text-2xl text-zinc-700 font-medium block hover:'>{val.postTitle}</Link>
+                            <div className='h-auto border-b border-zinc-200 py-3 px-5'>
+                                <Link to={`/posts/${val.postId}`} className='text-xl text-zinc-700 font-medium block hover:underline'>{val.postTitle}</Link>
                                 <span className='text-xs block'>{`Posted: ${val.postDate} | ${val.postStatus}`}</span>
+                                
                             </div>
                             <div className='h-80 flex items-center justify-center bg-zinc-100'>
 

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { auth, database } from './Firebase';
+import { auth, database, storage } from './Firebase';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -9,7 +9,7 @@ import {
 } from 'firebase/auth'
 
 import { ref, push, set, onValue, remove } from 'firebase/database'
-import { uploadBytes } from 'firebase/storage';
+import { uploadBytes, ref as StorageRef } from 'firebase/storage';
 
 
 const AuthContext = React.createContext()
@@ -30,7 +30,8 @@ export function FirebaseProvider({ children }) {
         writeData,
         childCount,
         deleteData,
-        uploadAvatar
+        uploadAvatar,
+        uploadFile,
     }
 
     useEffect(() => {
@@ -70,6 +71,11 @@ export function FirebaseProvider({ children }) {
 
     function uploadAvatar(ref, file) {
         return uploadBytes(ref, file)
+    }
+
+
+    function uploadFile(file, path) {
+        return uploadBytes(StorageRef(storage, path), file)
     }
 
 

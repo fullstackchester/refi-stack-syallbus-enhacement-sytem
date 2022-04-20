@@ -20,16 +20,10 @@ function FacultyAccount() {
     }, [])
 
     return (
-        <div className='w-full h-auto py-5 px-10'>
+        <div className='w-full h-auto py-5 px-10 flex justify-center'>
 
-            <div className='w-full h-auto grid grid-cols-6 gap-4'>
-                <main className='min-h-[500px] col-span-4 shadow-sm bg-white rounded-md flex flex-col items-center p-5'>
-                    <img
-                        className='h-36 w-36 border-2 border-gray-600 rounded-[100%]'
-                    />
-                    <h1 className='text-2xl text-gray-700 font-medium text-center'>{facultyData.name} </h1>
-                    <h6 className='text-md text-gray-500 font-medium text-center'>{facultyData.userType} </h6>
-                </main>
+            <div className='w-[80%] h-auto min-h-[600px] bg-white rounded-md shadow-sm border border-zinc-200'>
+
             </div>
 
         </div>

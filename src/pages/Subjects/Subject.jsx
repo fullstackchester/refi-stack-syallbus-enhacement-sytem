@@ -47,9 +47,9 @@ export const Subject = () => {
     }
 
     return (
-        <div className='h-auto p-10'>
+        <div className='h-auto p-10 flex justify-center'>
 
-            <div className='w-full bg-white shadow-md rounded-md'>
+            <div className='w-[80%] bg-white shadow-md rounded-md'>
                 <main className='h-auto min-h-[500px] flex flex-col p-5'>
                     <h1 className='text-5xl text-zinc-700 text-center '>{subject.courseCode} </h1>
                     <h2 className='text-md font-medium text-center text-zinc-600 '>{subject.subjectTitle} </h2>

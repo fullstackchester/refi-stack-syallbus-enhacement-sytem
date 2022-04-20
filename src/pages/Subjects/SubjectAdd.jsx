@@ -58,8 +58,8 @@ export const SubjectAdd = () => {
 
     }
     return (
-        <div className='h-auto py-5 px-10'>
-            <div className='h-auto w-full bg-white shadow-md rounded-md'>
+        <div className='h-auto py-5 px-10 flex justify-center'>
+            <div className='h-auto w-[80%] bg-white shadow-md rounded-md'>
                 <header className='h-12 border-b border-zinc-100 flex items-center px-5'>
                     <span className='text-sm text-zinc-500 font-medium'>{`New subject`} </span>
 

@@ -14,10 +14,7 @@ export function Profile() {
 	const [user, setUser] = useState({})
 
 	useEffect(() => {
-
-
-
-		const getUserData = onValue(ref(database, 'users/' + currentUser.uid), snapshot => {
+		const getUserData = onValue(ref(database, `users/${currentUser.uid}`), snapshot => {
 			if (snapshot.exists()) {
 				setUser(snapshot.val())
 
@@ -25,60 +22,42 @@ export function Profile() {
 				return setUser('No data available')
 			}
 		})
-
-
 		return getUserData
 	}, [])
 
-
+	function caps(string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
 
 	return (
-		<main className='h-auto p-4  grid grid-cols-4 border border-zinc-100 rounded-lg bg-white shadow-sm'>
+		<div className='w-full h-auto px-10 py-5 flex items-center justify-center'>
+			<div className='w-[80%] h-auto min-h-[600px] bg-white border border-zinc-200 rounded-md shadow-sm flex flex-col'>
+				<main className='flex-1 w-full p-5 flex flex-col items-center text-zinc-700'>
+					<div className=' w-32 h-32'>
+						<img
+							src={require('../../assets/Images/avatar.jpg')}
+							className='w-full h-full bg-slate-50 border-2 border-zinc-500 rounded-[100%] object-fit'
+						/>
 
-			<div className='col-span-1 h-full flex justify-center py-4'>
-				<img
-					width={200}
-					className='rounded-[100%]'
-					src={require('../../assets/Images/avatar.jpg')} />
-			</div>
-			<div className='col-span-3 h-full grid grid-cols-4 grid-rows-6'>
+					</div>
+					<h2 className='text-2xl font-semibold'>{user.name}</h2>
+					<span className='text-sm font-medium'>{user.userType ? caps(user.userType) : ''}</span>
+				</main>
+				<footer className='h-12 border-t border-zinc-200 flex justify-end'>
+					<button
+						onClick={(e) => {
+							e.preventDefault()
+							nav('/edit-profile')
+						}}
+						className='text-xs border-x border-zinc-200 px-4 bg-zinc-800 text-white rounded-br-md
+						hover:bg-zinc-700'>
+						Edit Profile
+					</button>
 
-				<div className='col-span-3 row-span-2 flex items-center p-2'>
-					<span className='text-3xl text-zinc-700 font-semibold'>{user.name}</span>
-				</div>
-
-				<div className='col-span-1 row-span-2 flex justify-end'>
-					<Link
-						className='w-fit h-fit text-sm text-zinc-500 font-medium flex hover:text-sky-600'
-						to='/edit-profile'>Edit profile <MdEdit className='ml-2' /></Link>
-
-				</div>
-				<div className='col-span-2 row-span-1 flex items-center flex-row text-zinc-500 px-2'>
-					<MdSupervisorAccount className='h-full text-xl' />
-					<span className='text-sm font-medium p-2'>
-						{user.userType}
-					</span>
-				</div>
-				<div className='col-span-2 row-span-1 flex items-center flex-row text-zinc-500 px-2'>
-					<HiIdentification className='h-full text-xl' />
-					<span className='text-sm font-medium p-2'>
-						{user.uid}
-					</span>
-				</div>
-				<div className='col-span-2 row-span-1 flex items-center flex-row text-zinc-500 px-2'>
-					<MdEmail className='h-full text-xl' />
-					<span className='text-sm font-medium p-2'>
-						{user.email}
-					</span>
-				</div>
-				<div className='col-span-2 row-span-1 flex items-center flex-row text-zinc-500 px-2'>
-					<MdEmail className='h-full text-xl' />
-					<span className='text-sm font-medium p-2'>
-						{user.department}
-					</span>
-				</div>
+				</footer>
 
 			</div>
-		</main>
+
+		</div>
 	)
 }

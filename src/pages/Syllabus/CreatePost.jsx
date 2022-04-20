@@ -11,7 +11,7 @@ export default function CreatePost() {
     const descriptionRef = useRef()
     const authorRef = useRef()
     const fileRef = useRef()
-    const { writeData } = useFirebase()
+    const { writeData, uploadFile } = useFirebase()
     const nav = useNavigate()
 
     const AddPost = [
@@ -76,19 +76,26 @@ export default function CreatePost() {
             postDate: new Date().toLocaleString()
         }
         writeData('posts/', Post, Post.postId)
-            .then((result) => {
-                nav('/posts')
-
+            .then(() => {
+                uploadFile(fileRef.current.files[0], `syllabus/${Post.postId}/${fileRef.current.files[0].name}`)
+                    // 'syllabus/' + Post.postId + '/' + fileRef.current.files[0].name
+                    .then(() => {
+                        nav('/posts')
+                    }).catch((err) => {
+                        setError(err.message)
+                        console.log(err)
+                    });
             }).catch((err) => {
-                return setError(err)
+                setError(err.message)
+                console.log(err)
             });
 
     }
 
 
     return (
-        <div className='w-full h-auto py-5 px-10'>
-            <div className='w-full h-auto min-h-[600px] border border-zinc-200 bg-white rounded-md'>
+        <div className='w-full h-auto py-5 px-10 flex justify-center'>
+            <div className='w-[80%] h-auto min-h-[600px] border border-zinc-200 bg-white rounded-md'>
                 <header className='h-16 border-b border-zinc-200'>
 
                 </header>
@@ -97,14 +104,15 @@ export default function CreatePost() {
                         id='create-post'
                         spellCheck={false}
                         onSubmit={PublishPost}
-                        className='h-auto  min-h-[500px] w-[700px] p-5'>
+                        className='h-auto  min-h-[500px] w-full p-5'>
 
                         {AddPost && AddPost.map((val, key) => {
                             return (
                                 <label
                                     key={key}
-                                    htmlFor={val.id}>
-                                    <span className='block font-medium text-gray-700'>
+                                    htmlFor={val.id}
+                                    className='flex flex-row'>
+                                    <span className='w-2/6 font-medium text-gray-700'>
                                         {val.label}
                                     </span>
                                     <input
@@ -115,13 +123,15 @@ export default function CreatePost() {
                                         accept={val.accept && val.accept}
                                         defaultValue={val.defaultValue}
                                         placeholder={val.placeholder}
-                                        className='w-full p-3 border border-gray-400 outline-none block rounded-sm ring-1 ring-transparent focus:border-sky-400 focus:ring-sky-400 mb-5' />
+                                        className='w-full p-3 border border-gray-400 outline-none rounded-sm ring-1 ring-transparent
+                                         focus:border-sky-400 focus:ring-sky-400 mb-8' />
                                 </label>
                             )
                         })}
                         <label
-                            htmlFor={`description`}>
-                            <span className='block font-medium text-gray-700'>
+                            htmlFor={`description`}
+                            className='flex flex-row'>
+                            <span className='w-2/6 font-medium text-gray-700'>
                                 {`Description`}
                             </span>
                             <textarea
@@ -133,17 +143,15 @@ export default function CreatePost() {
                                 placeholder={`Enter your description here...`}
                                 className='w-full p-3 border border-gray-400 outline-none block rounded-sm ring-1 ring-transparent focus:border-sky-400 focus:ring-sky-400 mb-5 resize-none' />
                         </label>
-
                     </form>
 
                 </main>
                 <footer className='h-12 flex justify-end'>
-                    <span>{error ?? error}</span>
+                    <span>{error}</span>
                     <button
                         form='create-post'
                         className='bg-zinc-800 text-white text-xs px-3 rounded-br-md hover:bg-zinc-700 
                         border border-transparent'>Publish post</button>
-
                 </footer>
 
             </div>
