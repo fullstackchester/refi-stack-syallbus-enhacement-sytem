@@ -21,7 +21,7 @@ function Faculty() {
 
 
     return (
-        <div className='w-full h-screen'>
+        <div className='w-full h-auto'>
             <header className='h-14  grid grid-cols-4 sticky top-12 bg-zinc-100'>
                 <h1 className='col-span-2 text-md font-medium text-zinc-700 flex items-center py-2 px-4 border border-sky-600'>Faculty</h1>
                 <div className='col-span-2 grid grid-cols-8 border border-red-600'>

@@ -16,7 +16,7 @@ export default function Layout() {
         {
             title: 'Syllabus',
             icon: <FontAwesomeIcon icon={faGraduationCap} />,
-            link: '/curriculum',
+            link: '/posts',
         },
         {
             title: 'Faculty',

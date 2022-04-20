@@ -1,40 +1,29 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import LongInput, { LongTextArea } from '../../components/Inputs/LongInput'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBan, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import { faBan, faCheckCircle, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
+import { useFirebase } from '../../js/FirebaseContext'
 
 function SubjectEdit() {
 
     const id = useParams()
     const [error, setError] = useState()
+    const { writeData } = useFirebase()
     const [subject, setSubject] = useState({})
-    const [courseCode, setCourseCode] = useState()
-    const [courseTitle, setCourseTitle] = useState()
-    const [creditUnit, setCreditUnit] = useState()
-    const [courseDescription, setCourseDescription] = useState()
     const courseCodeRef = useRef()
     const courseTitleRef = useRef()
     const creditUnitRef = useRef()
     const courseDescriptionRef = useRef()
-
-    const updatedSubject = {
-        subjectId: subject.subjectId,
-        courseCode: courseCodeRef.current,
-        subjectTitle: courseTitleRef.current,
-        creditUnits: creditUnitRef.current,
-        subjectDescription: courseDescriptionRef.current
-    }
-
+    const nav = useNavigate()
     const EditSubjectData = [
         {
             id: 'course-code',
             label: 'Course code',
             type: 'text',
             placeholder: 'IT 101',
-            onChange: (e) => setCourseCode(e.target.value),
             required: true,
             defaultValue: subject.courseCode,
             ref: courseCodeRef
@@ -44,7 +33,6 @@ function SubjectEdit() {
             label: 'Subject title',
             type: 'text',
             placeholder: 'Introduction to computing',
-            onChange: (e) => setCourseTitle(e.target.value),
             required: true,
             defaultValue: subject.subjectTitle,
             ref: courseTitleRef
@@ -54,7 +42,6 @@ function SubjectEdit() {
             label: 'Credit units',
             type: 'number',
             placeholder: '3.0',
-            onChange: (e) => setCreditUnit(e.target.value),
             required: true,
             defaultValue: subject.creditUnits,
             ref: creditUnitRef
@@ -67,7 +54,6 @@ function SubjectEdit() {
         const getCurrentData = onValue(ref(database, 'subject/' + id.id), snapshot => {
             if (snapshot.exists()) {
                 setSubject(snapshot.val())
-
             } else {
                 console.log('There is no data')
             }
@@ -76,10 +62,22 @@ function SubjectEdit() {
         return getCurrentData
     }, [])
 
-
     function UpdateSubject(e) {
         e.preventDefault()
-        console.log(updatedSubject)
+        const updatedSubject = {
+            subjectId: subject.subjectId,
+            courseCode: courseCodeRef.current.value,
+            subjectTitle: courseTitleRef.current.value,
+            creditUnits: creditUnitRef.current.value,
+            subjectDescription: courseDescriptionRef.current.value
+        }
+        writeData('subject/', updatedSubject, updatedSubject.subjectId)
+            .then(() => {
+                alert('Subject updated')
+            }).catch((err) => {
+                alert('Failed to update subject')
+            });
+
     }
 
     return (
@@ -99,37 +97,50 @@ function SubjectEdit() {
 
                         {EditSubjectData && EditSubjectData.map((val, key) => {
                             return (
-                                <LongInput
+                                <label
                                     key={key}
-                                    id={val.id}
-                                    innerRef={val.ref}
-                                    label={val.label}
-                                    onChange={val.onChange}
-                                    currentData={val.defaultValue}
-                                    placeholder={val.placeholder}
-                                    required={val.required}
-                                    type={val.type}
-                                />
+                                    htmlFor={id}
+                                    className='w-full h-auto border-b border-zinc-100 py-5 flex flex-row'>
+                                    <span className='w-auto min-w-[15rem] text-zinc-600 font-medium flex items-center'>{val.label}</span>
+
+                                    <input
+                                        id={val.id}
+                                        ref={val.ref}
+                                        label={val.label}
+                                        required={val.required}
+                                        type={val.type}
+                                        defaultValue={val.defaultValue}
+                                        className=' border border-zinc-300 flex-1 py-2 px-3 outline-none rounded-md text-zinc-700 
+                                        text-base ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300'
+                                    />
+                                </label>
+
                             )
                         })}
-                        <LongTextArea
-                            id={`course-description`}
-                            label={`Course Description`}
-                            onChange={(e) => setCourseDescription(e.target.value)}
-                            currentData={subject.subjectDescription}
-                            placeholder={`Enter your description here...`}
-                            innerRef={courseDescriptionRef}
-                            required={true}
-                            type={`text`}
-                        />
+                        <label
+                            htmlFor={id}
+                            className='w-full h-auto border-b border-zinc-100 py-5 flex flex-row'>
+                            <span className='w-auto min-w-[15rem] text-zinc-600 font-medium flex items-center'>{`Subject Description`} </span>
+                            <textarea
+                                id={`course-description`}
+                                rows={8}
+                                type={`text`}
+                                placeholder={`Enter your text here`}
+                                ref={courseDescriptionRef}
+                                required={true}
+                                defaultValue={subject.subjectDescription}
+                                className=' border border-zinc-300 flex-1 py-2 px-3 outline-none rounded-md text-zinc-700 whitespace-pre-line 
+                                text-base ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300 resize-none' />
+                        </label>
 
                     </form>
 
                 </main>
                 <footer className='h-12 border-t border-zinc-200 flex items-center justify-end'>
                     <button
+                        onClick={() => nav(`/subjects/${subject.subjectId}`)}
                         className='h-full w-14 text-md font-medium text-zinc-700 hover:bg-zinc-200 hover:text-sky-600 px-4'>
-                        <FontAwesomeIcon icon={faBan} />
+                        <FontAwesomeIcon icon={faChevronLeft} />
                     </button>
                     <button
                         type='submit'

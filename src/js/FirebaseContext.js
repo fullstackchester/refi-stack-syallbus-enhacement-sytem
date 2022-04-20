@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth'
 
 import { ref, push, set, onValue, remove } from 'firebase/database'
+import { uploadBytes } from 'firebase/storage';
 
 
 const AuthContext = React.createContext()
@@ -29,6 +30,7 @@ export function FirebaseProvider({ children }) {
         writeData,
         childCount,
         deleteData,
+        uploadAvatar
     }
 
     useEffect(() => {
@@ -66,7 +68,9 @@ export function FirebaseProvider({ children }) {
         return remove(ref(database, path))
     }
 
-
+    function uploadAvatar(ref, file) {
+        return uploadBytes(ref, file)
+    }
 
 
     return (

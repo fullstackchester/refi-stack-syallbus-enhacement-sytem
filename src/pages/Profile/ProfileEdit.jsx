@@ -1,34 +1,30 @@
-import React, { useState, useEffect } from 'react'
-import Dropdown from '../../components/Dropdown'
-import Form from '../../components/Form'
+import React, { useState, useEffect, useRef } from 'react'
 import { push, child, ref, update, get, onValue } from 'firebase/database'
-import { database } from '../../js/Firebase'
+import { database, storage } from '../../js/Firebase'
 import { useFirebase } from '../../js/FirebaseContext'
 import { useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBan, faCheck, faCheckCircle, faChevronLeft, faSave } from '@fortawesome/free-solid-svg-icons'
+import { ref as storageRef } from 'firebase/storage'
 
 export function ProfileEdit() {
-
-    const [name, setName] = useState()
-    const [email, setEmail] = useState()
-    const [employeeId, setEmployeeId] = useState()
-    const [department, setDepartment] = useState()
-    const [err, setErr] = useState()
-    const { currentUser } = useFirebase()
+    const { currentUser, writeData } = useFirebase()
     const nav = useNavigate()
-
+    const [avatar, setAvatar] = useState()
+    const [preview, setPreview] = useState()
+    const [err, setErr] = useState()
     const [currentData, setCurrentData] = useState({})
-    const updates = {}
 
-    const updateProfile = {
-        uid: currentData.uid,
-        department: department,
-        employeeId: employeeId,
-        name: name,
-        email: email,
-        userType: currentData.userType
-    }
+    const nameRef = useRef()
+    const emailRef = useRef()
+    const empIdRef = useRef()
+    const photoUrlRef = useRef()
+    const deptRef = useRef()
+
+
 
     useEffect(() => {
+
         const getCurrent = onValue(ref(database, 'users/' + currentUser.uid), snapshot => {
             if (snapshot.exists()) {
                 setCurrentData(snapshot.val())
@@ -40,6 +36,19 @@ export function ProfileEdit() {
         return getCurrent
     }, [])
 
+    useEffect(() => {
+        if (avatar) {
+            const reader = new FileReader()
+            reader.onloadend = () => {
+                setPreview(reader.result)
+            }
+            reader.readAsDataURL(avatar)
+        } else {
+
+        }
+    }, [avatar])
+
+
     const ChangeProfileFields = [
         {
             name: 'employee-id',
@@ -47,8 +56,8 @@ export function ProfileEdit() {
             placeholder: 'HIS00AA3125',
             type: 'text',
             required: true,
-            onChange: (e) => setEmployeeId(e.target.value),
-            initialValue: currentData.employeeId
+            initialValue: currentData.employeeId,
+            ref: empIdRef
         },
         {
             name: 'name',
@@ -56,8 +65,8 @@ export function ProfileEdit() {
             placeholder: 'John Smith',
             type: 'text',
             required: true,
-            onChange: (e) => setName(e.target.value),
-            initialValue: currentData.name
+            initialValue: currentData.name,
+            ref: nameRef
         },
         {
             name: 'email',
@@ -65,8 +74,8 @@ export function ProfileEdit() {
             placeholder: 'johnsmith@bulsu.edu.ph',
             type: 'text',
             required: true,
-            onChange: (e) => setEmail(e.target.value),
-            initialValue: currentData.email
+            initialValue: currentData.email,
+            ref: emailRef
         },
     ]
 
@@ -92,38 +101,128 @@ export function ProfileEdit() {
 
     const SaveChanges = (e) => {
         e.preventDefault()
+        const updateProfile = {
+            photoUrl: avatar ? avatar.name : '',
+            uid: currentData.uid,
+            employeeId: empIdRef.current.value,
+            name: nameRef.current.value,
+            email: emailRef.current.value,
+            userType: currentData.userType,
+            department: deptRef.current.value
+        }
 
-        updates['users/' + currentUser.uid + '/'] = updateProfile
-        update(ref(database), updates)
+        writeData('users/', updateProfile, updateProfile.uid)
             .then(() => {
-                nav('/profile')
-            }).catch(() => {
-                alert("Profile not updated")
+                alert('UPdate successful')
+            }).catch((err) => {
+                alert(err.message)
             });
 
-        console.log(updateProfile)
+
     }
 
-
-
     return (
-        <main className='h-[600px] p-4 flex items-center justify-center'>
-            <div className='w-[450px] h-auto '>
-                <Form
-                    buttonTitle='Save changes'
-                    inputFields={ChangeProfileFields}
-                    handleSubmit={SaveChanges}
-                    handleError={err}
-                    children={<Dropdown
-                        name='department'
-                        label='Department'
-                        required={true}
-                        selectables={departmentOptions}
-                        onChange={(e) => {
-                            setDepartment(e.target.value)
-                        }} />} />
-            </div>
+        <div className='h-auto py-5 px-10'>
+            <div className='h-auto w-full border-zinc-400'>
+                <header className='h-auto min-h-[4rem] border-zinc-400 flex flex-col'>
+                    <h1 className='text-3xl font-semibold text-zinc-700 border-red-600'>Edit profile</h1>
+                    <p className='text-sm text-zinc-700 font-medium'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula enim eu odio lacinia</p>
+                </header>
+                <main className='h-auto  p-5 flex flex-col items-center bg-white'>
+                    <form
+                        onSubmit={SaveChanges}
+                        spellCheck={`false`}
+                        id='edit-profile-form'
+                        name='edit-profile-form'
+                        className='h-auto min-h-[400px] w-[500px] p-5 border-zinc-600'>
 
-        </main>
+                        <div className='h-auto w-full border-zinc-300 flex flex-col items-center mb-3'>
+                            <img
+                                className='h-40 w-40 border-2 border-zinc-800 rounded-[100%] object-cover mb-1 bg-white'
+                                src={preview} />
+                            <label htmlFor='photo-url'>
+
+                                <span
+                                    className='border border-transparent text-zinc-700 font-medium 
+                                    text-sm cursor-pointer hover:underline' >Change photo</span>
+
+                                <input
+                                    onChange={(e) => {
+                                        const file = e.target.files[0]
+                                        if (file) {
+                                            setAvatar(file)
+                                        } else {
+                                            setAvatar(null)
+                                        }
+                                    }}
+                                    ref={photoUrlRef}
+                                    form={`edit-profile-form`}
+                                    id={`photo-url`}
+                                    type={`file`}
+                                    accept={`image/*`}
+                                    className='hidden' />
+                            </label>
+
+
+                        </div>
+                        {ChangeProfileFields && ChangeProfileFields.map((val, key) => {
+                            return (
+                                <label
+                                    className='flex flex-col mb-4'
+                                    htmlFor={val.name}
+                                    key={key}>
+                                    <span className='text-sm text-zinc-800 font-medium'>{val.label} </span>
+                                    <input
+                                        className='outline-none border border-zinc-300 px-3 py-3 rounded-sm ring-1 ring-transparent
+                                    focus:ring-sky-400 focus:border-sky-400 bg-gray-50 text-gray-700 text-md'
+                                        id={val.name}
+                                        type={val.type}
+                                        ref={val.ref}
+                                        onChange={val.onchange}
+                                        defaultValue={val.initialValue}
+                                        required={val.required} />
+                                </label>
+                            )
+                        })}
+                        <label
+                            className='flex flex-col mb-4'
+                            htmlFor={`department`} >
+                            <span className='text-sm text-zinc-800 font-medium'>{`Department`} </span>
+                            <select
+                                className='outline-none border border-zinc-300 px-3 py-3 rounded-sm ring-1 ring-transparent
+                                    focus:ring-sky-400 focus:border-sky-400 bg-gray-50 text-gray-700 text-md'
+                                id={`department`}
+                                ref={deptRef}
+                                required={true} >
+                                {departmentOptions && departmentOptions.map((val, key) => {
+                                    return (
+                                        <option key={key} value={val.value}>
+                                            {val.title}
+                                        </option>
+                                    )
+                                })}
+
+                            </select>
+                        </label>
+                    </form>
+
+                </main>
+
+                {/* footer will be the place for the navigations/ buttons */}
+                <footer className='h-12 border-t border-zinc-200 flex items-center justify-end'>
+                    <button
+                        onClick={() => nav(`/profile`)}
+                        className='h-full w-14 text-md font-medium text-zinc-700 hover:bg-zinc-200 hover:text-sky-600 px-4'>
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                    </button>
+                    <button
+                        form='edit-profile-form'
+                        type='submit'
+                        className='h-full w-14 text-md font-medium text-zinc-700 hover:bg-zinc-200 hover:text-sky-600 px-4'>
+                        <FontAwesomeIcon icon={faCheck} />
+                    </button>
+                </footer>
+            </div>
+        </div >
     )
 }

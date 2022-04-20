@@ -43,6 +43,7 @@ export const Subject = () => {
         //         alert('failed to delete subject!')
         //     });
         alert('DELETING SUBJECT')
+        closeModal()
     }
 
     return (

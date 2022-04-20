@@ -79,7 +79,7 @@ function Subjects() {
 
 
     return (
-        <div className='min-h-[600px] h-auto  rounded-lg'>
+        <div className='h-auto'>
             <nav className='h-14  flex flex-row justify-between py-2 px-4'>
                 <span className='text-xl flex items-center font-medium text-zinc-600 poppins'>Subjects</span>
 
@@ -92,7 +92,7 @@ function Subjects() {
                 </ul>
             </nav>
 
-            <main className=' h-auto p-4 grid grid-cols-12 gap-2'>
+            <main className='min-h-[500px] h-auto p-4 grid grid-cols-12 gap-2 border border-red-600'>
                 {subject.map((val, key) => {
                     return (
                         <Node
@@ -106,7 +106,6 @@ function Subjects() {
                 })}
                 {/* {subject.length === 0 ? <div className='col-span-4 h-[400px] flex justify-center items-center'>No subjects at the list</div> : ''} */}
             </main>
-            <footer className='h-14'></footer>
         </div>
     )
 }

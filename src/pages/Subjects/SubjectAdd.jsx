@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import Form from '../../components/Form'
 import { v4 as uuidv4 } from 'uuid'
 import { useFirebase } from '../../js/FirebaseContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBan, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import LongInput, { LongTextArea } from '../../components/Inputs/LongInput'
 
 export const SubjectAdd = () => {
     const [courseCode, setCourseCode] = useState()
@@ -36,16 +38,6 @@ export const SubjectAdd = () => {
             required: true,
         },
 
-        {
-            name: 'course-description',
-            label: 'Course description',
-            type: 'text',
-            placeholder: 'Enter your text here...',
-            onChange: (e) => setCourseDescription(e.target.value),
-            required: true,
-        },
-
-
     ]
     const newSubject = {
         subjectId: uuidv4(),
@@ -63,16 +55,58 @@ export const SubjectAdd = () => {
             }).catch(() => {
                 alert('Subject failed to add.')
             });
+
     }
     return (
-        <div className='w-full h-auto flex justify-center'>
-            <div className='w-[500px] min-h-[600px] p-5'>
-                <h1 className='text-4xl text-zinc-600 mb-5'>New subject</h1>
-                <Form
-                    inputFields={AddSubjectData}
-                    handleSubmit={addSubject}
-                    buttonTitle='Add subject'
-                />
+        <div className='h-auto py-5 px-10'>
+            <div className='h-auto w-full bg-white shadow-md rounded-md'>
+                <header className='h-12 border-b border-zinc-100 flex items-center px-5'>
+                    <span className='text-sm text-zinc-500 font-medium'>{`New subject`} </span>
+
+                </header>
+                <main className='h-auto min-h-[500px] p-5 flex flex-col'>
+                    <form
+                        onSubmit={addSubject}
+                        id='add-subject-form'
+                        name='add-subject-form'
+                        spellCheck='false'
+                        className=' flex-1'>
+
+                        {AddSubjectData && AddSubjectData.map((val, key) => {
+                            return (
+                                <LongInput
+                                    key={key}
+                                    id={val.id}
+                                    label={val.label}
+                                    onChange={val.onChange}
+                                    placeholder={val.placeholder}
+                                    required={val.required}
+                                    type={val.type}
+                                />
+                            )
+                        })}
+                        <LongTextArea
+                            id={`course-description`}
+                            label={`Course Description`}
+                            onChange={(e) => setCourseDescription(e.target.value)}
+                            placeholder={`Enter your description here...`}
+                            required={true}
+                            type={`text`}
+                        />
+                    </form>
+                </main>
+                <footer className='h-12 border-t border-zinc-200 flex items-center justify-end'>
+                    <button
+                        className='h-full w-14 text-md font-medium text-zinc-700 hover:bg-zinc-200 hover:text-sky-600 px-4'>
+                        <FontAwesomeIcon icon={faBan} />
+                    </button>
+                    <button
+                        type='submit'
+                        form='add-subject-form'
+                        className='h-full w-14 text-md font-medium text-zinc-700 hover:bg-zinc-200 hover:text-sky-600 px-4'>
+                        <FontAwesomeIcon icon={faCheckCircle} />
+                    </button>
+                </footer>
             </div>
         </div>
     )

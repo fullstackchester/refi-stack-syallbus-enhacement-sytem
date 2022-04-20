@@ -2,19 +2,19 @@ import React from 'react'
 
 export default function LongInput(
     {
-        id, label, form, type, required, onChange, currentData, placeholder, innerRef
+        id, label, form, type, required, onChange, currentData, placeholder, ref
     }
 ) {
     return (
         <label
             htmlFor={id}
-            className='w-full h-auto border-b border-zinc-100 py-5 flex flex-row'>
+            className='w-full h-auto border-b border-zinc-100 py-5 flex flex-row px-4 '>
             <span className='w-auto min-w-[15rem] text-zinc-600 font-medium flex items-center'>{label} </span>
             <input
                 form={form}
                 id={id}
                 type={type}
-                innerRef={innerRef}
+                ref={ref}
                 placeholder={placeholder}
                 onChange={onChange}
                 required={required}
@@ -27,7 +27,7 @@ export default function LongInput(
 
 export function LongTextArea(
     {
-        id, label, form, type, required, onChange, currentData, placeholder, innerRef
+        id, label, form, type, required, onChange, currentData, placeholder,
     }
 ) {
     return (
@@ -40,7 +40,6 @@ export function LongTextArea(
                 id={id}
                 rows={8}
                 type={type}
-                innerRef={innerRef}
                 placeholder={placeholder}
                 onChange={onChange}
                 required={required}

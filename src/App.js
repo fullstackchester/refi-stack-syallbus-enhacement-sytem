@@ -6,7 +6,6 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Subjects from './pages/Subjects/Subjects'
-import Curriculum from './pages/Curriculum'
 import Files from './pages/Files'
 import Faculty from './pages/Faculty/Faculty'
 import { Profile } from './pages/Profile/Profile'
@@ -17,10 +16,13 @@ import { Subject } from './pages/Subjects/Subject'
 import SubjectEdit from './pages/Subjects/SubjectEdit'
 import { SubjectAdd } from './pages/Subjects/SubjectAdd'
 import FacultyAccount from './pages/Faculty/FacultyAccount'
+import Posts from './pages/Syllabus/Posts'
+import CreatePost from './pages/Syllabus/CreatePost'
+import ViewPost from './pages/Syllabus/ViewPost'
 
 export default function App() {
 	return (
-		<div className='w-full h-auto bg-gray-100'>
+		<div className='w-full h-auto bg-gray-300/40'>
 			<FirebaseProvider>
 				<Router>
 					<Routes>
@@ -28,7 +30,9 @@ export default function App() {
 						<Route path='/signup' element={<Signup />} />
 						<Route path='/' element={<Layout />} >
 							<Route exact path='dashboard' element={<Dashboard />} />
-							<Route path='curriculum' element={<Curriculum />} />
+							<Route path='posts' element={<Posts />} />
+							<Route path='posts/create-post' element={<CreatePost />} />
+							<Route path='posts/:postId' element={<ViewPost />} />
 							<Route path='files' element={<Files />} />
 							<Route path='faculty' element={<Faculty />} />
 							<Route path='faculty/:id' element={<FacultyAccount />} />
