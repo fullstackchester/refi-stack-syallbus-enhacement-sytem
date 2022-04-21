@@ -4,7 +4,7 @@ import { ref, onValue } from 'firebase/database'
 import { database } from '../../js/Firebase'
 import { v4 as uuidv4 } from 'uuid'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBook, faAdd } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faAdd, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 import Node from '../../components/Node'
 
@@ -80,19 +80,34 @@ function Subjects() {
 
     return (
         <div className='h-auto'>
-            <nav className='h-14  flex flex-row justify-between py-2 px-4'>
-                <span className='text-xl flex items-center font-medium text-zinc-600 poppins'>Subjects</span>
+            <nav className='h-14  flex flex-row justify-between px-10 border bg-white'>
+                <span className='text-xl flex items-center font-medium text-zinc-600 '>Subjects</span>
+                <div className='h-full w-auto min-w-[20rem] border-red-600 flex flex-row py-2'>
+                    <div className="flex justify-center flex-1 bg-transparent border border-zinc-200 rounded-md mr-2">
+                        <input
+                            spellCheck={false}
+                            placeholder={`Search`}
+                            aria-placeholder={`Search`}
+                            type={`text`} className={`outline-none border border-transparent bg-transparent flex-1 px-3
+                            ring-1 ring-transparent focus:border-sky-300 focus:ring-sky-200 text-sm rounded-tl-md rounded-bl-md`} />
+                        <button className='w-12 hover:bg-zinc-600 hover:text-white transition-colors border-l border-zinc-300 text-sm
+                        hover:border-zinc-600 last:rounded-tr-md rounded-br-md'>
+                            <FontAwesomeIcon icon={faSearch} />
+                        </button>
 
-                <ul className='text-zinc-700 flex flex-row items-center p-2'>
-                    <li className='text-xl cursor-pointer'>
-                        <FontAwesomeIcon
-                            icon={faAdd}
-                            onClick={() => nav('/subjects/add')} />
-                    </li>
-                </ul>
+                    </div>
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault()
+                            nav('/subjects/add')
+                        }}
+                        className='w-14 hover:bg-zinc-600 hover:text-white rounded-md transition-colors'>
+                        <FontAwesomeIcon icon={faAdd} />
+                    </button>
+                </div>
             </nav>
 
-            <main className='min-h-[500px] h-auto p-4 grid grid-cols-12 gap-2 border border-red-600'>
+            <main className='min-h-[500px] h-auto px-10 py-5 grid grid-cols-12 gap-2 '>
                 {subject.map((val, key) => {
                     return (
                         <Node

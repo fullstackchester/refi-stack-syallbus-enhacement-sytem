@@ -28,7 +28,7 @@ export default function Header() {
     ]
 
     return (
-        <div className='h-12 w-full bg-white shadow-sm sticky top-0 flex flex-row py-1 px-4 justify-end z-10 '>
+        <div className='h-12 w-full bg-zinc-800 shadow-sm sticky top-0 flex flex-row py-1 px-4 justify-end z-10 '>
 
             <div className='h-full w-32 flex flex-row items-center justify-evenly'>
 
@@ -36,7 +36,7 @@ export default function Header() {
                     return (
                         <span
                             onClick={val.onClick}
-                            className='text-md text-zinc-700 cursor-pointer hover:text-zinc-500'
+                            className='text-md text-white cursor-pointer hover:text-zinc-500'
                             key={key}>
                             {val.icons}
                         </span>

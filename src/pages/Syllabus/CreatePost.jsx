@@ -72,6 +72,7 @@ export default function CreatePost() {
             postStatus: postStatusRef.current.value,
             postTitle: titleRef.current.value,
             postFile: fileRef.current.files[0].name,
+            postFileUrl: `syllabus/${idRef.current.value}/${fileRef.current.files[0].name}`,
             postDescription: descriptionRef.current.value,
             postDate: new Date().toLocaleString()
         }
