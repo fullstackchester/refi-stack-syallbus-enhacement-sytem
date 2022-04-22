@@ -5,10 +5,10 @@ import { useFirebase } from '../../js/FirebaseContext'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBan, faCheck, faCheckCircle, faChevronLeft, faSave } from '@fortawesome/free-solid-svg-icons'
-import { ref as storageRef } from 'firebase/storage'
+import { ref as storageRef, uploadBytes } from 'firebase/storage'
 
 export function ProfileEdit() {
-    const { currentUser, writeData } = useFirebase()
+    const { currentUser, writeData, uploadFile } = useFirebase()
     const nav = useNavigate()
     const [avatar, setAvatar] = useState()
     const [preview, setPreview] = useState()
@@ -20,6 +20,8 @@ export function ProfileEdit() {
     const empIdRef = useRef()
     const photoUrlRef = useRef()
     const deptRef = useRef()
+
+    const inputClass = 'border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300'
 
 
 
@@ -77,6 +79,16 @@ export function ProfileEdit() {
             initialValue: currentData.email,
             ref: emailRef
         },
+
+        {
+            name: 'department',
+            label: 'Department',
+            placeholder: '',
+            type: 'select',
+            required: true,
+            initialValue: currentData.department,
+            ref: ''
+        },
     ]
 
     const departmentOptions = [
@@ -113,9 +125,14 @@ export function ProfileEdit() {
 
         writeData('users/', updateProfile, updateProfile.uid)
             .then(() => {
-                alert('UPdate successful')
+                uploadFile(avatar, `avatars/${currentData.uid}/${avatar.name}`)
+                    .then(() => {
+                        nav('/profile')
+                    }).catch((err) => {
+                        setErr(err.message)
+                    });
             }).catch((err) => {
-                alert(err.message)
+                setErr(err.message)
             });
 
 
@@ -123,25 +140,26 @@ export function ProfileEdit() {
 
     return (
         <div className='h-auto py-5 px-10 flex justify-center'>
-            <div className='h-auto w-[80%] border-zinc-400'>
-                <main className='h-auto p-5 flex flex-col items-center bg-white'>
+            <div className='h-auto w-[80%] border border-zinc-200 bg-white rounded-md'>
+                <header className='h-16 border-b border-zinc-200 flex items-center px-10'>
+                    <span className='text-2xl text-zinc-700 font-medium'>{`Edit profile`} </span>
+
+                </header>
+                <main className='h-auto flex flex-col items-center '>
                     <form
                         onSubmit={SaveChanges}
                         spellCheck={`false`}
                         id='edit-profile-form'
                         name='edit-profile-form'
-                        className='h-auto min-h-[400px] w-[500px] p-5 border-zinc-600'>
+                        className='h-auto min-h-[400px] w-full px-10 border-zinc-600'>
 
-                        <div className='h-auto w-full border-zinc-300 flex flex-col items-center mb-3'>
-                            <img
-                                className='h-40 w-40 border-2 border-zinc-800 rounded-[100%] object-cover mb-1 bg-white'
-                                src={preview} />
-                            <label htmlFor='photo-url'>
+                        <div className='h-auto w-full  flex flex-col items-center'>
 
+                            <label
+                                className='w-full h-auto flex flex-row items-center py-5 border-b border-zinc-100'
+                                htmlFor='photo-url'>
                                 <span
-                                    className='border border-transparent text-zinc-700 font-medium 
-                                    text-sm cursor-pointer hover:underline' >Change photo</span>
-
+                                    className='w-1/6 text-sm text-zinc-600 font-medium flex items-center' >Profile photo</span>
                                 <input
                                     onChange={(e) => {
                                         const file = e.target.files[0]
@@ -157,6 +175,13 @@ export function ProfileEdit() {
                                     type={`file`}
                                     accept={`image/*`}
                                     className='hidden' />
+                                <img
+                                    className='h-14 w-14 rounded-[100%] object-cover mb-1 bg-zinc-400'
+                                    src={preview} />
+                                <span className='h-fit w-fit border border-transparent bg-zinc-700 p-2 text-white text-sm
+                                rounded-md hover:bg-zinc-500 cursor-pointer ml-2'>
+                                    Change
+                                </span>
                             </label>
 
 
@@ -164,44 +189,40 @@ export function ProfileEdit() {
                         {ChangeProfileFields && ChangeProfileFields.map((val, key) => {
                             return (
                                 <label
-                                    className='flex flex-col mb-4'
+                                    key={key}
                                     htmlFor={val.name}
-                                    key={key}>
-                                    <span className='text-sm text-zinc-800 font-medium'>{val.label} </span>
-                                    <input
-                                        className='outline-none border border-zinc-300 px-3 py-3 rounded-sm ring-1 ring-transparent
-                                    focus:ring-sky-400 focus:border-sky-400 bg-gray-50 text-gray-700 text-md'
-                                        id={val.name}
-                                        type={val.type}
-                                        ref={val.ref}
-                                        onChange={val.onchange}
-                                        defaultValue={val.initialValue}
-                                        required={val.required} />
+                                    className={`${val.type !== 'hidden' ? 'py-5 border-b border-zinc-100' : ''}
+                                     w-full h-auto flex flex-row`}>
+                                    <span className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'>
+                                        {val.label}
+                                    </span>
+                                    {val.type !== 'select' ?
+                                        <input
+                                            id={val.name}
+                                            ref={val.ref}
+                                            required={val.required}
+                                            type={val.type}
+                                            defaultValue={val.initialValue}
+                                            placeholder={val.placeholder}
+                                            className={inputClass} /> :
+                                        <select
+                                            className={inputClass}
+                                            id={val.name}
+                                            ref={deptRef}
+                                            required={val.required} >
+                                            {departmentOptions && departmentOptions.map((val, key) => {
+                                                return (
+                                                    <option key={key} value={val.value}>
+                                                        {val.title}
+                                                    </option>
+                                                )
+                                            })}
+
+                                        </select>}
                                 </label>
                             )
                         })}
-                        <label
-                            className='flex flex-col mb-4'
-                            htmlFor={`department`} >
-                            <span className='text-sm text-zinc-800 font-medium'>{`Department`} </span>
-                            <select
-                                className='outline-none border border-zinc-300 px-3 py-3 rounded-sm ring-1 ring-transparent
-                                    focus:ring-sky-400 focus:border-sky-400 bg-gray-50 text-gray-700 text-md'
-                                id={`department`}
-                                ref={deptRef}
-                                required={true} >
-                                {departmentOptions && departmentOptions.map((val, key) => {
-                                    return (
-                                        <option key={key} value={val.value}>
-                                            {val.title}
-                                        </option>
-                                    )
-                                })}
-
-                            </select>
-                        </label>
                     </form>
-
                 </main>
 
                 {/* footer will be the place for the navigations/ buttons */}

@@ -55,8 +55,9 @@ function Account() {
         <div className='w-full h-auto border-t border-zinc-600 px-2 py-3 flex flex-row '>
 
             <img
-                className='h-10 w-10 bg-zinc-800 rounded-[100%]'
-                src={`https://firebasestorage.googleapis.com/v0/b/internship-project-ccbf7.appspot.com/o/avatars%2F${currentUser.uid}?alt=media&token=7aeb1e31-3c53-4e5b-8e46-529337af01ae`} />
+                id='rofile-avatar'
+                className='h-10 w-10 bg-zinc-800 rounded-[100%] object-cover'
+            />
             <div className='h-auto flex-grow flex flex-col px-2'>
                 <span className='text-xs font-medium text-zinc-300'>{name && name}</span>
                 <button

@@ -19,6 +19,7 @@ export default function ViewPost() {
     const [comment, setComment] = useState()
     const commentRef = useRef()
     const [currentPostId, setCurrentPosId] = useState()
+    const [commentCount, setCommentCount] = useState()
 
     useEffect(() => {
         const getPost = onValue(ref(database, `posts/${postId.postId}`), postData => {
@@ -32,17 +33,6 @@ export default function ViewPost() {
 
         return getPost
     }, [])
-
-    // useEffect(() => {
-    //     const getProfile = onValue(ref(database, `users/${currentUser.uid}`), snapshot => {
-    //         if (snapshot.exists()) {
-    //             console.table(snapshot.val())
-    //         } else {
-    //             console.log('User not found')
-    //         }
-    //     })
-    //     return getProfile
-    // }, [])
 
     function PostComment(e) {
         e.preventDefault()
@@ -60,14 +50,23 @@ export default function ViewPost() {
                 alert(err.message)
             });
     }
+
     function DownloadSyllabi(e) {
         e.preventDefault()
         getDownloadURL(StorageRef(storage, post.postFileUrl))
             .then((url) => {
-                console.log(url)
+                window.open(url)
             }).catch((err) => {
                 alert(err.message)
             });
+    }
+
+    function getFacultyName(uid) {
+        onValue(ref(database, `users/${uid}`), userSnapshot => {
+            if (userSnapshot.exists()) {
+                return userSnapshot.val().name
+            }
+        })
     }
 
     return (
@@ -76,25 +75,26 @@ export default function ViewPost() {
                 <div className='col-span-3 row-span-1 px-5 py-3 border-b border-zinc-200 text-zinc-700
                 grid grid-cols-4'>
                     <div className='col-span-3'>
-                        <h3 className='text-2xl font-medium  '>{post.postTitle}</h3>
-                        <h6 className='text-xs font-medium'>{`Posted: ${post.postDate}`}</h6>
+                        <h3 className='text-2xl font-semibold  '>{post.postTitle}</h3>
+                        <h3 className='text-md text-zinc-500 font-normal  '>{post.postDescription}</h3>
+                        <h6 className='text-xs text-zinc-500 font-medium'>{`Posted: ${post.postDate}`}</h6>
                     </div>
                     <div className='col-span-1 border-zinc-300 flex flex-col'>
                         <Status />
                         <div className='w-full flex-1 flex items-center justify-center'>
                             <span className='text-sm font-bold p-2 border'>{post.postStatus}</span>
                         </div>
-
                     </div>
                 </div>
 
                 <div className='col-span-1 row-span-5 border-r border-zinc-200 text-zinc-700'>
                     <div
-                        onClick={DownloadSyllabi}
                         className='h-1/2 w-full border-b border-zinc-300 p-3 flex flex-col '>
                         <span className='text-sm font-semibold'>{`Attachments`}</span>
-                        <div className='flex-1 flex flex-col items-center justify-center hover:bg-zinc-600
-                         bg-opacity-60 hover:text-white transition-colors cursor-pointer '>
+                        <div
+                            onClick={DownloadSyllabi}
+                            className='flex-1 flex flex-col items-center justify-center hover:bg-zinc-600/70 
+                            hover:text-white transition-colors cursor-pointer '>
 
                             <FontAwesomeIcon
                                 icon={faFileWord}

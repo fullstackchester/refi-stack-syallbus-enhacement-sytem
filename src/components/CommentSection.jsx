@@ -1,4 +1,4 @@
-import { onValue, orderByChild, query, ref } from 'firebase/database'
+import { onValue, ref } from 'firebase/database'
 import React, { useState, useEffect } from 'react'
 import { database } from '../js/Firebase'
 
@@ -9,6 +9,10 @@ export default function Comments(
 ) {
     const [postComments, setComments] = useState([])
     const [commentAuthor, setAuthor] = useState()
+
+    function getFacultyName(uid) {
+
+    }
 
     useEffect(() => {
         onValue(ref(database, `comments/${postId}`), snapshot => {

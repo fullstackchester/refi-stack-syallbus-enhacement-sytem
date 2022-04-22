@@ -13,12 +13,11 @@ export default function Posts() {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        const fetchPosts = onValue(ref(database, 'posts'), posts => {
+        onValue(ref(database, 'posts'), posts => {
             if (posts.exists() && posts.length !== 0) {
                 setPosts(Object.values(posts.val()))
             }
         })
-        return fetchPosts
     }, [])
 
     return (
@@ -55,7 +54,7 @@ export default function Posts() {
                     return (
                         <div
                             key={key}
-                            className='col-span-1 h-auto bg-white border border-gray-200 mb-3 rounded-lg shadow-sm'>
+                            className='col-span-1 h-auto bg-white border border-gray-200 mb-3 rounded-lg'>
                             <div className='h-auto border-b border-zinc-200 py-3 px-5'>
                                 <Link to={`/posts/${val.postId}`} className='text-xl text-zinc-700 font-medium block hover:underline'>
                                     {val.postTitle}
@@ -63,7 +62,7 @@ export default function Posts() {
                                 <span className='text-xs block'>{`Posted: ${val.postDate}`}</span>
 
                             </div>
-                            <div className='h-40 flex items-center justify-center bg-zinc-100'>
+                            <div className='h-40 flex items-center justify-center'>
 
                                 <p className='h-40 flex flex-col justify-center text-zinc-800 border-black'>
                                     <FontAwesomeIcon icon={faFileWord} className='text-3xl' />
@@ -71,7 +70,7 @@ export default function Posts() {
                                     <br />
                                 </p>
                             </div>
-                            <div className='h-12 flex justify-end'>
+                            <div className='h-12 flex justify-end border-t border-zinc-200'>
                                 <div className='w-auto rounded-br-md flex items-center px-3 text-xs font-medium
                                  hover:underline cursor-pointer'>
                                     {val.postStatus}

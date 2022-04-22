@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFirebase } from '../../js/FirebaseContext'
 import { onValue, ref } from 'firebase/database'
-import { database } from '../../js/Firebase'
+import { database, storage } from '../../js/Firebase'
 import { HiIdentification } from 'react-icons/hi'
 import { MdEmail, MdEdit, MdSupervisorAccount } from 'react-icons/md'
+import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 
 export function Profile() {
 
@@ -14,9 +15,17 @@ export function Profile() {
 	const [user, setUser] = useState({})
 
 	useEffect(() => {
+
 		const getUserData = onValue(ref(database, `users/${currentUser.uid}`), snapshot => {
 			if (snapshot.exists()) {
 				setUser(snapshot.val())
+				getDownloadURL(storageRef(storage, `avatars/${currentUser.uid}/${snapshot.val().photoUrl}`))
+					.then((url) => {
+						const avatar = document.getElementById(`user-profile-avatar`)
+						avatar.setAttribute('src', url)
+					}).catch((err) => {
+						console.log(err.message)
+					})
 
 			} else {
 				return setUser('No data available')
@@ -35,8 +44,9 @@ export function Profile() {
 				<main className='flex-1 w-full p-5 flex flex-col items-center text-zinc-700'>
 					<div className=' w-32 h-32'>
 						<img
-							src={require('../../assets/Images/avatar.jpg')}
-							className='w-full h-full bg-slate-50 border-2 border-zinc-500 rounded-[100%] object-fit'
+							id={`user-profile-avatar`}
+							src={`hello.png`}
+							className='w-full h-full bg-zinc-400  rounded-[100%] object-cover'
 						/>
 
 					</div>

@@ -47,8 +47,20 @@ function SubjectEdit() {
             ref: creditUnitRef
         },
 
+        {
+            id: 'course-description',
+            label: 'Course description',
+            type: 'textarea',
+            placeholder: 'Enter your text here...',
+            required: false,
+            row: 8,
+            defaultValue: subject.subjectDescription,
+            ref: courseDescriptionRef
+        },
+
 
     ]
+    const inputClass = 'border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300'
 
     useEffect(() => {
         const getCurrentData = onValue(ref(database, 'subject/' + id.id), snapshot => {
@@ -83,7 +95,10 @@ function SubjectEdit() {
     return (
         <div className='h-auto py-5 px-10 flex justify-center'>
             <div className='h-auto w-[80%] bg-white shadow-md rounded-md'>
-                <main className='h-auto min-h-[500px] p-5 flex flex-col'>
+                <header className='h-16 border-b border-zinc-200 flex items-center px-10'>
+                    <span className='text-2xl text-zinc-700 font-medium'>{`Edit subject`} </span>
+                </header>
+                <main className='h-auto min-h-[500px] px-10 flex flex-col'>
                     <form
                         onSubmit={UpdateSubject}
                         id='edit-subject-form'
@@ -95,40 +110,38 @@ function SubjectEdit() {
                             return (
                                 <label
                                     key={key}
-                                    htmlFor={id}
-                                    className='w-full h-auto border-b border-zinc-100 py-5 flex flex-row'>
-                                    <span className='w-auto min-w-[15rem] text-zinc-600 font-medium flex items-center'>{val.label}</span>
+                                    htmlFor={val.id}
+                                    className={`${val.type !== 'textarea' ? ' border-b border-zinc-100' : ''}
+                                    py-5 w-full h-auto flex flex-row`}
+                                >
+                                    <span
+                                        className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'
+                                    >
+                                        {val.label}
+                                    </span>
 
-                                    <input
-                                        id={val.id}
-                                        ref={val.ref}
-                                        label={val.label}
-                                        required={val.required}
-                                        type={val.type}
-                                        defaultValue={val.defaultValue}
-                                        className=' border border-zinc-300 flex-1 py-2 px-3 outline-none rounded-md text-zinc-700 
-                                        text-base ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300'
-                                    />
+                                    {val.type !== 'textarea' ?
+                                        <input
+                                            id={val.id}
+                                            ref={val.ref}
+                                            label={val.label}
+                                            required={val.required}
+                                            type={val.type}
+                                            defaultValue={val.defaultValue}
+                                            className={inputClass} /> :
+                                        <textarea
+                                            id={`course-description`}
+                                            rows={8}
+                                            type={`text`}
+                                            placeholder={`Enter your text here`}
+                                            ref={courseDescriptionRef}
+                                            required={true}
+                                            defaultValue={subject.subjectDescription}
+                                            className={`${inputClass} resize-none`} />}
                                 </label>
 
                             )
                         })}
-                        <label
-                            htmlFor={id}
-                            className='w-full h-auto border-b border-zinc-100 py-5 flex flex-row'>
-                            <span className='w-auto min-w-[15rem] text-zinc-600 font-medium flex items-center'>{`Subject Description`} </span>
-                            <textarea
-                                id={`course-description`}
-                                rows={8}
-                                type={`text`}
-                                placeholder={`Enter your text here`}
-                                ref={courseDescriptionRef}
-                                required={true}
-                                defaultValue={subject.subjectDescription}
-                                className=' border border-zinc-300 flex-1 py-2 px-3 outline-none rounded-md text-zinc-700 whitespace-pre-line 
-                                text-base ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300 resize-none' />
-                        </label>
-
                     </form>
 
                 </main>

@@ -42,12 +42,6 @@ function Sidebar({
                 })}
             </ul>
             <Account />
-
-            <button
-                onClick={() => minimize ? setMinimize(false) : setMinimize(true)}
-                className='h-12 border-t border-zinc-700 text-2xl text-zinc-200 flex justify-end items-center p-2 bg-zinc-800'>
-                <IoChevronForward />
-            </button>
         </div>
     )
 }
