@@ -4,6 +4,7 @@ import { useFirebase } from '../../js/FirebaseContext'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
+import LoadingButton from '../../components/LoadingButton'
 
 export default function CreatePost() {
 
@@ -115,6 +116,7 @@ export default function CreatePost() {
                 <main className='flex-1 border-b border-zinc-200 flex justify-center'>
                     <form
                         id='create-post'
+                        name='create-post'
                         spellCheck={false}
                         onSubmit={PublishPost}
                         className='min-h-[500px] w-full px-10'>
@@ -145,14 +147,15 @@ export default function CreatePost() {
                     </form>
 
                 </main>
-                <footer className='h-12 flex justify-end'>
+                <footer className='h-14 flex items-center justify-end px-10'>
                     {error ? <span className='px-5 text-sm text-red-500 font-semibold flex items-center border-red-600'>
                         <FontAwesomeIcon icon={faWarning} className='mr-2 text-base' /> {error}
                     </span> : ''}
-                    <button
-                        form='create-post'
-                        className='bg-zinc-800 text-white text-xs px-3 rounded-br-md hover:bg-zinc-700 
-                        border border-transparent'>Publish post</button>
+
+                    <LoadingButton
+                        form={`create-post`}
+                        type={`submit`}
+                        title={`Publish`} />
                 </footer>
             </div>
         </div>

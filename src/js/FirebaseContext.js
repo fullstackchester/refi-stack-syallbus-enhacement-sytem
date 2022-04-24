@@ -21,6 +21,8 @@ export function useFirebase() {
 export function FirebaseProvider({ children }) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
+    const [admin, setAdmin] = useState()
+    const [isAreaChair, setAreaChair] = useState()
 
     const value = {
         currentUser,
@@ -32,13 +34,23 @@ export function FirebaseProvider({ children }) {
         deleteData,
         uploadAvatar,
         uploadFile,
+        admin,
+        isAreaChair,
     }
 
     useEffect(() => {
+
         const unsub = onAuthStateChanged(auth, user => {
             setCurrentUser(user)
             setLoading(false)
+
+            onValue(ref(database, `users/${user.uid}`), snapshot => {
+                setAreaChair(snapshot.val().userType === 'area-chair' ? true : false)
+                setAdmin(snapshot.val().userType === 'administrator' ? true : false)
+            })
         })
+
+
         return unsub
     }, []);
 
@@ -77,6 +89,7 @@ export function FirebaseProvider({ children }) {
     function uploadFile(file, path) {
         return uploadBytes(StorageRef(storage, path), file)
     }
+
 
 
     return (

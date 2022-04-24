@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook, faAdd, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 import Node from '../../components/Node'
+import '../../assets/Images/svg/material_search.svg';
 
 function Subjects() {
 
@@ -107,7 +108,7 @@ function Subjects() {
                 </div>
             </nav>
 
-            <main className='min-h-[500px] h-auto px-10 py-5 grid grid-cols-12 gap-2 '>
+            <main className='h-auto px-10 py-5 grid grid-cols-12 gap-2 '>
                 {subject.map((val, key) => {
                     return (
                         <Node

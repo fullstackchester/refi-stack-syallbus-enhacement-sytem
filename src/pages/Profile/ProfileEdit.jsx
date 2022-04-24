@@ -224,14 +224,14 @@ export function ProfileEdit() {
                         })}
                     </form>
                 </main>
-
                 {/* footer will be the place for the navigations/ buttons */}
-                <footer className='h-12 border-t border-zinc-200 flex items-center justify-end'>
+                <footer className='h-14 flex items-center justify-end px-10'>
                     <button
                         form='edit-profile-form'
                         type='submit'
-                        className='h-full w-14 text-md font-medium text-zinc-700 hover:bg-zinc-200 hover:text-sky-600 px-4'>
-                        <FontAwesomeIcon icon={faCheck} />
+                        className='h-fit w-fit text-sm font-normal text-white bg-sky-600 py-2 px-4
+                        hover:bg-sky-700 border border-transparent rounded-md '>
+                        Save changes
                     </button>
                 </footer>
             </div>

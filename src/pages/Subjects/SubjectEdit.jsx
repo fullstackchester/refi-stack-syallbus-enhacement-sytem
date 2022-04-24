@@ -6,11 +6,13 @@ import { faBan, faCheckCircle, faChevronLeft } from '@fortawesome/free-solid-svg
 import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
 import { useFirebase } from '../../js/FirebaseContext'
+import LoadingButton from '../../components/LoadingButton'
 
 function SubjectEdit() {
 
     const id = useParams()
     const [error, setError] = useState()
+    const [loading, setLoading] = useState(false)
     const { writeData } = useFirebase()
     const [subject, setSubject] = useState({})
     const courseCodeRef = useRef()
@@ -76,6 +78,7 @@ function SubjectEdit() {
 
     function UpdateSubject(e) {
         e.preventDefault()
+        setLoading(true)
         const updatedSubject = {
             subjectId: subject.subjectId,
             courseCode: courseCodeRef.current.value,
@@ -85,7 +88,8 @@ function SubjectEdit() {
         }
         writeData('subject/', updatedSubject, updatedSubject.subjectId)
             .then(() => {
-                alert('Subject updated')
+                setLoading(false)
+                nav(`/subjects/${id.id}`)
             }).catch((err) => {
                 alert('Failed to update subject')
             });
@@ -112,8 +116,7 @@ function SubjectEdit() {
                                     key={key}
                                     htmlFor={val.id}
                                     className={`${val.type !== 'textarea' ? ' border-b border-zinc-100' : ''}
-                                    py-5 w-full h-auto flex flex-row`}
-                                >
+                                    py-5 w-full h-auto flex flex-row`} >
                                     <span
                                         className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'
                                     >
@@ -145,18 +148,13 @@ function SubjectEdit() {
                     </form>
 
                 </main>
-                <footer className='h-12 border-t border-zinc-200 flex items-center justify-end'>
-                    <button
-                        onClick={() => nav(`/subjects/${subject.subjectId}`)}
-                        className='h-full w-14 text-md font-medium text-zinc-700 hover:bg-zinc-200 hover:text-sky-600 px-4'>
-                        <FontAwesomeIcon icon={faChevronLeft} />
-                    </button>
-                    <button
-                        type='submit'
-                        form='edit-subject-form'
-                        className='h-full w-14 text-md font-medium text-zinc-700 hover:bg-zinc-200 hover:text-sky-600 px-4'>
-                        <FontAwesomeIcon icon={faCheckCircle} />
-                    </button>
+                <footer className='h-14 flex items-center justify-end px-10'>
+
+                    <LoadingButton
+                        form={`edit-subject-form`}
+                        type={`submit`}
+                        title={`Save changes`}
+                        loadingState={loading} />
 
                 </footer>
 

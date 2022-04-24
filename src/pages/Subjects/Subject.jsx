@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useFirebase } from '../../js/FirebaseContext'
 import Modal from '../../components/Modal'
+import LoadingButton from '../../components/LoadingButton'
 
 export const Subject = () => {
 
@@ -49,7 +50,7 @@ export const Subject = () => {
     return (
         <div className='h-auto p-10 flex justify-center'>
 
-            <div className='w-[80%] bg-white shadow-md rounded-md'>
+            <div className='w-[80%] bg-white border border-zinc-200 rounded-md'>
                 <main className='h-auto min-h-[500px] flex flex-col p-5'>
                     <h1 className='text-5xl text-zinc-700 text-center '>{subject.courseCode} </h1>
                     <h2 className='text-md font-medium text-center text-zinc-600 '>{subject.subjectTitle} </h2>
@@ -63,20 +64,19 @@ export const Subject = () => {
                         dedicatedFunction={deleteSubject}
                         isOpen={isOpen} />
                 </main>
-                <footer className='h-12 border-t border-zinc-200 flex justify-end'>
-                    <button
-                        onClick={openModal}
-                        className='h-full w-14 text-md text-zinc-700 hover:bg-zinc-200 hover:text-sky-600'>
-                        <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                    <button
-                        onClick={(e) => {
+                <footer className='h-14 flex items-center justify-end px-10'>
+                    <LoadingButton
+                        btnColor={`bg-red-600 hover:bg-red-700`}
+                        dedicatedFunc={openModal}
+                        title={`Delete`} />
+
+                    <LoadingButton
+                        dedicatedFunc={(e) => {
                             e.preventDefault()
                             nav('/subjects/' + subject.subjectId + '/edit')
                         }}
-                        className='h-full w-14 text-md text-zinc-700 hover:bg-zinc-200 hover:text-sky-600'>
-                        <FontAwesomeIcon icon={faEdit} />
-                    </button>
+                        title={`Edit subject`} />
+
                 </footer>
 
             </div>

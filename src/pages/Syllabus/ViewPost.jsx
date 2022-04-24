@@ -15,14 +15,14 @@ export default function ViewPost() {
 
     const postId = useParams()
     const [post, setPost] = useState({})
-    const { currentUser } = useFirebase()
+    const { currentUser, admin, isAreaChair } = useFirebase()
     const [comment, setComment] = useState()
     const commentRef = useRef()
     const [currentPostId, setCurrentPosId] = useState()
     const [commentCount, setCommentCount] = useState()
 
     useEffect(() => {
-        const getPost = onValue(ref(database, `posts/${postId.postId}`), postData => {
+        onValue(ref(database, `posts/${postId.postId}`), postData => {
             if (postData.exists()) {
                 setPost(postData.val())
             } else {
@@ -30,8 +30,6 @@ export default function ViewPost() {
             }
 
         })
-
-        return getPost
     }, [])
 
     function PostComment(e) {
@@ -61,28 +59,23 @@ export default function ViewPost() {
             });
     }
 
-    function getFacultyName(uid) {
-        onValue(ref(database, `users/${uid}`), userSnapshot => {
-            if (userSnapshot.exists()) {
-                return userSnapshot.val().name
-            }
-        })
-    }
 
     return (
         <div className='w-full h-auto flex justify-center items-center py-5 px-10'>
             <main className='w-[80%] h-[85vh] bg-white  rounded-md  grid grid-cols-3 grid-rows-6 shadow-sm'>
+
+
                 <div className='col-span-3 row-span-1 px-5 py-3 border-b border-zinc-200 text-zinc-700
                 grid grid-cols-4'>
-                    <div className='col-span-3'>
+                    <div className='col-span-3 overflow-hidden'>
                         <h3 className='text-2xl font-semibold  '>{post.postTitle}</h3>
-                        <h3 className='text-md text-zinc-500 font-normal  '>{post.postDescription}</h3>
+                        <span className='h-10 text-sm text-zinc-500 font-normal border overflow-hidden text-ellipsis '>{post.postDescription}</span>
                         <h6 className='text-xs text-zinc-500 font-medium'>{`Posted: ${post.postDate}`}</h6>
                     </div>
-                    <div className='col-span-1 border-zinc-300 flex flex-col'>
-                        <Status />
+                    <div className='col-span-1 flex flex-col border border-red-600'>
+                        <Status post={post} />
                         <div className='w-full flex-1 flex items-center justify-center'>
-                            <span className='text-sm font-bold p-2 border'>{post.postStatus}</span>
+                            <span className='text-sm font-bold p-2'>{post.postStatus}</span>
                         </div>
                     </div>
                 </div>

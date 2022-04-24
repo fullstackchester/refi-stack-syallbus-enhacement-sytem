@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBook, faFile, faGraduationCap, faSquarePollVertical, faUserTie } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faFile, faFileAlt, faGraduationCap, faSquarePollVertical, faUserTie } from '@fortawesome/free-solid-svg-icons'
 
 
 export default function Layout() {
@@ -25,7 +25,7 @@ export default function Layout() {
         },
         {
             title: 'Files',
-            icon: <FontAwesomeIcon icon={faFile} />,
+            icon: <FontAwesomeIcon icon={faFileAlt} />,
             link: '/files',
         },
         {
