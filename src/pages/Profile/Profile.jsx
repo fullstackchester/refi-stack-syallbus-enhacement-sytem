@@ -13,7 +13,7 @@ export function Profile() {
 
 	const { currentUser } = useFirebase()
 	const [user, setUser] = useState({})
-	
+
 	useEffect(() => {
 
 		const getUserData = onValue(ref(database, `users/${currentUser.uid}`), snapshot => {

@@ -6,7 +6,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Subjects from './pages/Subjects/Subjects'
-import Files from './pages/Files'
+import Files from './pages/Files/Files'
 import Faculty from './pages/Faculty/Faculty'
 import { Profile } from './pages/Profile/Profile'
 import { ProfileEdit } from './pages/Profile/ProfileEdit'
@@ -34,8 +34,8 @@ export default function App() {
 							<Route path='posts/create-post' element={<CreatePost />} />
 							<Route path='posts/:postId' element={<ViewPost />} />
 							<Route path='files' element={<Files />} />
-							<Route path='faculty' element={<Faculty />} />
-							<Route path='faculty/:id' element={<FacultyAccount />} />
+							<Route exact path='faculty' element={<Faculty />} />
+							<Route exact path='faculty/:id' element={<FacultyAccount />} />
 							<Route exact path='subjects' element={<Subjects />} />
 							<Route exact path='subjects/add' element={<SubjectAdd />} />
 							<Route exact path='subjects/:id' element={<Subject />} />

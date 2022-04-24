@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { database } from '../../js/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileWord, faSearch, faAdd } from '@fortawesome/free-solid-svg-icons'
+import Searchbar from '../../components/Searchbar'
+import Navbar from '../../components/Navbar'
+import PostStatus from '../../components/PostStatus'
 
 
 
@@ -23,39 +26,19 @@ export default function Posts() {
 
     return (
         <div className='w-full h-auto min-h-[600px]'>
-            <nav className='h-14  flex flex-row justify-between px-10 border bg-white sticky top-12'>
-                <span className='text-xl flex items-center font-medium text-zinc-600 '>Posted Syllabus</span>
-                <div className='h-full w-auto min-w-[20rem] border-red-600 flex flex-row py-2'>
-                    <div className="flex justify-center flex-1 bg-transparent border border-zinc-200 rounded-md mr-2">
-                        <input
-                            onChange={(e) => setSearch(e.target.value)}
-                            spellCheck={false}
-                            placeholder={`Search`}
-                            aria-placeholder={`Search`}
-                            type={`text`} className={`outline-none border border-transparent bg-transparent flex-1 px-3
-                            ring-1 ring-transparent focus:border-sky-300 focus:ring-sky-200 text-sm rounded-tl-md rounded-bl-md`}
-                        />
-                        <button className='w-12 hover:bg-zinc-600 hover:text-white transition-colors border-l
-                         border-zinc-300 text-sm hover:border-zinc-600 last:rounded-tr-md rounded-br-md'>
-                            <FontAwesomeIcon icon={faSearch} />
-                        </button>
-
-                    </div>
-                    <button
-                        onClick={(e) => {
-                            e.preventDefault()
-                            nav('/posts/create-post')
-                        }}
-                        className='w-14 hover:bg-zinc-600 hover:text-white rounded-md transition-colors'>
-                        <FontAwesomeIcon icon={faAdd} />
-                    </button>
-                </div>
-            </nav>
+            <Navbar
+                headerTitle={`Posted Syllabus`}
+                searchBarOnChange={(e) => setSearch(e.target.value)}
+                buttonOnClick={(e) => {
+                    e.preventDefault()
+                    nav('/posts/create-post')
+                }}
+            />
             <main className='w-full h-auto text-lg py-5 px-10 grid grid-cols-3 gap-3'>
                 {posts && posts
                     .sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime())
                     .filter(entry => Object.values(entry).some(val => typeof val === 'string'
-                        && val.includes(searchpost)))
+                        && val.toLowerCase().includes(searchpost.toLowerCase())))
                     .map((val, key) => {
                         return (
                             <div
@@ -76,12 +59,8 @@ export default function Posts() {
                                         <br />
                                     </p>
                                 </div>
-                                <div className='h-12 flex justify-end border-t border-zinc-200'>
-                                    <div className='w-auto rounded-br-md flex items-center px-3 text-xs font-medium 
-                                    hover:underline cursor-pointer'>
-                                        {val.postStatus}
-                                    </div>
-
+                                <div className='h-12 flex justify-end items-center border-t border-zinc-200 px-3'>
+                                    <PostStatus textSize={`text-xs`} postStatus={val.postStatus} />
                                 </div>
                             </div>
                         )

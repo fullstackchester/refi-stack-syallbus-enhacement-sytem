@@ -31,7 +31,7 @@ export default function CreatePost() {
             id: 'post-status',
             label: '',
             type: 'hidden',
-            defaultValue: 'to-be-reviewed',
+            defaultValue: 'Needs reviewing',
             placeholder: '',
             ref: postStatusRef,
             required: true,
