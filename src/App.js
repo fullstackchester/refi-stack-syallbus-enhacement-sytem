@@ -19,6 +19,8 @@ import FacultyAccount from './pages/Faculty/FacultyAccount'
 import Posts from './pages/Syllabus/Posts'
 import CreatePost from './pages/Syllabus/CreatePost'
 import ViewPost from './pages/Syllabus/ViewPost'
+import FacultyEdit from './pages/Faculty/FacultyEdit'
+import ViewFile from './pages/Files/ViewFile'
 
 export default function App() {
 	return (
@@ -33,13 +35,19 @@ export default function App() {
 							<Route path='posts' element={<Posts />} />
 							<Route path='posts/create-post' element={<CreatePost />} />
 							<Route path='posts/:postId' element={<ViewPost />} />
-							<Route path='files' element={<Files />} />
+
+							<Route exact path='files' element={<Files />} />
+							<Route exact path='files/:id' element={<ViewFile />} />
+
 							<Route exact path='faculty' element={<Faculty />} />
 							<Route exact path='faculty/:id' element={<FacultyAccount />} />
+							<Route exact path='faculty/edit/:id' element={<FacultyEdit />} />
+
 							<Route exact path='subjects' element={<Subjects />} />
 							<Route exact path='subjects/add' element={<SubjectAdd />} />
 							<Route exact path='subjects/:id' element={<Subject />} />
 							<Route exact path='subjects/:id/edit' element={<SubjectEdit />} />
+
 							<Route path='profile' element={<Profile />} />
 							<Route path='edit-profile' element={<ProfileEdit />} />
 							<Route path='settings' element={<Settings />} />

@@ -19,7 +19,7 @@ function Subjects() {
     const [creditUnit, setCreditUnit] = useState()
     const [courseDescription, setCourseDescription] = useState()
     const [search, setSearch] = useState('')
-
+    const [subject, setSubject] = useState([])
     const nav = useNavigate()
 
 
@@ -31,7 +31,7 @@ function Subjects() {
         creditUnits: creditUnit,
         subjectDescription: courseDescription
     }
-    const [subject, setSubject] = useState([])
+
 
     useEffect(() => {
 

@@ -2,7 +2,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { useFirebase } from '../js/FirebaseContext'
-import { set, ref, update, query, orderByKey } from 'firebase/database'
+import { set, ref, update, query, orderByKey, get } from 'firebase/database'
 import { database } from '../js/Firebase'
 
 export default function Status({ post }) {
@@ -12,7 +12,7 @@ export default function Status({ post }) {
     const statusButtons = [
         {
             title: 'Need reviews',
-            status: 'Need reviews',
+            status: 'Needs reviewing',
         },
         {
             title: 'Approved',
@@ -20,12 +20,12 @@ export default function Status({ post }) {
         },
         {
             title: 'Need revisions',
-            status: 'Need revisions',
+            status: 'Needs revisions',
         }
     ]
 
-    function changeStatus() {
-
+    function changeStatus(UpdateStatus) {
+        update(ref(database, `posts/${post.postId}`), { postStatus: UpdateStatus })
     }
 
     return (
@@ -33,13 +33,14 @@ export default function Status({ post }) {
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button
+
                         disabled={!isAreaChair && !admin}
-                        className={`inline-flex justify-center w-full px-4 py-2 text-sm font-medium 
-                        text-white bg-sky-600 rounded-md hover:bg-sky-700 focus:outline-none focus-visible:ring-2 
+                        className={`inline-flex justify-center items-center w-full px-2 py-2 text-xs font-medium 
+                        text-white bg-zinc-600 rounded-md hover:bg-zinc-700 focus:outline-none focus-visible:ring-2 
                         focus-visible:ring-white focus-visible:ring-opacity-75`}>
                         Set Status
                         <ChevronDownIcon
-                            className="w-5 h-5 ml-2 -mr-1 text-white "
+                            className="w-5 h-5 text-white"  
                             aria-hidden="true" />
                     </Menu.Button>
                 </div>
@@ -60,10 +61,8 @@ export default function Status({ post }) {
                                     <Menu.Item key={key}>
                                         {({ active }) => (
                                             <button
-                                                onClick={(e) => {
-                                                    e.preventDefault()
-                                                    setStatus(val.status)
-                                                    changeStatus()
+                                                onClick={() => {
+                                                    changeStatus(val.status)
                                                 }}
                                                 className={
                                                     `${active ? 'bg-zinc-600 text-white' : 'text-gray-900'}

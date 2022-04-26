@@ -6,14 +6,14 @@ import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 import { useFirebase } from '../../js/FirebaseContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faIdBadge, faMessage, faUserCog, faUsersRectangle } from '@fortawesome/free-solid-svg-icons'
+import LoadingButton from '../../components/LoadingButton'
 
 function FacultyAccount() {
 
     const faculty = useParams()
-    const { currentUser } = useFirebase()
+    const nav = useNavigate()
     const [facultyData, setFacultyData] = useState({})
     const [userType, setUserType] = useState()
-    const [hasPhoto, setHasPhoto] = useState()
 
 
     useEffect(() => {
@@ -24,15 +24,11 @@ function FacultyAccount() {
                 if (snapshot.val().photoUrl) {
                     getDownloadURL(storageRef(storage, `avatars/${faculty.id}/${snapshot.val().photoUrl}`))
                         .then((url) => {
-                            setHasPhoto(url)
                             const avatar = document.getElementById(`faculty-avatar`)
                             avatar.setAttribute('src', url)
                         }).catch((err) => {
                             console.log(err.message)
                         })
-                } else {
-                    const avatar = document.getElementById(`faculty-avatar`)
-                    avatar.setAttribute('src', 'logo512.png')
                 }
             }
         })
@@ -53,17 +49,17 @@ function FacultyAccount() {
                     <span className='text-2xl text-zinc-700 font-medium'>{`Faculty`} </span>
                 </header>
                 <main className='h-auto flex flex-row'>
-                    <div className='w-3/4 h-auto min-h-[400px] flex flex-col py-3 px-10 text-zinc-700'>
+                    <div className='w-full h-auto min-h-[400px] flex flex-col items-center py-3 px-10 text-zinc-700'>
                         <div className={`h-auto w-full flex justify-center`}>
                             <img
                                 id={'faculty-avatar'}
-                                className={`w-28 h-28 rounded-[100%] object-cover`} />
+                                className={`w-28 h-28 rounded-[100%] object-cover bg-zinc-100`} />
 
                         </div>
                         <span className={`text-2xl font-semibold text-center`}>
                             {facultyData.name}
                         </span>
-                        <ul className='font-medium text-sm mt-3'>
+                        <ul className='font-medium text-sm mt-3 w-2/3'>
                             <li className='flex flex-row items-center text-zinc-600 p-1'>
                                 <FontAwesomeIcon icon={faIdBadge} className=' w-8 ' />
                                 <span className='text-sm'>{facultyData.employeeId} </span>
@@ -82,10 +78,14 @@ function FacultyAccount() {
                             </li>
                         </ul>
                     </div>
-                    <div className='w-1/4 border-l border-zinc-200'>
-
-                    </div>
                 </main>
+                <footer className='h-14 border-t border-zinc-200 flex items-center justify-end px-10 '>
+                    <LoadingButton
+                        dedicatedFunc={() => {
+                            nav(`/faculty/edit/${faculty.id}`)
+                        }}
+                        title={`Edit Faculty`} />
+                </footer>
 
             </div>
 

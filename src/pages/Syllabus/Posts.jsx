@@ -45,7 +45,7 @@ export default function Posts() {
                                 key={key}
                                 className='col-span-1 h-auto bg-white border border-gray-200 rounded-lg'>
                                 <div className='h-auto border-b border-zinc-200 py-3 px-5'>
-                                    <Link to={`/posts/${val.postId}`} className='text-xl text-zinc-700 font-semibold
+                                    <Link to={`/posts/${val.postId}`} className='text-lg text-zinc-700 font-semibold
                                      block hover:underline overflow-hidden text-ellipsis'>
                                         {val.postTitle}
                                     </Link>

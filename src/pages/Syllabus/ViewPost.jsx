@@ -3,12 +3,13 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { database, storage } from '../../js/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileWord } from '@fortawesome/free-solid-svg-icons'
+import { faFileWord, faCircle, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { useFirebase } from '../../js/FirebaseContext'
 import Comments from '../../components/CommentSection'
 import { v4 as uuidv4 } from 'uuid'
 import Status from '../../components/SetStatus'
 import { getDownloadURL, ref as StorageRef } from 'firebase/storage'
+import PostStatus from '../../components/PostStatus'
 
 export default function ViewPost() {
 
@@ -17,9 +18,9 @@ export default function ViewPost() {
     const [post, setPost] = useState({})
     const { currentUser, admin, isAreaChair } = useFirebase()
     const [comment, setComment] = useState()
+    const [user, setUser] = useState({})
+
     const commentRef = useRef()
-    const [currentPostId, setCurrentPosId] = useState()
-    const [commentCount, setCommentCount] = useState()
 
     useEffect(() => {
         onValue(ref(database, `posts/${postId.postId}`), postData => {
@@ -28,7 +29,14 @@ export default function ViewPost() {
             } else {
                 setPost('POST NOT FOUND')
             }
+        })
+    }, [])
 
+    useEffect(() => {
+        return onValue(ref(database, `users/${currentUser.uid}`), faculty => {
+            if (faculty.exists()) {
+                setUser(faculty.val())
+            }
         })
     }, [])
 
@@ -39,7 +47,8 @@ export default function ViewPost() {
             commentId: uuidv4(),
             commentString: comment,
             commentDate: new Date().toLocaleString(),
-            uid: currentUser.uid
+            uid: user ? user.uid : '',
+            name: user ? user.name : ''
         }
         set(ref(database, `comments/${post.postId}/${userComment.commentId}`), userComment)
             .then(() => {
@@ -63,20 +72,17 @@ export default function ViewPost() {
     return (
         <div className='w-full h-auto flex justify-center items-center py-5 px-10'>
             <main className='w-[80%] h-[85vh] bg-white  rounded-md  grid grid-cols-3 grid-rows-6 shadow-sm'>
-
-
-                <div className='col-span-3 row-span-1 px-5 py-3 border-b border-zinc-200 text-zinc-700
+                <div className='col-span-3 row-span-1 px-5 py-2 border-b border-zinc-200 text-zinc-700
                 grid grid-cols-4'>
                     <div className='col-span-3 overflow-hidden'>
-                        <h3 className='text-2xl font-semibold  '>{post.postTitle}</h3>
-                        <span className='h-10 text-sm text-zinc-500 font-normal border overflow-hidden text-ellipsis '>{post.postDescription}</span>
-                        <h6 className='text-xs text-zinc-500 font-medium'>{`Posted: ${post.postDate}`}</h6>
-                    </div>
-                    <div className='col-span-1 flex flex-col border border-red-600'>
-                        <Status post={post} />
-                        <div className='w-full flex-1 flex items-center justify-center'>
-                            <span className='text-sm font-bold p-2'>{post.postStatus}</span>
+                        <div className='h-8 w-full text-xl font-semibold flex flex-row items-center'>
+                            {post.postTitle}<PostStatus postStatus={post.postStatus} textSize={`text-xs font-normal`} />
                         </div>
+                        <div className='text-md text-zinc-600'>{post.postDescription} </div>
+                        <div className='text-xs text-zinc-600 font-medium'> {`${post.postAuthor} ${String.fromCharCode(8226)}  ${post.postDate}`} </div>
+                    </div>
+                    <div className='col-span-1 flex flex-col'>
+                        <Status post={post} />
                     </div>
                 </div>
 
@@ -122,9 +128,7 @@ export default function ViewPost() {
                                 className='flex-1 p-2 text-sm outline-none border border-zinc-200 focus:border-sky-300
                                  resize-none ring-1 ring-transparent focus:ring-sky-300 rounded-md' />
                         </form>
-
                     </div>
-
                 </div>
             </main>
         </div>

@@ -1,10 +1,12 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { useFirebase } from '../../js/FirebaseContext'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import LoadingButton from '../../components/LoadingButton'
+import { get, onValue, ref } from 'firebase/database'
+import { database } from '../../js/Firebase'
 
 export default function CreatePost() {
 
@@ -16,6 +18,17 @@ export default function CreatePost() {
     const fileRef = useRef()
     const { writeData, uploadFile, currentUser } = useFirebase()
     const nav = useNavigate()
+    const [name, setName] = useState()
+    const [error, setError] = useState('Failed to write data')
+    useEffect(() => {
+        return onValue(ref(database, `users/${currentUser.uid}`), user => {
+            if (user.exists()) {
+                setName(user.val().name)
+            } else {
+                setName(`User not found`)
+            }
+        })
+    }, [])
 
     const AddPost = [
         {
@@ -75,7 +88,7 @@ export default function CreatePost() {
             required: false,
         },
     ]
-    const [error, setError] = useState('')
+
 
     function PublishPost(e) {
         e.preventDefault()
@@ -88,6 +101,7 @@ export default function CreatePost() {
             postDescription: descriptionRef.current.value,
             postDate: new Date().toLocaleString(),
             uid: currentUser.uid,
+            postAuthor: name,
         }
         writeData('posts/', Post, Post.postId)
             .then(() => {
@@ -102,7 +116,6 @@ export default function CreatePost() {
                 setError(err.message)
                 console.log(err)
             });
-
     }
 
 
@@ -148,9 +161,12 @@ export default function CreatePost() {
 
                 </main>
                 <footer className='h-14 flex items-center justify-end px-10'>
-                    {error ? <span className='px-5 text-sm text-red-500 font-semibold flex items-center border-red-600'>
-                        <FontAwesomeIcon icon={faWarning} className='mr-2 text-base' /> {error}
-                    </span> : ''}
+                    {error &&
+                        <div className=' text-red-600'>
+                            <FontAwesomeIcon icon={faWarning} className='mr-2 text-xs' />
+                            <span className='text-sm font-medium'>{`Error: ${error}`}</span>
+                        </div>
+                    }
 
                     <LoadingButton
                         form={`create-post`}
