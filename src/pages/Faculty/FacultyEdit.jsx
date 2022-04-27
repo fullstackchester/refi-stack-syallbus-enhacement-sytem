@@ -146,7 +146,7 @@ export default function FacultyEdit() {
 
     return (
         <div className='h-auto py-5 px-10 flex justify-center'>
-            <div className='h-auto w-[80%] bg-white border border-zinc-200 rounded-md'>
+            <div className='base-container'>
                 <header className='h-16 border-b border-zinc-200 flex items-center px-10'>
                     <span className='text-2xl text-zinc-700 font-medium'>{`Edit Faculty`} </span>
                 </header>
@@ -175,10 +175,10 @@ export default function FacultyEdit() {
                                             type={val.type}
                                             defaultValue={val.initialValue}
                                             placeholder={val.placeholder}
-                                            className={inputClass}
+                                            className={`input-style`}
                                         /> :
                                         <select
-                                            className={inputClass}
+                                            className={`input-style`}
                                             id={val.name}
                                             ref={val.ref}
                                             value={val.initialValue}
@@ -197,7 +197,7 @@ export default function FacultyEdit() {
                             </label>)}
                     </form>
                 </main>
-                <footer className='h-14 border-t border-zinc-200 flex items-center justify-end px-10 '>
+                <footer className={`base-footer`}>
                     {error && error}
                     <LoadingButton
                         form={`edit-faculty-form`}

@@ -21,6 +21,7 @@ import CreatePost from './pages/Syllabus/CreatePost'
 import ViewPost from './pages/Syllabus/ViewPost'
 import FacultyEdit from './pages/Faculty/FacultyEdit'
 import ViewFile from './pages/Files/ViewFile'
+import EditFile from './pages/Files/EditFile'
 
 export default function App() {
 	return (
@@ -38,6 +39,7 @@ export default function App() {
 
 							<Route exact path='files' element={<Files />} />
 							<Route exact path='files/:id' element={<ViewFile />} />
+							<Route exact path='files/edit/:id' element={<EditFile />} />
 
 							<Route exact path='faculty' element={<Faculty />} />
 							<Route exact path='faculty/:id' element={<FacultyAccount />} />

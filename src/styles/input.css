@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+    .btn-loading{
+        @apply rounded-md outline-none border border-transparent py-2 px-3 text-sm ml-2 hover:bg-sky-700
+        bg-sky-600 text-white flex flex-row transition-transform shadow-md shadow-sky-300/50
+    }
+
+    .base-container{
+        @apply h-auto w-[80%] bg-white border border-zinc-200 rounded-md
+    }
+
+    .input-style{
+        @apply border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300
+    }
+
+    .base-footer {
+        @apply h-14 border-t border-zinc-200 flex items-center justify-end px-10
+    }
+}

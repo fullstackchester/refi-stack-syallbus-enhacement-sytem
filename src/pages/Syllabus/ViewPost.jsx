@@ -110,7 +110,6 @@ export default function ViewPost() {
                 <div className='col-span-2 row-span-5 flex flex-col '>
                     <div className='w-full h-10 p-2'>
                         <span className='text-sm text-zinc-400'>Comments</span>
-
                     </div>
                     <div className='flex-1 px-4 overflow-y-auto'>
                         <Comments postId={postId.postId} />

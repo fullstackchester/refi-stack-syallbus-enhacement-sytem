@@ -56,25 +56,18 @@ export default function Files() {
                     .map((val, key) =>
                         <div
                             key={key}
-                            className='col-span-1 h-auto bg-white border border-gray-200 rounded-lg'>
-                            <div className='h-auto border-b border-zinc-200 py-3 px-5'>
-                                <Link to={`/files/${val.postId}`} className='text-lg text-zinc-700 font-semibold
-                                     block hover:underline overflow-hidden text-ellipsis'>
-                                    {val.postTitle}
-                                </Link>
-                                <span className='text-xs font-medium text-zinc-500 block'>{`Posted: ${val.postDate}`}</span>
-
+                            className='col-span-1 h-auto min-h-[250px] bg-white border border-zinc-200
+                             rounded-md flex flex-col p-4'>
+                            <div className={`flex-1 flex flex-col`}>
+                                <h1 className='text-zinc-700 text-lg font-semibold'>
+                                    <Link to={`/files/${val.postId}`} className={`hover:underline`} >{val.postTitle}</Link>
+                                </h1>
+                                <span className={`text-xs font-medium text-zinc-500`}>{`Posted: ${val.postDate}`}</span>
                             </div>
-                            <div className='h-40 flex items-center justify-center p-4'>
-                                <p className='h-40 flex flex-col justify-center text-zinc-800 border-black'>
-                                    <FontAwesomeIcon icon={faFileWord} className='text-3xl' />
-                                    <span className='text-xs text-center font-medium'>{val.postFile}</span>
-                                    <br />
-                                </p>
-                            </div>
-                            <div className='h-12 flex justify-end items-center border-t border-zinc-200 px-3'>
+                            <div className={`flex justify-end`}>
                                 <PostStatus textSize={`text-xs`} postStatus={val.postStatus} />
                             </div>
+
                         </div>
                     )}
             </main>

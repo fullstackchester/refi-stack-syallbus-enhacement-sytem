@@ -43,8 +43,8 @@ export default function Login() {
             }).catch((err) => {
                 setErr(err.code)
             });
-
     }
+
     return (
         <div className='w-full h-screen flex justify-center items-center'>
 
@@ -66,7 +66,6 @@ export default function Login() {
                         nav('/signup')
                     }}
                     className='text-sky-600 cursor-pointer'>Signup</span></p>
-
             </motion.div>
         </div>
     )

@@ -6,8 +6,7 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 export default function LoadingButton(
     { dedicatedFunc, loadingState, title, form, buttonType, btnColor }
 ) {
-
-
+    
     return (
         <button
             form={form}
