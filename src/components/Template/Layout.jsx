@@ -37,7 +37,7 @@ export default function Layout() {
     return (
         <div className='w-full h-auto flex flex-row'>
             <Sidebar SidebarMenu={SidebarData} />
-            <div className='h-auto flex-grow'>
+            <div className='h-auto flex-1'>
                 <Header />
                 <div className='w-full h-auto'>
                     <Outlet />

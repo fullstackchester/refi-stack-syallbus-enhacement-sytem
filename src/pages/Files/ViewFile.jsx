@@ -1,10 +1,11 @@
 import { onValue, ref } from 'firebase/database'
+import { getDownloadURL, ref as StorageRef } from 'firebase/storage'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Comments from '../../components/CommentSection'
 import LoadingButton from '../../components/LoadingButton'
 import PostStatus from '../../components/PostStatus'
-import { database } from '../../js/Firebase'
+import { database, storage } from '../../js/Firebase'
 
 export default function ViewFile() {
 
@@ -26,7 +27,16 @@ export default function ViewFile() {
             setCount(comments.size)
         })
     }, [])
-    console.log(commentCount)
+
+    function downloadFile(e) {
+        e.preventDefault()
+        getDownloadURL(StorageRef(storage, post && post.postFileUrl))
+            .then((url) => {
+                window.open(url)
+            }).catch((err) => {
+                alert(err)
+            });
+    }
     return (
         <div className='w-full h-auto flex justify-center items-center py-5 px-10'>
             <main className='w-[80%] h-auto bg-white rounded-md border border-zinc-200 flex flex-col'>
@@ -35,7 +45,7 @@ export default function ViewFile() {
                         {post.postTitle} <PostStatus postStatus={post.postStatus} textSize={`text-xs`} />
                     </div>
                     <div className={`py-2 text-xs font-semibold text-zinc-600`}>
-                        {`Attachments:`} <Link className={`hover:underline`} to={``}>{post.postFile}</Link>
+                        {`Attachments:`} <span className={`hover:underline cursor-pointer`} onClick={downloadFile}>{post.postFile}</span>
                         <p className={`text-xs text-zinc-500`}>{`Posted: ${post.postDate}`} </p>
                     </div>
                     <p className={`text-sm text-zinc-600`}>{post.postDescription} </p>

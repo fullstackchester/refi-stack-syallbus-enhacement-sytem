@@ -11,7 +11,7 @@ function Sidebar({
 
     console.log(minimize)
     return (
-        <div className='w-[240px] min-w-[240px] h-screen bg-zinc-900 flex flex-col sticky top-0'>
+        <div className='w-[200px] h-screen bg-zinc-900 flex flex-col sticky top-0'>
             <header className='h-12 flex flex-row text-white items-center border-b border-zinc-50/30'>
                 <img
 

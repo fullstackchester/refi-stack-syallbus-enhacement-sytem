@@ -4,11 +4,10 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     onAuthStateChanged,
-    updateProfile,
     signOut
 } from 'firebase/auth'
 
-import { ref, push, set, onValue, remove } from 'firebase/database'
+import { ref, set, onValue, remove } from 'firebase/database'
 import { uploadBytes, ref as StorageRef } from 'firebase/storage';
 
 

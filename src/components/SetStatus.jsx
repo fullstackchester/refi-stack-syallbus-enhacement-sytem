@@ -9,20 +9,6 @@ export default function Status({ post }) {
 
     const [status, setStatus] = useState()
     const { admin, isAreaChair } = useFirebase()
-    const statusButtons = [
-        {
-            title: 'Need reviews',
-            status: 'Needs reviewing',
-        },
-        {
-            title: 'Approved',
-            status: 'Approved',
-        },
-        {
-            title: 'Need revisions',
-            status: 'Needs revisions',
-        }
-    ]
 
     function changeStatus(UpdateStatus) {
         update(ref(database, `posts/${post.postId}`), { postStatus: UpdateStatus })
@@ -35,12 +21,12 @@ export default function Status({ post }) {
                     <Menu.Button
 
                         disabled={!isAreaChair && !admin}
-                        className={`inline-flex justify-center items-center w-full px-2 py-2 text-xs font-medium 
+                        className={`inline-flex justify-center items-center w-full px-2 py-1 text-xs
                         text-white bg-zinc-600 rounded-md hover:bg-zinc-700 focus:outline-none focus-visible:ring-2 
                         focus-visible:ring-white focus-visible:ring-opacity-75`}>
                         Set Status
                         <ChevronDownIcon
-                            className="w-5 h-5 text-white"  
+                            className="w-5 h-5 text-white"
                             aria-hidden="true" />
                     </Menu.Button>
                 </div>
@@ -56,7 +42,20 @@ export default function Status({ post }) {
                     <Menu.Items className={`absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100
                      rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}>
                         <div className="px-1 py-1 ">
-                            {statusButtons && statusButtons.map((val, key) => {
+                            {[
+                                {
+                                    title: 'Need reviews',
+                                    status: 'Needs reviewing',
+                                },
+                                {
+                                    title: 'Approved',
+                                    status: 'Approved',
+                                },
+                                {
+                                    title: 'Need revisions',
+                                    status: 'Needs revisions',
+                                }
+                            ].map((val, key) => {
                                 return (
                                     <Menu.Item key={key}>
                                         {({ active }) => (

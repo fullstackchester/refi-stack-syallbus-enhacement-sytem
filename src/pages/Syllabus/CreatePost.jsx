@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import LoadingButton from '../../components/LoadingButton'
-import { get, onValue, ref } from 'firebase/database'
+import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
 
 export default function CreatePost() {
@@ -28,7 +28,7 @@ export default function CreatePost() {
                 setName(`User not found`)
             }
         })
-    }, [])
+    })
 
     const AddPost = [
         {
@@ -124,7 +124,6 @@ export default function CreatePost() {
             <div className='w-[80%] h-auto min-h-[600px] border border-zinc-200 bg-white rounded-md'>
                 <header className='h-16 border-b flex items-center px-10'>
                     <span className='text-2xl text-zinc-700 font-medium'>{`New post`} </span>
-
                 </header>
                 <main className='flex-1 border-b border-zinc-200 flex justify-center'>
                     <form

@@ -26,10 +26,10 @@ function Account() {
     useEffect(() => {
 
         onValue(ref(database, 'users/' + currentUser.uid), snapshot => {
-            return snapshot.val().userType === 'administrator' ? setIsAdmin(true) : setIsAdmin(false)
+             snapshot.val().userType === 'administrator' ? setIsAdmin(true) : setIsAdmin(false)
         })
         const getName = onValue(ref(database, 'users/' + currentUser.uid), snapshot => {
-            return setName(snapshot.val().name)
+             setName(snapshot.val().name)
         })
 
         return getName
