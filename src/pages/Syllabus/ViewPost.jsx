@@ -32,7 +32,7 @@ export default function ViewPost() {
     }, [])
 
     useEffect(() => {
-        return onValue(ref(database, `users/${currentUser.uid}`), faculty => {
+        onValue(ref(database, `users/${currentUser.uid}`), faculty => {
             if (faculty.exists()) {
                 setUser(faculty.val())
             }
@@ -86,7 +86,7 @@ export default function ViewPost() {
                         <div className='text-xs text-zinc-600 font-semibold'>{`Posted: ${post.postDate}`} </div>
                         <div className='text-sm text-zinc-600 mt-2'>{post.postDescription} </div>
                     </div>
-                    <div className='col-span-1 flex flex-col'>
+                    <div className='col-span-1 flex flex-col border'>
                         <Status post={post} />
                     </div>
                 </div>

@@ -9,6 +9,11 @@ Install all of the libs needed
 
 ### `npm start`
 
+
+### `npm run tailwind`
+
+for the tailwind css
+
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 

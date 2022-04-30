@@ -29,6 +29,9 @@ function FacultyAccount() {
                         }).catch((err) => {
                             console.log(err.message)
                         })
+                } else {
+                    const avatar = document.getElementById(`faculty-avatar`)
+                    avatar.setAttribute('src', 'logo192.png')
                 }
             }
         })
