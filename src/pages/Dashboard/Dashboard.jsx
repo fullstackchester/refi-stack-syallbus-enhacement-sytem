@@ -1,8 +1,4 @@
-import { onValue, ref } from 'firebase/database'
-import React, { useRef, useState, useEffect } from 'react'
-import { database, storage } from '../../js/Firebase'
-import { getDownloadURL, ref as StorageRef } from 'firebase/storage';
-
+import React from 'react'
 
 
 function Dashboard() {

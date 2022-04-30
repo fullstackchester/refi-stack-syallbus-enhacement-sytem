@@ -2,8 +2,6 @@ import { onValue, ref, set } from 'firebase/database'
 import React, { useEffect, useState, useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { database, storage } from '../../js/Firebase'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileWord, faCircle, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { useFirebase } from '../../js/FirebaseContext'
 import Comments from '../../components/CommentSection'
 import { v4 as uuidv4 } from 'uuid'
@@ -17,7 +15,7 @@ export default function ViewPost() {
 
     const postId = useParams()
     const [post, setPost] = useState({})
-    const { currentUser, admin, isAreaChair } = useFirebase()
+    const { currentUser, } = useFirebase()
     const [comment, setComment] = useState()
     const [user, setUser] = useState({})
 

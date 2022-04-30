@@ -1,7 +1,7 @@
-import { faFileWord, faFilter } from '@fortawesome/free-solid-svg-icons'
+import { faFilter } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { equalTo, onValue, orderByValue, query, ref } from 'firebase/database'
-import React, { Fragment, useState, useRef, useEffect } from 'react'
+import { onValue, ref } from 'firebase/database'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import PostStatus from '../../components/PostStatus'
 import { database } from '../../js/Firebase'
@@ -14,7 +14,6 @@ export default function Files() {
     const [search, setSearch] = useState('')
 
     useEffect(() => {
-        const filter = query(ref(database, `posts/`), orderByValue(`uid`), equalTo(`${currentUser.uid}`))
         const getSyllabus = onValue(ref(database, `posts`), snapshot => {
             setSyllabus(Object.values(snapshot.val()))
         })

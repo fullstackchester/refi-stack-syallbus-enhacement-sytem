@@ -1,8 +1,8 @@
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { useFirebase } from '../js/FirebaseContext'
-import { set, ref, update, query, orderByKey, get } from 'firebase/database'
+import { ref, update } from 'firebase/database'
 import { database } from '../js/Firebase'
 
 export default function Status({ post }) {

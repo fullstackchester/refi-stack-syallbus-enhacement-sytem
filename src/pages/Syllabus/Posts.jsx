@@ -1,10 +1,7 @@
-import { onValue, orderByChild, orderByValue, query, ref } from 'firebase/database'
+import { onValue, ref } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { database } from '../../js/Firebase'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileWord, faSearch, faAdd } from '@fortawesome/free-solid-svg-icons'
-import Searchbar from '../../components/Searchbar'
 import Navbar from '../../components/Navbar'
 import PostStatus from '../../components/PostStatus'
 
