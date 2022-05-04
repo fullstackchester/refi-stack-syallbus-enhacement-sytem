@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { faBook, faUserCircle, faFileAlt, faGraduationCap, faSquarePollVertical, faUserTie, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faUserCircle, faFileAlt, faGraduationCap, faSquarePollVertical, faUserTie, faChevronLeft, faChevronRight, faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ReactComponent as IconAccount } from '../../assets/Images/svg/material_account.svg'
+import { ReactComponent as IconFile } from '../../assets/Images/svg/material_file.svg'
+
 
 
 function Sidebar() {
 
-    const [minimize, setMinimize] = useState(false)
+    const [minimize, setMinimize] = useState()
     return (
-        <div className={`${minimize ? 'w-auto' : 'w-[15vw] min-w-[210px]'} h-screen bg-zinc-900 flex flex-col sticky top-0`}>
+        <div className={`${minimize ? 'w-auto' : 'w-[15vw] min-w-[210px]'} h-screen
+         bg-zinc-900 flex flex-col sticky top-0 transition-all`}>
             <header className='h-12 flex flex-row text-white items-center border-b border-zinc-50/30'>
                 <img
 

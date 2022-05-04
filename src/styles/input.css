@@ -19,4 +19,8 @@
     .base-footer {
         @apply h-14 border-t border-zinc-200 flex items-center justify-end px-10
     }
+
+    .dash-th {
+        @apply p-2 text-zinc-700 text-left text-xs
+    }
 }

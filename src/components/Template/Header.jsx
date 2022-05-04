@@ -11,28 +11,25 @@ export default function Header() {
         e.preventDefault()
         nav(link)
     }
-
-    const HeaderLinks = [
-        {
-            icons: <FontAwesomeIcon icon={faBell} />,
-            onClick: (e) => navigate(e, 'notifications')
-        },
-        {
-            icons: <FontAwesomeIcon icon={faCog} />,
-            onClick: (e) => navigate(e, 'settings')
-        },
-        {
-            icons: <FontAwesomeIcon icon={faUserCircle} />,
-            onClick: (e) => navigate(e, 'profile')
-        },
-    ]
-
     return (
         <div className='h-12 w-full bg-zinc-800 shadow-sm sticky top-0 flex flex-row py-1 px-4 justify-end z-10 '>
 
             <div className='h-full w-32 flex flex-row items-center justify-evenly'>
 
-                {HeaderLinks.map((val, key) => {
+                {[
+                    {
+                        icons: <FontAwesomeIcon icon={faBell} />,
+                        onClick: (e) => navigate(e, 'notifications')
+                    },
+                    {
+                        icons: <FontAwesomeIcon icon={faCog} />,
+                        onClick: (e) => navigate(e, 'settings')
+                    },
+                    {
+                        icons: <FontAwesomeIcon icon={faUserCircle} />,
+                        onClick: (e) => navigate(e, 'profile')
+                    },
+                ].map((val, key) => {
                     return (
                         <span
                             onClick={val.onClick}

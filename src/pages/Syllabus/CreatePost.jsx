@@ -19,7 +19,9 @@ export default function CreatePost() {
     const { writeData, uploadFile, currentUser } = useFirebase()
     const nav = useNavigate()
     const [name, setName] = useState()
-    const [error, setError] = useState('Failed to write data')
+    const [error, setError] = useState()
+    const [loading, setLoading] = useState(false)
+
     useEffect(() => {
         return onValue(ref(database, `users/${currentUser.uid}`), user => {
             if (user.exists()) {
@@ -122,8 +124,8 @@ export default function CreatePost() {
     return (
         <div className='w-full h-auto py-5 px-10 flex justify-center'>
             <div className='w-[80%] h-auto min-h-[600px] border border-zinc-200 bg-white rounded-md'>
-                <header className='h-16 border-b flex items-center px-10'>
-                    <span className='text-2xl text-zinc-700 font-medium'>{`New post`} </span>
+                <header className='h-14 border-b flex items-center px-10'>
+                    <span className='text-lg text-zinc-700 font-medium'>{`New post`} </span>
                 </header>
                 <main className='flex-1 border-b border-zinc-200 flex justify-center'>
                     <form
@@ -168,6 +170,7 @@ export default function CreatePost() {
                     }
 
                     <LoadingButton
+                        loadingState={loading}
                         form={`create-post`}
                         type={`submit`}
                         title={`Publish`} />

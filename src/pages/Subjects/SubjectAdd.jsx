@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { useFirebase } from '../../js/FirebaseContext'
 import LoadingButton from '../../components/LoadingButton'
+import { useNavigate } from 'react-router-dom'
 
 export const SubjectAdd = () => {
     const [courseCode, setCourseCode] = useState()
@@ -9,7 +10,9 @@ export const SubjectAdd = () => {
     const [creditUnit, setCreditUnit] = useState()
     const [courseDescription, setCourseDescription] = useState()
     const [loadingState, setState] = useState(false)
+    const [error, setError] = useState('')
     const { writeData } = useFirebase()
+    const nav = useNavigate()
     const inputClass = 'border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300'
 
     const AddSubjectData = [
@@ -63,7 +66,9 @@ export const SubjectAdd = () => {
         writeData('subject/', newSubject, newSubject.subjectId)
             .then(() => {
                 setState(false)
-            }).catch(() => {
+                nav('/subjects')
+            }).catch((e) => {
+                setError(e.message)
                 alert('Subject failed to add.')
             });
 
@@ -72,7 +77,7 @@ export const SubjectAdd = () => {
         <div className='h-auto py-5 px-10 flex justify-center'>
             <div className='h-auto w-[80%] bg-white border border-zinc-200 rounded-md'>
                 <header className='h-16 border-b border-zinc-200 flex items-center px-10'>
-                    <span className='text-2xl text-zinc-700 font-medium'>{`New subject`} </span>
+                    <span className='text-base text-zinc-700 font-medium'>{`New subject`} </span>
                 </header>
                 <main className='h-auto min-h-[500px] px-10 flex flex-col'>
                     <form
@@ -120,7 +125,7 @@ export const SubjectAdd = () => {
                         form={`add-subject-form`}
                         buttonType='submit'
                         loadingState={loadingState}
-                        title={`Add sub`} />
+                        title={`Add subject`} />
                 </footer>
             </div>
         </div>

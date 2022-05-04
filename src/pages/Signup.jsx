@@ -26,8 +26,10 @@ function Signup() {
         setloading(true)
 
         if (passRef.current.value === confirmPassRef.current.value) {
+
             signup(emailRef.current.value, passRef.current.value)
                 .then((userCredentials) => {
+                    
                     const newAccount = {
                         uid: userCredentials.user.uid,
                         employeeId: idRef.current.value,
@@ -44,9 +46,11 @@ function Signup() {
                             setErr(err.code)
                         });
                     setloading(false)
+
                 }).catch((err) => {
                     setErr(err.code)
                 });
+                
         } else {
             setErr(`Passwords don't match`)
             setloading(false)

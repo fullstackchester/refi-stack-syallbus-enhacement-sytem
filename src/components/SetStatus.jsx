@@ -55,28 +55,25 @@ export default function Status({ post }) {
                                     title: 'Need revisions',
                                     status: 'Needs revisions',
                                 }
-                            ].map((val, key) => {
-                                return (
-                                    <Menu.Item key={key}>
-                                        {({ active }) => (
-                                            <button
-                                                onClick={() => {
-                                                    changeStatus(val.status)
-                                                }}
-                                                className={
-                                                    `${active ? 'bg-zinc-600 text-white' : 'text-gray-900'}
+                            ].map((val, key) =>
+                                <Menu.Item key={key}>
+                                    {({ active }) => (
+                                        <button
+                                            onClick={() => {
+                                                changeStatus(val.status)
+                                            }}
+                                            className={
+                                                `${active ? 'bg-zinc-600 text-white' : 'text-gray-900'}
                                                      group flex rounded-md items-center w-full px-2 py-2 text-sm`} >
-                                                {val.title}
-                                            </button>
-                                        )
-                                        }
-                                    </Menu.Item>
-                                )
-                            })}
+                                            {val.title}
+                                        </button>
+                                    )
+                                    }
+                                </Menu.Item>)}
                         </div>
                     </Menu.Items>
                 </Transition>
             </Menu>
-        </div >
+        </div>
     )
 }

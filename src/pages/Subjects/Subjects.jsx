@@ -35,61 +35,22 @@ function Subjects() {
 
     useEffect(() => {
 
-        const getSubjects = onValue(ref(database, 'subject'), snapshot => {
-            setSubject(Object.values(snapshot.val()))
+        return onValue(ref(database, 'subject'), snapshot => {
+            if (snapshot.exists()) {
+                setSubject(Object.values(snapshot.val()))
+            }
         })
-
-        return getSubjects
     }, [])
 
-    const AddSubjectData = [
-        {
-            name: 'course-code',
-            label: 'Course code',
-            type: 'text',
-            placeholder: 'IT 101',
-            onChange: (e) => setCourseCode(e.target.value),
-            required: true,
-        },
-        {
-            name: 'subject-title',
-            label: 'Subject title',
-            type: 'text',
-            placeholder: 'Introduction to computing',
-            onChange: (e) => setSubjectTitle(e.target.value),
-            required: true,
-        },
-        {
-            name: 'credit-unit',
-            label: 'Credit units',
-            type: 'number',
-            placeholder: '3.0',
-            onChange: (e) => setCreditUnit(e.target.value),
-            required: true,
-        },
-
-        {
-            name: 'course-description',
-            label: 'Course description',
-            type: 'text',
-            placeholder: 'Enter your text here...',
-            onChange: (e) => setCourseDescription(e.target.value),
-            required: true,
-        },
-
-
-    ]
-
-
     return (
-        <div className='h-auto'>
+        <div className='h-auto w-full'>
             <Navbar
                 headerTitle={`Subjects`}
                 buttonOnClick={() => nav('/subjects/add')}
                 searchBarOnChange={(e) => setSearch(e.target.value)} />
 
-            <main className='h-auto px-10 py-5 grid grid-cols-12 gap-2 '>
-                {subject
+            <main className='h-auto px-10 py-5 grid grid-cols-12 gap-2'>
+                {subject.length !== 0 ? subject
                     .filter(entry => Object.values(entry).some(val => typeof val === 'string' && val.toLowerCase().includes(search.toLowerCase())))
                     .map((val, key) => {
                         return (
@@ -101,7 +62,10 @@ function Subjects() {
                                 icon={faBook}
                             />
                         )
-                    })}
+                    }) :
+                    <div className={`col-span-12 h-[80vh] text-sm font-medium flex items-center justify-center`}>
+                        No subject added
+                    </div>}
             </main>
         </div>
     )

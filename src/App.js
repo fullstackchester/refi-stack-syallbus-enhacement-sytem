@@ -22,6 +22,8 @@ import ViewPost from './pages/Syllabus/ViewPost'
 import FacultyEdit from './pages/Faculty/FacultyEdit'
 import ViewFile from './pages/Files/ViewFile'
 import EditFile from './pages/Files/EditFile'
+import SchoolYearList from './pages/SchoolYear/SchoolYearList'
+import AddSchoolYear from './pages/SchoolYear/AddSchoolYear'
 
 export default function App() {
 	return (
@@ -33,6 +35,10 @@ export default function App() {
 						<Route path='/signup' element={<Signup />} />
 						<Route path='/' element={<Layout />} >
 							<Route exact path='dashboard' element={<Dashboard />} />
+
+							<Route exact path='school-year' element={<SchoolYearList />} />
+							<Route exact path='school-year/add' element={<AddSchoolYear />} />
+
 							<Route path='posts' element={<Posts />} />
 							<Route path='posts/create-post' element={<CreatePost />} />
 							<Route path='posts/:postId' element={<ViewPost />} />
@@ -50,8 +56,9 @@ export default function App() {
 							<Route exact path='subjects/:id' element={<Subject />} />
 							<Route exact path='subjects/:id/edit' element={<SubjectEdit />} />
 
-							<Route path='profile' element={<Profile />} />
-							<Route path='edit-profile' element={<ProfileEdit />} />
+							<Route exact path='profile' element={<Profile />} />
+							<Route exact path='profile/edit-profile' element={<ProfileEdit />} />
+
 							<Route path='settings' element={<Settings />} />
 						</Route>
 						<Route path='*' element={<NotFound />} />
