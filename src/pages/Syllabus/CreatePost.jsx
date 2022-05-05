@@ -16,11 +16,15 @@ export default function CreatePost() {
     const descriptionRef = useRef()
     const authorRef = useRef()
     const fileRef = useRef()
+    const acadYearRef = useRef()
+    const subjectRef = useRef()
     const { writeData, uploadFile, currentUser } = useFirebase()
     const nav = useNavigate()
     const [name, setName] = useState()
     const [error, setError] = useState()
     const [loading, setLoading] = useState(false)
+    const [schoolyear, setSY] = useState([])
+    const [subs, setSubs] = useState([])
 
     useEffect(() => {
         return onValue(ref(database, `users/${currentUser.uid}`), user => {
@@ -31,6 +35,23 @@ export default function CreatePost() {
             }
         })
     })
+
+    useEffect(() => {
+        onValue(ref(database, `schoolYear`), sy => {
+            if (sy.exists()) {
+                setSY(Object.values(sy.val()))
+            }
+        })
+        onValue(ref(database, `subject`), subjects => {
+            if (subjects.exists()) {
+                setSubs(Object.values(subjects.val()))
+            }
+        })
+
+
+    }, [])
+
+
 
     const AddPost = [
         {
@@ -80,20 +101,12 @@ export default function CreatePost() {
             accept: 'application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             required: true,
         },
-        {
-            id: 'syllabus-description',
-            label: 'Description',
-            type: 'text',
-            defaultValue: '',
-            placeholder: '',
-            ref: descriptionRef,
-            required: false,
-        },
     ]
 
 
     function PublishPost(e) {
         e.preventDefault()
+        setLoading(true)
         const Post = {
             postId: idRef.current.value,
             postStatus: postStatusRef.current.value,
@@ -103,21 +116,23 @@ export default function CreatePost() {
             postDescription: descriptionRef.current.value,
             postDate: new Date().toLocaleString(),
             uid: currentUser.uid,
+            syId: acadYearRef.current.value,
             postAuthor: name,
         }
-        writeData('posts/', Post, Post.postId)
-            .then(() => {
-                uploadFile(fileRef.current.files[0], `syllabus/${Post.postId}/${fileRef.current.files[0].name}`)
-                    .then(() => {
-                        nav('/posts')
-                    }).catch((err) => {
-                        setError(err.message)
-                        console.log(err)
-                    });
-            }).catch((err) => {
-                setError(err.message)
-                console.log(err)
-            });
+        // writeData('posts/', Post, Post.postId)
+        //     .then(() => {
+        //         uploadFile(fileRef.current.files[0], `syllabus/${Post.postId}/${fileRef.current.files[0].name}`)
+        //             .then(() => {
+        //                 nav('/posts')
+        //             }).catch((err) => {
+        //                 setError(err.message)
+        //                 console.log(err)
+        //             });
+        //     }).catch((err) => {
+        //         setError(err.message)
+        //         console.log(err)
+        //     });
+        console.table(Post)
     }
 
 
@@ -158,6 +173,48 @@ export default function CreatePost() {
                                 </label>
                             )
                         })}
+                        <label
+                            className={`py-5 border-b border-zinc-100 w-full h-auto flex flex-row`}
+                            htmlFor='academic-year'>
+                            <span className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'>Academic Year</span>
+                            <select
+                                ref={acadYearRef}
+                                className='border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 
+                                text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300' id='academic-year'>
+                                {schoolyear && schoolyear.map((val, key) => {
+                                    return (
+                                        <option key={key} value={val.syId} className='text-sm p-1'> {val.syTitle} </option>
+                                    )
+                                })}
+                            </select>
+                        </label>
+                        <label
+                            className={`py-5 border-b border-zinc-100 w-full h-auto flex flex-row`}
+                            htmlFor='academic-year'>
+                            <span className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'>Subject</span>
+                            <select
+                                ref={subjectRef}
+                                className='border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 
+                                text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300' id='academic-year'>
+                                {subs !== 0 ? subs.map((val, key) => {
+                                    return (
+                                        <option key={key} value={val.subjectId} className='text-sm p-1'> {val.subjectTitle} </option>
+                                    )
+                                }) : <option>No Subjects Available</option>}
+                            </select>
+                        </label>
+                        <label
+                            className={`py-5 border-b border-zinc-100 w-full h-auto flex flex-row`}
+                            htmlFor='syllabus-description'>
+                            <span className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'>Description</span>
+                            <textarea
+                                id='syllabus-description'
+                                ref={descriptionRef}
+                                rows={8}
+                                placeholder='Enter your description...'
+                                className='border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 
+                                text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300 resize-none' />
+                        </label>
                     </form>
 
                 </main>

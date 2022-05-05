@@ -45,7 +45,7 @@ export default function EditFile() {
                             historyId: uuidv4(),
                             historyDate: new Date().toLocaleDateString(),
                             historyTime: new Date().toLocaleTimeString(),
-
+                            previousPost: post
                         }
                         set(ref(database, `history/${post.postId}/${history.historyId}`), history)
                             .then(() => {

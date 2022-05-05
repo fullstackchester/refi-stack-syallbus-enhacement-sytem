@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { onValue, ref, set } from 'firebase/database'
 import { database } from '../../js/Firebase'
 import { useFirebase } from '../../js/FirebaseContext'
+import SYStatus from '../../components/SYStatus'
 
 
 export default function SchoolYear() {
@@ -107,7 +108,9 @@ export default function SchoolYear() {
                             <tr key={key} className={`text-xs font-medium text-zinc-700`}>
                                 <td className='border border-zinc-200 p-2'>{val.syTitle}</td>
                                 <td className='border border-zinc-200 p-2'>{val.syTitle}</td>
-                                <td className='border border-zinc-200 p-2'>{val.syStatus}</td>
+                                <td className='border border-zinc-200 p-2'>
+                                    <SYStatus status={val.syStatus} />
+                                </td>
                             </tr>
                         )
                     })}

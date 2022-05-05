@@ -15,9 +15,9 @@ function Sidebar() {
          bg-zinc-900 flex flex-col sticky top-0 transition-all`}>
             <header className='h-12 flex flex-row text-white items-center border-b border-zinc-50/30'>
                 <img
-
-                    className='h-8 w-auto'
-                    src={require('../../assets/Images/logo.svg').default} />
+                    alt='logo'
+                    className='h-8 w-auto border border-white'
+                    src={require('../../assets/Images/svg/curriculum-logo.svg').default} />
                 {!minimize ? <h1 className='text-md headings'>Curriculum</h1> : ''}
             </header>
             <div className='w-full text-sm flex flex-col flex-1'>
