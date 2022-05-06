@@ -2,8 +2,6 @@ import { onValue, ref } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { database } from '../../js/Firebase'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useFirebase } from '../../js/FirebaseContext'
 import Modal from '../../components/Modal'
 import LoadingButton from '../../components/LoadingButton'
@@ -16,6 +14,7 @@ export const Subject = () => {
     const { deleteData } = useFirebase()
     let [isOpen, setIsOpen] = useState(false)
     const dialogMessage = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus lectus id tortor sodales, ac scelerisque dolor scelerisque. Vestibulum vitae tellus et mauris eleifend imperdiet.'
+
 
     function closeModal() {
         setIsOpen(false)
@@ -52,10 +51,10 @@ export const Subject = () => {
 
             <div className='w-[80%] bg-white border border-zinc-200 rounded-md'>
                 <main className='h-auto min-h-[500px] flex flex-col p-5'>
-                    <h1 className='text-5xl text-zinc-700 text-center '>{subject.courseCode} </h1>
-                    <h2 className='text-md font-medium text-center text-zinc-600 '>{subject.subjectTitle} </h2>
-                    <h2 className='text-md font-medium text-zinc-600 text-center '>{`Credit units: ${subject.creditUnits}`} </h2>
-                    <p className='text-md text-zinc-700 mt-4 border-red-600 flex-1 text-justify px-10'>{subject.subjectDescription}</p>
+                    <div className='text-4xl font-medium text-zinc-700 text-center '>{subject.courseCode} </div>
+                    <h2 className='text-sm font-medium text-center text-zinc-600 '>{subject.subjectTitle} </h2>
+                    <h2 className='text-sm font-medium text-zinc-600 text-center '>{`Credit units: ${subject.creditUnits}`} </h2>
+                    <p className='text-md text-zinc-600 mt-4  flex-1 text-justify px-10'>{subject.subjectDescription}</p>
                     <Modal
                         dialogTitle={`Delete subject?`}
                         dialogMessage={dialogMessage}
@@ -73,7 +72,7 @@ export const Subject = () => {
                     <LoadingButton
                         dedicatedFunc={(e) => {
                             e.preventDefault()
-                            nav('/subjects/' + subject.subjectId + '/edit')
+                            nav(`/subjects/${subject.subjectId}/edit`)
                         }}
                         title={`Edit subject`} />
 

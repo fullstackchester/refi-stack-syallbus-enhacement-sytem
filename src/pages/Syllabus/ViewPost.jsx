@@ -10,6 +10,7 @@ import { getDownloadURL, ref as StorageRef } from 'firebase/storage'
 import PostStatus from '../../components/PostStatus'
 import History from '../../components/HistorySection'
 
+
 export default function ViewPost() {
 
 
@@ -20,6 +21,7 @@ export default function ViewPost() {
     const [user, setUser] = useState({})
 
     const commentRef = useRef()
+
 
     useEffect(() => {
         onValue(ref(database, `posts/${postId.postId}`), postData => {
@@ -80,8 +82,8 @@ export default function ViewPost() {
                         <div className='text-xs text-zinc-600 font-semibold'>
                             Author: <Link to={`/faculty/${post.uid}`} className='text-sky-600 hover:underline cursor-pointer'>{post.postAuthor} </Link>
                         </div>
-                        <div className='text-xs text-zinc-600 font-semibold '>
-                            {`Attachments: `}<Link to={``} className={`hover:underline text-sky-600`}>{post.postFile}</Link>
+                        <div className='text-xs text-zinc-600 font-semibold'>
+                            {`Attachments: `} <button type='button' className='text-sky-600 hover:underline cursor-pointer'>{post.postFile}</button>
                         </div>
                         <div className='text-xs text-zinc-600 font-semibold'>{`Posted: ${post.postDate}`} </div>
                         <div className='text-sm text-zinc-600 mt-2'>{post.postDescription} </div>
@@ -122,8 +124,6 @@ export default function ViewPost() {
                         </div>
                     </div>
                 </div>
-
-
             </main>
         </div>
     )

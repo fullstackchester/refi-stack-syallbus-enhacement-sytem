@@ -43,8 +43,7 @@ export default function EditFile() {
                     .then(() => {
                         const history = {
                             historyId: uuidv4(),
-                            historyDate: new Date().toLocaleDateString(),
-                            historyTime: new Date().toLocaleTimeString(),
+                            historyDate: new Date().toLocaleString(),
                             previousPost: post
                         }
                         set(ref(database, `history/${post.postId}/${history.historyId}`), history)

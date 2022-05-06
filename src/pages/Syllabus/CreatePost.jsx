@@ -117,21 +117,20 @@ export default function CreatePost() {
             postDate: new Date().toLocaleString(),
             uid: currentUser.uid,
             syId: acadYearRef.current.value,
+            subjectId: subjectRef.current.value,
             postAuthor: name,
         }
-        // writeData('posts/', Post, Post.postId)
-        //     .then(() => {
-        //         uploadFile(fileRef.current.files[0], `syllabus/${Post.postId}/${fileRef.current.files[0].name}`)
-        //             .then(() => {
-        //                 nav('/posts')
-        //             }).catch((err) => {
-        //                 setError(err.message)
-        //                 console.log(err)
-        //             });
-        //     }).catch((err) => {
-        //         setError(err.message)
-        //         console.log(err)
-        //     });
+        writeData('posts/', Post, Post.postId)
+            .then(() => {
+                uploadFile(fileRef.current.files[0], `syllabus/${Post.postId}/${fileRef.current.files[0].name}`)
+                    .then(() => {
+                        nav('/posts')
+                    }).catch((err) => {
+                        setError(err.message)
+                    });
+            }).catch((err) => {
+                setError(err.message)
+            });
         console.table(Post)
     }
 
@@ -178,9 +177,11 @@ export default function CreatePost() {
                             htmlFor='academic-year'>
                             <span className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'>Academic Year</span>
                             <select
+                                required={true}
                                 ref={acadYearRef}
                                 className='border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 
                                 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300' id='academic-year'>
+                                <option value={''} className='text-sm p-1'> Select School Year </option>
                                 {schoolyear && schoolyear.map((val, key) => {
                                     return (
                                         <option key={key} value={val.syId} className='text-sm p-1'> {val.syTitle} </option>
@@ -193,10 +194,12 @@ export default function CreatePost() {
                             htmlFor='academic-year'>
                             <span className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'>Subject</span>
                             <select
+                                required={true}
                                 ref={subjectRef}
                                 className='border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 
                                 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300' id='academic-year'>
-                                {subs !== 0 ? subs.map((val, key) => {
+                                <option value={''} className='text-sm p-1'> Select Subject </option>
+                                {subs.length !== 0 ? subs.map((val, key) => {
                                     return (
                                         <option key={key} value={val.subjectId} className='text-sm p-1'> {val.subjectTitle} </option>
                                     )
@@ -221,8 +224,7 @@ export default function CreatePost() {
                 <footer className='h-14 flex items-center justify-end px-10'>
                     {error &&
                         <div className=' text-red-600'>
-                            <FontAwesomeIcon icon={faWarning} className='mr-2 text-xs' />
-                            <span className='text-sm font-medium'>{`Error: ${error}`}</span>
+                            <span className='text-xs font-medium'>{`Error: ${error}`}</span>
                         </div>
                     }
 

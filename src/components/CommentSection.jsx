@@ -23,6 +23,7 @@ export default function Comments(
                 .sort((a, b) => new Date(b.commentDate).getTime() - new Date(a.commentDate).getTime())
                 .map((val, key) =>
                     <div
+                        title={val.commentDate}
                         key={key}
                         className={`col-span-3 h-auto rounded-md bg-zinc-200/60 bg-opacity-70 text-zinc-700 
                         text-sm border p-3`}>

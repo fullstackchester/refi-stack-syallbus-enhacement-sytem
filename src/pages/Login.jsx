@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../js/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
+import { AuthError } from '../js/AuthError'
 
 
 export default function Login() {
@@ -14,6 +15,14 @@ export default function Login() {
     const [loading, setLoading] = useState(false)
     const emailRef = useRef()
     const passRef = useRef()
+
+    useEffect(() => {
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                nav('/dashboard')
+            }
+        })
+    }, [])
 
 
     function loginUser(e) {
@@ -32,8 +41,12 @@ export default function Login() {
                     nav('/dashboard')
                     setLoading(false)
                 }).catch((err) => {
-                    setErr(err.code)
-                    setLoading(false)
+                    for (let key in AuthError) {
+                        if ((err.code).replace('auth/', '') === key) {
+                            setErr(AuthError[key])
+                            setLoading(false)
+                        }
+                    }
                 });
         }
     }
@@ -86,7 +99,11 @@ export default function Login() {
                             />
                         </label>
                     )}
-                    <div className={`h-auto min-h-[1.5rem] text-xs text-red-600 font-medium text-right p-1 mt-2`}>{err}</div>
+
+                    <div className='h-auto min-h-[1.5rem] w-auto text-xs text-red-500
+                     flex items-center justify-end font-medium p-1 mt-2'>
+                        {err}
+                    </div>
                     <button
                         type={`submit`}
                         className={`p-2 bg-zinc-700 text-white text-sm outline-none border border-transparent

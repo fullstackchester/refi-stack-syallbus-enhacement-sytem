@@ -106,9 +106,9 @@ export default function SchoolYear() {
                     {sy.map((val, key) => {
                         return (
                             <tr key={key} className={`text-xs font-medium text-zinc-700`}>
-                                <td className='border border-zinc-200 p-2'>{val.syTitle}</td>
-                                <td className='border border-zinc-200 p-2'>{val.syTitle}</td>
-                                <td className='border border-zinc-200 p-2'>
+                                <td className='border-t border-zinc-200 p-1'>{val.syTitle}</td>
+                                <td className='border-t border-zinc-200 p-1'>{val.syTitle}</td>
+                                <td className='border-t border-zinc-200 p-1'>
                                     <SYStatus status={val.syStatus} />
                                 </td>
                             </tr>

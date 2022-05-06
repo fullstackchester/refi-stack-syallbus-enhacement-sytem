@@ -47,6 +47,7 @@ export function FirebaseProvider({ children }) {
                 setAreaChair(snapshot.val().userType === 'area-chair' ? true : false)
                 setAdmin(snapshot.val().userType === 'administrator' ? true : false)
             })
+
         })
 
 

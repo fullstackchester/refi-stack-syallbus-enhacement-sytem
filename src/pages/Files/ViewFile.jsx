@@ -3,6 +3,7 @@ import { getDownloadURL, ref as StorageRef } from 'firebase/storage'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Comments from '../../components/CommentSection'
+import History from '../../components/HistorySection'
 import LoadingButton from '../../components/LoadingButton'
 import PostStatus from '../../components/PostStatus'
 import { database, storage } from '../../js/Firebase'
@@ -45,14 +46,20 @@ export default function ViewFile() {
                         {post.postTitle} <PostStatus postStatus={post.postStatus} textSize={`text-xs`} />
                     </div>
                     <div className={`py-2 text-xs font-semibold text-zinc-600`}>
-                        {`Attachments:`} <span className={`hover:underline cursor-pointer`} onClick={downloadFile}>{post.postFile}</span>
+                        {`Attachments:`} <span
+                            title={`Download attachment - ${post.postFile}`}
+                            className={`text-sky-600 hover:underline cursor-pointer`}
+                            onClick={downloadFile}>{post.postFile}</span>
                         <p className={`text-xs text-zinc-500`}>{`Posted: ${post.postDate}`} </p>
                     </div>
                     <p className={`text-sm text-zinc-600`}>{post.postDescription} </p>
                 </div>
                 <div className={`h-[300px] grid grid-cols-3 border-t border-zinc-200`}>
-                    <div className={`col-span-1  bg-zinc-50`}>
+                    <div className={`col-span-1  bg-zinc-50 flex flex-col`}>
                         <div className={`p-1 text-xs text-zinc-600`}>Edit history</div>
+                        <div className='flex-1 overflow-y-auto'>
+                            <History postId={postId.id} />
+                        </div>
                     </div>
                     <div className={`col-span-2 border-l border-zinc-200 overflow-y-auto`}>
                         <div className={`p-1 text-xs text-zinc-600`}>
