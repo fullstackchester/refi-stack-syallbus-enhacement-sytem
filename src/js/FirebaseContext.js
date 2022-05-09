@@ -66,7 +66,6 @@ export function FirebaseProvider({ children }) {
         return signOut(auth)
     }
 
-
     function writeData(path, data, id) {
         return set(ref(database, path + id), data)
     }

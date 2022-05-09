@@ -94,9 +94,9 @@ export default function SchoolYear() {
                 buttonTitle={`Add`}
                 handleClose={() => setVisible(false)}
             />
-            <table className=' w-full'>
+            <table className='w-full'>
                 <thead>
-                    <tr className='bg-zinc-50'>
+                    <tr>
                         <th className='dash-th'>S.Y Date</th>
                         <th className='dash-th'>Available Syllabus</th>
                         <th className='dash-th'>Status</th>
@@ -106,9 +106,9 @@ export default function SchoolYear() {
                     {sy.map((val, key) => {
                         return (
                             <tr key={key} className={`text-xs font-medium text-zinc-700`}>
-                                <td className='border-t border-zinc-200 p-1'>{val.syTitle}</td>
-                                <td className='border-t border-zinc-200 p-1'>{val.syTitle}</td>
-                                <td className='border-t border-zinc-200 p-1'>
+                                <td className='border-t border-zinc-200 p-2'>{val.syTitle}</td>
+                                <td className='border-t border-zinc-200 p-2'>{val.syTitle}</td>
+                                <td className='border-t border-zinc-200 p-2'>
                                     <SYStatus status={val.syStatus} />
                                 </td>
                             </tr>
@@ -118,7 +118,6 @@ export default function SchoolYear() {
             </table>
             <div className='h-14 w-full flex flex-row justify-end items-center px-5'>
                 <button
-                    onClick={() => nav(`/school-year`)}
                     className={`border border-transparent bg-zinc-600 hover:bg-zinc-700 text-white text-xs
                 p-2 rounded-md shadow-md shadow-zinc-300`}>View all</button>
             </div>

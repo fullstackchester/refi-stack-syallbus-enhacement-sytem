@@ -14,7 +14,6 @@ export function Profile() {
 	const [user, setUser] = useState({})
 	const [metadata, setData] = useState({})
 
-	console.log(currentUser)
 	useEffect(() => {
 		setData(currentUser.metadata)
 

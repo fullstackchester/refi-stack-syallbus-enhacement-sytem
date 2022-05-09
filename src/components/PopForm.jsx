@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import LoadingButton from './LoadingButton'
 
 export default function PopForm(
     { formTitle, formId, buttonTitle, func, isOpen, handleClose, children }
@@ -13,7 +12,7 @@ export default function PopForm(
                     className="fixed inset-0 z-10 overflow-y-auto"
                     onClose={handleClose}
                 >
-                    <div className="min-h-screen px-4 text-center">
+                    <div className="min-h-screen px-4 text-center bg-zinc-800/70">
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"

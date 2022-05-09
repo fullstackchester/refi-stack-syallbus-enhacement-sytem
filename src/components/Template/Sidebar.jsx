@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { faBook, faUserCircle, faFileAlt, faGraduationCap, faSquarePollVertical, faUserTie, faChevronLeft, faChevronRight, faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ReactComponent as IconAccount } from '../../assets/Images/svg/material_account.svg'
-import { ReactComponent as IconFile } from '../../assets/Images/svg/material_file.svg'
 
 
 
@@ -13,12 +11,12 @@ function Sidebar() {
     return (
         <div className={`${minimize ? 'w-auto' : 'w-[15vw] min-w-[210px]'} h-screen
          bg-zinc-900 flex flex-col sticky top-0 transition-all`}>
-            <header className='h-12 flex flex-row text-white items-center border-b border-zinc-50/30'>
+            <header className='h-auto min-h-[3rem] flex flex-row text-white items-center py-5'>
                 <img
                     alt='logo'
-                    className='h-8 w-auto border border-white'
-                    src={require('../../assets/Images/svg/curriculum-logo.svg').default} />
-                {!minimize ? <h1 className='text-md headings'>Curriculum</h1> : ''}
+                    className='h-8 w-auto '
+                    src={require('../../assets/Images/logo.svg').default} />
+                {!minimize ? <h1 className='text-xl font-light headings'>Curriculum</h1> : ''}
             </header>
             <div className='w-full text-sm flex flex-col flex-1'>
                 {[

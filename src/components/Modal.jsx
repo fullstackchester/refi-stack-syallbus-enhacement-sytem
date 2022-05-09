@@ -15,7 +15,7 @@ const Modal = (
                     className="fixed inset-0 z-10 overflow-y-auto"
                     onClose={handleClose}
                 >
-                    <div className="min-h-screen px-4 text-center">
+                    <div className="min-h-screen px-4 text-center bg-zinc-800/70">
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
@@ -44,14 +44,14 @@ const Modal = (
                             leaveTo="opacity-0 scale-95" >
 
                             <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left
-                             align-middle transition-all transform bg-zinc-800 shadow-xl rounded-lg">
+                             align-middle transition-all transform bg-white shadow-xl rounded-lg">
                                 <Dialog.Title
                                     as="h3"
-                                    className="text-lg font-medium leading-6 text-zinc-100" >
+                                    className="text-lg font-medium leading-6 text-zinc-700" >
                                     {dialogTitle}
                                 </Dialog.Title>
                                 <div className="mt-2">
-                                    <p className="text-sm text-gray-300">
+                                    <p className="text-sm text-gray-600">
                                         {dialogMessage}
                                     </p>
                                 </div>
@@ -59,8 +59,8 @@ const Modal = (
                                 <div className="mt-4 flex justify-end">
                                     <button
                                         type="button"
-                                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900
-                                         bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none
+                                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white
+                                         bg-sky-600 border border-transparent rounded-md hover:bg-sky-700 focus:outline-none
                                           focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 mr-3"
                                         onClick={handleClose} >
                                         Cancel

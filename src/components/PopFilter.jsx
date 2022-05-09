@@ -1,8 +1,11 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-export default function PopHistory(
-    { isOpen, handleClose, title, children }
+
+export default function PopFilter(
+    {
+        handleClose, isOpen, dialogTitle, dialogMessage, children
+    }
 ) {
     return (
         <>
@@ -40,22 +43,27 @@ export default function PopHistory(
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95" >
 
-                            <div className="inline-block w-full max-w-3xl p-6 my-8 overflow-hidden text-left
+                            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left
                              align-middle transition-all transform bg-white shadow-xl rounded-lg">
                                 <Dialog.Title
                                     as="h3"
                                     className="text-lg font-medium leading-6 text-zinc-700" >
-                                    {title}
+                                    {dialogTitle}
                                 </Dialog.Title>
+                                <div className="mt-2">
+                                    <p className="text-sm text-gray-600">
+                                        {dialogMessage}
+                                    </p>
+                                </div>
                                 {children}
                                 <div className="mt-4 flex justify-end">
                                     <button
                                         type="button"
-                                        onClick={handleClose}
-                                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900
-                                         bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none
-                                          focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 mr-3" >
-                                        Close
+                                        className="inline-flex justify-center px-4 py-2 text-xs font-medium text-white
+                                         bg-sky-600 border border-transparent rounded-md hover:bg-sky-700 focus:outline-none
+                                          focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 mr-3"
+                                        onClick={handleClose} >
+                                        Cancel
                                     </button>
                                 </div>
                             </div>
