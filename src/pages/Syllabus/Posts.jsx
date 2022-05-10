@@ -66,10 +66,17 @@ export default function Posts() {
             <main className='w-full h-auto text-lg py-5 px-10 grid grid-cols-4 gap-3'>
                 {schoolyear.length !== 0 ? schoolyear.map((v, k) => {
                     return (
+<<<<<<< HEAD
                         <div key={k} className='h-auto min-h-[15rem] col-span-4 flex flex-col mb-10'>
                             <div className='text-sm font-medium text-zinc-700'>{v.syTitle}</div>
                             <div className='flex-1 grid grid-cols-4 gap-3 h-auto py-3'>
                                 {posts.length !== 0 ? posts
+=======
+                        <div key={k} className='h-auto min-h-[15rem] col-span-4 flex flex-col'>
+                            <div className='text-sm font-medium text-zinc-700'>{v.syTitle}</div>
+                            <div className='flex-1 grid grid-cols-4 gap-3 h-auto py-3'>
+                                {posts && posts
+>>>>>>> 6d17db1f427b61896a92475e4c4af17327d31b3e
                                     .sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime())
                                     .filter(entry => Object.values(entry).some(val => typeof val === 'string'
                                         && val.toLowerCase().includes(v.syId)))
@@ -90,8 +97,12 @@ export default function Posts() {
                                                 </div>
                                             </div>
                                         </Link>
+<<<<<<< HEAD
                                     ) :
                                     <div> No syllabus added</div>}
+=======
+                                    )}
+>>>>>>> 6d17db1f427b61896a92475e4c4af17327d31b3e
 
                             </div>
                         </div>
