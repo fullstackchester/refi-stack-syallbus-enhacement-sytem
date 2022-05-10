@@ -1,11 +1,10 @@
 import { limitToFirst, onValue, query, ref } from 'firebase/database'
 import React, { useRef, useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import Modal from '../../components/Modal'
 import PostStatus from '../../components/PostStatus'
 import { database } from '../../js/Firebase'
 import SchoolYear from './SchoolYear'
-import { faFilter } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faPrint } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PopFilter from '../../components/PopFilter'
 
@@ -31,7 +30,11 @@ function Dashboard() {
             }
         })
     }, [limitCount])
-    console.log(posts.length)
+
+    function print() {
+        console.log(selected)
+    }
+
     return (
         <div className='w-full h-auto min-h-[85vh] flex flex-col'>
             <PopFilter isOpen={filterModal} handleClose={() => setFilterModal(false)} buttonTitle='Ok' dialogTitle='Select filter' >
@@ -59,20 +62,22 @@ function Dashboard() {
                                 label: 'None',
                                 value: ''
                             },
-                        ].map((val, key) =>
-                            <label key={key} htmlFor={val.id} className='text-sm flex flex-row items-center p-2'>
-                                <input name='filterBy' id={val.id} type='radio' value={val.value}
-                                    onChange={() => {
-                                        setFilterPost(val.value)
-                                        setFilterModal(false)
-                                    }} />
-                                <span className='ml-2'>{val.label}</span>
-                            </label>)
+                        ]
+                            .map((val, key) =>
+                                <label key={key} htmlFor={val.id} className='text-sm flex flex-row items-center p-2'>
+                                    <input name='filterBy' id={val.id} type='radio' value={val.value}
+                                        onChange={() => {
+                                            setFilterPost(val.value)
+                                            setFilterModal(false)
+                                        }} />
+                                    <span className='ml-2'>{val.label}</span>
+                                </label>)
                     }
                 </div>
             </PopFilter>
-            <div className={`h-auto w-full grid grid-cols-4 gap-4 px-10 py-5`}>
-                <div className={`col-span-4 h-auto bg-white table-fixed flex flex-col  border border-zinc-200`}>
+            
+            <div className={`h-auto w-full grid grid-cols-6 gap-4 px-10 py-5`}>
+                <div className={`col-span-6 h-auto bg-white table-fixed flex flex-col  border border-zinc-200`}>
                     <div className={`h-14 w-full flex flex-row items-center justify-between border-b border-zinc-100 px-4`}>
                         <h1 className='text-zinc-600 font-medium'>Posts</h1>
                         <div className='flex flex-row'>
@@ -122,12 +127,14 @@ function Dashboard() {
                                                 <PostStatus postStatus={val.postStatus} textSize={`text-xs`} />
                                             </td>
                                             <td className={`border-y border-zinc-100 p-2`}>
-                                                <input type={`checkbox`} value={val.postId}
+                                                <input type={`checkbox`} value={val.postFile}
                                                     onChange={(e) => {
                                                         if (e.target.checked) {
                                                             setSelected([
                                                                 ...selected, e.target.value
                                                             ])
+                                                        } else {
+                                                            setSelected((prev) => prev.filter((doc) => doc !== e.target.value))
                                                         }
                                                     }} />
                                             </td>
@@ -139,17 +146,24 @@ function Dashboard() {
                                 className='text-xs hover:underline text-zinc-600'>Load more...</button>
                         </div>
                     </div>
-                    <div className={`h-12 flex items-center justify-end px-5`}>
+                    <div className={`h-12 flex flex-row items-center justify-end px-5`}>
+                        {selected.length > 0 ?
+                            <button
+                                onClick={() => print()}
+                                className={`text-xs text-white p-2 border border-transparent bg-sky-600 hover:bg-sky-700 h-fit w-fit rounded-md mr-2`}>
+                                <FontAwesomeIcon icon={faPrint} />
+                            </button> :
+                            <></>}
                         <button
                             onClick={() => nav(`/posts`)}
                             type={`button`}
                             className={`text-xs text-white p-2 border border-transparent
-                            bg-zinc-600 hover:bg-zinc-700 shadow-md shadow-zinc-300 h-fit w-fit rounded-md`}>View all</button>
+                            bg-zinc-600 hover:bg-zinc-700 h-fit w-fit rounded-md transition-colors`}>View all</button>
 
                     </div>
                 </div>
                 <div
-                    className={`col-span-4 h-auto bg-white flex-col border border-zinc-200`}>
+                    className={`col-span-6 h-auto bg-white flex-col border border-zinc-200`}>
                     <SchoolYear />
                 </div>
             </div>
