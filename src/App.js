@@ -24,6 +24,8 @@ import ViewFile from './pages/Files/ViewFile'
 import EditFile from './pages/Files/EditFile'
 import SchoolYearList from './pages/SchoolYear/SchoolYearList'
 import AddSchoolYear from './pages/SchoolYear/AddSchoolYear'
+import DisplayInformation from './pages/Profile/DisplayInformation'
+import Authentication from './pages/Profile/Authentication'
 
 export default function App() {
 	return (
@@ -34,7 +36,7 @@ export default function App() {
 						<Route exact path='/' element={<Login />} />
 						<Route path='/signup' element={<Signup />} />
 						<Route path='/' element={<Layout />} >
-							<Route exact path='dashboard' element={<Dashboard />} />
+							<Route exact path='reports' element={<Dashboard />} />
 
 							<Route exact path='school-year' element={<SchoolYearList />} />
 							<Route exact path='school-year/add' element={<AddSchoolYear />} />
@@ -56,8 +58,11 @@ export default function App() {
 							<Route exact path='subjects/:id' element={<Subject />} />
 							<Route exact path='subjects/:id/edit' element={<SubjectEdit />} />
 
-							<Route exact path='profile' element={<Profile />} />
-							<Route exact path='profile/edit-profile' element={<ProfileEdit />} />
+							<Route path='profile' element={<Profile />}>
+								<Route index element={<DisplayInformation />} />
+								<Route path='display-information' element={<DisplayInformation />} />
+								<Route path='security' element={<Authentication />} />
+							</Route>
 
 							<Route path='settings' element={<Settings />} />
 						</Route>

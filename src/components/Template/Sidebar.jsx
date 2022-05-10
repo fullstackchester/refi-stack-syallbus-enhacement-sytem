@@ -21,9 +21,9 @@ function Sidebar() {
             <div className='w-full text-sm flex flex-col flex-1'>
                 {[
                     {
-                        title: 'Dashboard',
+                        title: 'Reports',
                         icon: <FontAwesomeIcon icon={faSquarePollVertical} />,
-                        link: '/dashboard',
+                        link: '/reports',
                     },
                     {
                         title: 'Syllabus',
