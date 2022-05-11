@@ -236,6 +236,6 @@ export function ProfileEdit() {
                     </button>
                 </footer>
             </div>
-        </div >
+        </div>
     )
 }

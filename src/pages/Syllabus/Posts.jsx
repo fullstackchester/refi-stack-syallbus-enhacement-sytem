@@ -63,51 +63,30 @@ export default function Posts() {
                     </button>
                 </div>
             </nav>
-            <main className='w-full h-auto text-lg py-5 px-10 grid grid-cols-4 gap-3'>
-                {schoolyear.length !== 0 ? schoolyear.map((v, k) => {
-                    return (
-<<<<<<< HEAD
-                        <div key={k} className='h-auto min-h-[15rem] col-span-4 flex flex-col mb-10'>
-                            <div className='text-sm font-medium text-zinc-700'>{v.syTitle}</div>
-                            <div className='flex-1 grid grid-cols-4 gap-3 h-auto py-3'>
-                                {posts.length !== 0 ? posts
-=======
-                        <div key={k} className='h-auto min-h-[15rem] col-span-4 flex flex-col'>
-                            <div className='text-sm font-medium text-zinc-700'>{v.syTitle}</div>
-                            <div className='flex-1 grid grid-cols-4 gap-3 h-auto py-3'>
-                                {posts && posts
->>>>>>> 6d17db1f427b61896a92475e4c4af17327d31b3e
-                                    .sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime())
-                                    .filter(entry => Object.values(entry).some(val => typeof val === 'string'
-                                        && val.toLowerCase().includes(v.syId)))
-                                    .map((val, key) =>
-                                        <Link to={`/posts/${val.postId}`}>
-                                            <div
-                                                key={key}
-                                                className='col-span-1 h-auto min-h-[200px] bg-white border first-letter:border-gray-200 rounded-md hover:shadow-lg flex flex-col'>
-                                                <div className='h-auto py-3 px-5 flex-1'>
-                                                    <Link to={`/posts/${val.postId}`} className='text-base text-zinc-700 font-semibold 
-                                                    block hover:underline overflow-hidden text-ellipsis'>
-                                                        {val.postTitle}
-                                                    </Link>
-                                                    <span className='text-xs font-medium text-zinc-500 block'>{`Posted: ${val.postDate}`}</span>
-                                                </div>
-                                                <div className='h-12 flex justify-end items-center px-3'>
-                                                    <PostStatus textSize={`text-xs`} postStatus={val.postStatus} />
-                                                </div>
-                                            </div>
-                                        </Link>
-<<<<<<< HEAD
-                                    ) :
-                                    <div> No syllabus added</div>}
-=======
-                                    )}
->>>>>>> 6d17db1f427b61896a92475e4c4af17327d31b3e
+            <main className='w-full h-auto text-lg py-5 px-10 grid grid-cols-4 gap-3 border border-zinc-300'>
+                {posts && posts
+                    .sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime())
+                    .filter(entry => Object.values(entry).some(val => typeof val === 'string'
+                        && val.toLowerCase().includes(searchpost.toLowerCase())))
+                    .map((val, key) =>
+                        <Link to={`/posts/${val.postId}/information`} key={key}>
+                            <div
 
+                                className='col-span-1 h-auto min-h-[200px] bg-white border 
+                                border-gray-200 rounded-md hover:shadow-lg flex flex-col'>
+                                <div className='h-auto py-3 px-5 flex-1'>
+                                    <span className='text-base text-zinc-700 font-semibold 
+                                    block hover:underline overflow-hidden text-ellipsis'>
+                                        {val.postTitle}
+                                    </span>
+                                    <span className='text-xs font-medium text-zinc-500 block'>{`Posted: ${val.postDate}`}</span>
+                                </div>
+                                <div className='h-12 flex justify-end items-center px-3'>
+                                    <PostStatus textSize={`text-xs`} postStatus={val.postStatus} />
+                                </div>
                             </div>
-                        </div>
-                    )
-                }) : <></>}
+                        </Link>
+                    )}
             </main>
         </div>
     )

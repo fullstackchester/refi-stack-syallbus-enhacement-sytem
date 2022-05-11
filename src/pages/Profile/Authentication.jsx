@@ -1,4 +1,9 @@
+import { updateEmail, updatePassword } from 'firebase/auth'
+import { ref, update } from 'firebase/database'
 import React, { useRef, useEffect, useState } from 'react'
+import Modal from '../../components/Modal'
+import Confirm from '../../components/PopConfirmation'
+import { database } from '../../js/Firebase'
 import { useFirebase } from '../../js/FirebaseContext'
 
 export default function Authentication() {
@@ -8,11 +13,14 @@ export default function Authentication() {
     const { currentUser } = useFirebase()
     const uid = currentUser.uid
 
+    const [open, setOpen] = useState(false)
+    const [openDel, setOpenDel] = useState(false)
+
     const editCredentials = [
         {
             id: 'email',
             name: 'email',
-            label: 'Email',
+            label: 'New email',
             type: 'email',
             ref: emailRef,
             description: 'Use an valid email address',
@@ -22,7 +30,7 @@ export default function Authentication() {
         {
             id: 'pass',
             name: 'pass',
-            label: 'Password',
+            label: 'New password',
             type: 'password',
             ref: passRef,
             isRequired: true,
@@ -30,28 +38,46 @@ export default function Authentication() {
         },
     ]
 
-    useEffect(() => {
-
-    }, [])
 
     function saveCredentials(e) {
         e.preventDefault()
-        const cred = {
-            email: emailRef.current.value,
-            password: passRef.current.value
-        }
+
+        updateEmail(currentUser, emailRef.current.value)
+            .then(() => {
+                updatePassword(currentUser, passRef.current.value)
+                    .then(() => {
+                        update(ref(database, `users/${uid}`), { email: emailRef.current.value })
+                            .then(() => {
+                                setOpen(true)
+                            }).catch((err) => {
+
+                            });
+                    }).catch((err) => {
+
+                    });
+            }).catch((err) => {
+
+            });
     }
 
     return (
         <>
+            <Modal
+                dialogTitle={'Update successfully'}
+                dialogMessage={'Successfully updated your email and password'}
+                isOpen={open}
+                handleClose={() => setOpen(false)} />
+
+            <Confirm isOpen={openDel} handleClose={() => setOpenDel(false)} />
+
             <div className='h-14 flex flex-row items-center border-b border-zinc-100 text-sm text-zinc-600 px-5 font-semibold'>Security</div>
             <form
                 onSubmit={saveCredentials}
                 id='security-form' name='security-form' spellCheck={false} className='w-full flex-1 px-5 py-3'>
-                {editCredentials.map((val, k) => {
+                {editCredentials.map((val, key) => {
                     return (
                         <label
-                            key={k}
+                            key={key}
                             htmlFor={val.id}
                             className='flex flex-col text-sm text-zinc-700 mb-5'>
                             <span className='font-medium'>{val.label}</span>
@@ -62,12 +88,31 @@ export default function Authentication() {
                                 type={val.type}
                                 required={val.isRequired}
                                 defaultValue={val.currentVal}
-                                className='border border-zinc-200 p-2 outline-none focus:border-sky-300 rounded-md w-80' />
-                            <p className='text-xs font-medium mt-1 text-zinc-500'>{val.description} </p>
+                                className='border border-zinc-200 p-2 outline-none focus:border-sky-300 rounded-sm w-80
+                                ring-1 ring-transparent focus:ring-sky-300 transition-colors' />
+                            <p className='text-xs font-medium mt-1 text-zinc-500'>{val.description}</p>
                         </label>
                     )
                 })}
+                <div className='border-t border-zinc-100 h-20 py-5'>
+                    <label
+                        className='flex flex-col text-sm text-zinc-700 mb-5'>
+                        <span className='font-medium'>{'Account Deletion'}</span>
+                        <p className='text-xs font-medium mt-1 text-zinc-500'>
+                            {'This will delete all of your data ( basic information, passwords )'}
+                        </p>
+                        <button
+                            onClick={() => setOpenDel(true)}
+                            type='button'
+                            className='w-fit h-fit text-xs border border-transparent outline-none p-2
+                             bg-red-600 hover:bg-red-700 text-white rounded-md mt-3'>
+                            Delete Account
+                        </button>
+                    </label>
+
+                </div>
             </form>
+
             <footer className='h-14 flex items-center justify-end px-5 border-t border-zinc-100'>
                 <button
                     type='submit'

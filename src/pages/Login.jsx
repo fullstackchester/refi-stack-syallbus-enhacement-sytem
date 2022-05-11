@@ -19,7 +19,7 @@ export default function Login() {
     useEffect(() => {
         onAuthStateChanged(auth, user => {
             if (user) {
-                nav('/dashboard')
+                nav('/reports')
             }
         })
     }, [])

@@ -180,7 +180,7 @@ export default function FacultyEdit() {
                                         <select
                                             className={`input-style`}
                                             id={val.name}
-                                            ref={val.ref}
+                                            ref={deptRef}
                                             value={val.initialValue}
                                             onChange={val.onChange}
                                             required={val.required} >

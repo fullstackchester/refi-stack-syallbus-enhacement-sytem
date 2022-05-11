@@ -29,7 +29,6 @@ export function FirebaseProvider({ children }) {
         signup,
         logout,
         writeData,
-        childCount,
         deleteData,
         uploadAvatar,
         uploadFile,
@@ -50,7 +49,6 @@ export function FirebaseProvider({ children }) {
 
         })
 
-
         return unsub
     }, []);
 
@@ -69,12 +67,6 @@ export function FirebaseProvider({ children }) {
     function writeData(path, data, id) {
         return set(ref(database, path + id), data)
     }
-
-
-    function childCount(path) {
-        onValue(ref(database, path), snapshot => snapshot.val().length)
-    }
-
 
     function deleteData(path) {
         return remove(ref(database, path))

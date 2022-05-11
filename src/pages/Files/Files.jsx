@@ -21,7 +21,6 @@ export default function Files() {
         return getSyllabus
     }, [])
 
-
     return (
         <div className='h-auto'>
             <header className='h-14  flex flex-row justify-between px-10 border bg-white sticky top-12'>
@@ -66,7 +65,6 @@ export default function Files() {
                             <div className={`flex justify-end`}>
                                 <PostStatus textSize={`text-xs`} postStatus={val.postStatus} />
                             </div>
-
                         </div>
                     )}
             </main>

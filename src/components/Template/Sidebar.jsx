@@ -54,7 +54,7 @@ function Sidebar() {
                     <NavLink
                         key={key}
                         to={val.link}
-                        className={({ isActive }) => isActive ? 'text-sky-300' : 'text-zinc-200'}>
+                        className={({ isActive }) => isActive ? 'text-sky-300 bg-zinc-800' : 'text-zinc-200'}>
                         <div className='flex flex-row h-12 w-full hover:bg-zinc-800 transition-colors'>
                             <div className={`h-full w-12 flex justify-center items-center`}>
                                 {val.icon}

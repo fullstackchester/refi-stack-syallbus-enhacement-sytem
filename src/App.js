@@ -26,6 +26,9 @@ import SchoolYearList from './pages/SchoolYear/SchoolYearList'
 import AddSchoolYear from './pages/SchoolYear/AddSchoolYear'
 import DisplayInformation from './pages/Profile/DisplayInformation'
 import Authentication from './pages/Profile/Authentication'
+import Information from './pages/Syllabus/Information'
+import Comments from './pages/Syllabus/Comments'
+import History from './pages/Syllabus/History'
 
 export default function App() {
 	return (
@@ -43,7 +46,12 @@ export default function App() {
 
 							<Route path='posts' element={<Posts />} />
 							<Route path='posts/create-post' element={<CreatePost />} />
-							<Route path='posts/:postId' element={<ViewPost />} />
+							<Route path='posts/:postId' element={<ViewPost />} >
+								<Route index element={<Information />} />
+								<Route path='information' element={<Information />} />
+								<Route path='comments' element={<Comments />} />
+								<Route path='edit-history' element={<History />} />
+							</Route>
 
 							<Route exact path='files' element={<Files />} />
 							<Route exact path='files/:id' element={<ViewFile />} />
