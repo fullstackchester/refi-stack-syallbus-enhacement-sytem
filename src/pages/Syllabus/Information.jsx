@@ -18,22 +18,19 @@ export default function Information() {
         return onValue(ref(database, `/posts/${postId}`), snapshot => {
             if (snapshot.exists()) {
                 setPost(snapshot.val())
+                getDownloadURL(storageRef(storage, snapshot.val().postFileUrl))
+                    .then((url) => {
+                        setFileUrl(url)
+                    })
+                    .catch((e) => {
+                        console.log(e)
+                    });
             }
         })
     }, [])
 
 
-    function getAttachment(e) {
-        e.preventDefault()
-        getDownloadURL(storageRef(storage, post.postFileUrl))
-            .then((url) => {
-                console.log(`${isAdmin} ${isAreaChair}`)
-            })
-            .catch((e) => {
-                console.log(e)
-            });
 
-    }
 
 
     return (
@@ -61,16 +58,23 @@ export default function Information() {
                     </div>
                     <div className='flex flex-row '>
                         Attachements:
-                        <span onClick={getAttachment} className='font-medium ml-1 hover:underline cursor-pointer'>
+
+                        {/* 
+                        Hours wasted on file preview from firebase storage to browser: 4hrs+
+
+                         */}
+                        <span
+                            onClick={() => {
+                                window.open(`https://drive.google.com/viewerng/viewer?embedded=true&url=${encodeURIComponent(fileUrl)}`, '_blank')
+                            }}
+                            className='font-medium ml-1 hover:underline cursor-pointer'>
                             {post.postFile}
                         </span>
                     </div>
                     <div className='flex flex-row '>{`Posted: ${post.postDate}`}</div>
-                    {/* <iframe src={`https://view.officeapps.live.com/op/embed.aspx?src=${fileUrl}`} className='w-full h-80 border' ></iframe> */}
-                    {/* <iframe src={`https://view.officeapps.live.com/op/embed.aspx?src=${fileUrl}`} className='w-full h-80 border' ></iframe> */}
+
                 </div>
             </div>
-            {/* <iframe src={`https://docs.google.com/viewer?url=${fileUrl && fileUrl}&embedded=true`} className='w-full h-80 border' ></iframe> */}
         </>
     )
 }

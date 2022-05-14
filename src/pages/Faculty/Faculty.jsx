@@ -4,7 +4,7 @@ import { database } from '../../js/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAdd, faUser, faUserCog, faSearch } from '@fortawesome/free-solid-svg-icons'
 import Node from '../../components/Node'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Navbar from '../../components/Navbar'
 
 
@@ -24,28 +24,67 @@ function Faculty() {
     }, [])
 
     return (
-        <div className='w-full h-auto'>
-            <Navbar
-                headerTitle={`Faculty`}
-                searchBarOnChange={(e) => setSearch(e.target.value)}
+        <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center py-5'>
+            <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>
+                <header className='h-14 flex flex-row justify-end px-5 items-center'>
+                    <div>
+                        <input
+                            type='text'
+                            spellCheck={false}
+                            placeholder='Search'
+                            onChange={(e) => setSearch(e.target.value)}
+                            className='w-60 border border-zinc-200 text-xs p-2 outline-none rounded-md' />
+                    </div>
 
-            />
-            <main className=' h-auto py-5 px-10 grid grid-cols-12 gap-2'>
-                {faculty && faculty
-                    .filter(entry => Object.values(entry).some(val => typeof val === 'string'
-                        && val.toLowerCase().includes(search.toLowerCase())))
-                    .map((val, key) => {
-                        return (
-                            <Node
-                                key={key}
-                                link={`/faculty/${val.uid}`}
-                                title={val.name}
-                                subTitle={val.email}
-                                icon={val.userType === 'administrator' ? faUserCog : faUser}
-                            />
-                        )
-                    })}
-            </main>
+                </header>
+                <main className='flex-1'>
+                    <table className='w-full h-auto table-auto'>
+                        <thead>
+                            <tr className='border border-zinc-100'>
+                                {
+                                    [{ title: '' },
+                                    { title: 'Name' },
+                                    { title: 'Email' },
+                                    { title: 'Employee Id' },
+                                    { title: 'Department' },]
+                                        .map((val, key) =>
+                                            <th key={key} className='p-2 text-xs text-left text-zinc-600'>{val.title}</th>)
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {faculty.length !== 0 ?
+                                faculty
+                                    .filter(entry => Object.values(entry).some(val => typeof val === 'string'
+                                        && val.toLowerCase().includes(search.toLowerCase())))
+                                    .sort(function (a, b) {
+                                        return a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+                                    })
+                                    .map((val, key) =>
+                                        <tr key={key}
+                                            className='border border-zinc-100 text-xs text-zinc-700 font-medium
+                                        hover:bg-zinc-200 transition-colors'>
+                                            <td className='p-3'>
+                                                {/* Place the Checkbox here */}
+                                                <input type='checkbox' className=' default:ring-2 checked:bg-sky-300' />
+                                            </td>
+                                            <td className='p-3'>
+                                                <Link to={`${val.uid}`} className='hover:underline'>
+                                                    {val.name}
+                                                </Link>
+                                            </td>
+                                            <td className='p-3'>{val.email}</td>
+                                            <td>{val.employeeId}</td>
+                                            <td className='p-3'>{val.department}</td>
+                                        </tr>) : <></>}
+                        </tbody>
+
+                    </table>
+                </main>
+                <footer className='h-10 border-t border-zinc-100'>
+
+                </footer>
+            </div>
         </div>
     )
 }

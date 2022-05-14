@@ -36,6 +36,17 @@ export default function Posts() {
         })
     }, [])
 
+    function getSy(syId) {
+        onValue(ref(database, `schoolYear/${syId}`), snapshot => {
+            if (snapshot.exists()) {
+
+                return (<span>{snapshot.val().syTitle}</span>)
+            } else {
+                return 'No Sy Found'
+            }
+        })
+    }
+
     return (
         <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center'>
             <PopFilter isOpen={isOpen} handleClose={() => setOpen(false)} buttonTitle='Ok' dialogTitle='Filter by' >
@@ -105,19 +116,23 @@ export default function Posts() {
                         [
                             {
                                 icon: faPlusCircle,
+                                title: 'New post',
                                 onClick: () => nav('create-post')
                             },
                             {
                                 icon: faFilter,
+                                title: 'Sort By',
                                 onClick: () => setOpen(true)
                             },
                             {
                                 icon: faCalendarAlt,
+                                title: 'Sort by School Year',
                                 onClick: () => setFilterSy(true)
                             },
                         ].map((val, key) =>
                             <button
                                 key={key}
+                                title={val.title}
                                 className={`border border-transparent text-zinc-800 ml-2 flex items-center 
                                 justify-center hover:bg-zinc-100 w-8 h-8 rounded-full`}
                                 onClick={val.onClick} >
@@ -126,7 +141,7 @@ export default function Posts() {
                     }
                 </header>
                 <main className='flex-1'>
-                    <table className=' w-full h-auto'>
+                    <table className='w-full h-auto table-auto'>
                         <thead>
                             <tr className='border border-zinc-100'>
                                 {[
@@ -157,7 +172,7 @@ export default function Posts() {
                                             onClick={() => {
                                                 nav(`/posts/${v.postId}`)
                                             }}>{v.postTitle}</td>
-                                        <td className='p-2 text-xs '>{v.postDate}</td>
+                                        <td className='p-2 text-xs '>{v.syId ? `${getSy(v.syId)}` : 'Null'}</td>
                                         <td className='p-2 text-xs '>{v.postDate}</td>
                                         <td className='p-2 text-xs '>
                                             <PostStatus postStatus={v.postStatus} textSize={'text-xs'} />
