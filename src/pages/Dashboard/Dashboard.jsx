@@ -75,7 +75,7 @@ function Dashboard() {
                     }
                 </div>
             </PopFilter>
-            
+
             <div className={`h-auto w-full grid grid-cols-6 gap-4 px-10 py-5`}>
                 <div className={`col-span-6 h-auto bg-white table-fixed flex flex-col  border border-zinc-200`}>
                     <div className={`h-14 w-full flex flex-row items-center justify-between border-b border-zinc-100 px-4`}>

@@ -20,7 +20,7 @@ export function useFirebase() {
 export function FirebaseProvider({ children }) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
-    const [admin, setAdmin] = useState()
+    const [isAdmin, setAdmin] = useState()
     const [isAreaChair, setAreaChair] = useState()
 
     const value = {
@@ -32,7 +32,7 @@ export function FirebaseProvider({ children }) {
         deleteData,
         uploadAvatar,
         uploadFile,
-        admin,
+        isAdmin,
         isAreaChair,
     }
 

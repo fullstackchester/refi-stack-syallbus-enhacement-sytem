@@ -123,7 +123,8 @@ export default function CreatePost() {
         writeData('posts/', Post, Post.postId)
             .then(() => {
                 uploadFile(fileRef.current.files[0], `syllabus/${Post.postId}/${fileRef.current.files[0].name}`)
-                    .then(() => {
+                    .then((snapshot) => {
+                        console.log(snapshot)
                         nav('/posts')
                     }).catch((err) => {
                         setError(err.message)

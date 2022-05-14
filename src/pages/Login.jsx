@@ -38,7 +38,7 @@ export default function Login() {
         } else {
             signInWithEmailAndPassword(auth, email, pass)
                 .then(() => {
-                    nav('/dashboard')
+                    nav('/reports')
                     setLoading(false)
                 }).catch((err) => {
                     for (let key in AuthError) {

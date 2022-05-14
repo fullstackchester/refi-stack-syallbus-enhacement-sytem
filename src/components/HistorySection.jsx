@@ -4,7 +4,7 @@ import { database } from '../js/Firebase'
 import PopHistory from './PopHistory'
 import PostStatus from './PostStatus'
 
-export default function History(
+export default function HistorySection(
     { postId }
 ) {
     const [history, setHistory] = useState([])
@@ -37,7 +37,7 @@ export default function History(
                     </div>
                 )
                 :
-                <div className='h-auto border-b border-zinc-100 text-xs text-zinc-600 font-medium p-2 text-center'>
+                <div className='h-auto border-red-400 text-xs text-zinc-600 font-medium p-2 text-center'>
                     No Edit history
                 </div>
             }

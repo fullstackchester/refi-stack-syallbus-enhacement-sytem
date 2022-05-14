@@ -5,22 +5,21 @@ import { useFirebase } from '../js/FirebaseContext'
 import { ref, update } from 'firebase/database'
 import { database } from '../js/Firebase'
 
-export default function Status({ post }) {
+export default function Status({ postId }) {
 
     const [status, setStatus] = useState()
-    const { admin, isAreaChair } = useFirebase()
+    const { isAdmin, isAreaChair } = useFirebase()
 
     function changeStatus(UpdateStatus) {
-        update(ref(database, `posts/${post.postId}`), { postStatus: UpdateStatus })
+        update(ref(database, `posts/${postId}`), { postStatus: UpdateStatus })
     }
 
     return (
-        <div className="w-full text-right">
+        <div className="w-full text-right z-50">
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button
-
-                        disabled={!isAreaChair && !admin}
+                        disabled={!isAreaChair && !isAdmin}
                         className={`inline-flex justify-center items-center w-full px-2 py-1 text-xs
                         text-white bg-zinc-600 rounded-md hover:bg-zinc-700 focus:outline-none focus-visible:ring-2 
                         focus-visible:ring-white focus-visible:ring-opacity-75`}>
@@ -43,18 +42,9 @@ export default function Status({ post }) {
                      rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}>
                         <div className="px-1 py-1 ">
                             {[
-                                {
-                                    title: 'Need reviews',
-                                    status: 'Needs reviewing',
-                                },
-                                {
-                                    title: 'Approved',
-                                    status: 'Approved',
-                                },
-                                {
-                                    title: 'Need revisions',
-                                    status: 'Needs revisions',
-                                }
+                                { title: 'Need reviews', status: 'Needs reviewing', },
+                                { title: 'Approved', status: 'Approved', },
+                                { title: 'Need revisions', status: 'Needs revisions', }
                             ].map((val, key) =>
                                 <Menu.Item key={key}>
                                     {({ active }) => (
