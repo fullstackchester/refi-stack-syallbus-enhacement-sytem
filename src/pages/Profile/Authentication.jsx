@@ -1,8 +1,8 @@
 import { updateEmail, updatePassword } from 'firebase/auth'
 import { ref, update } from 'firebase/database'
-import React, { useRef, useEffect, useState } from 'react'
-import Modal from '../../components/Modal'
+import React, { useRef, useState } from 'react'
 import Confirm from '../../components/PopConfirmation'
+import PopNotif from '../../components/PopNotif'
 import { database } from '../../js/Firebase'
 import { useFirebase } from '../../js/FirebaseContext'
 
@@ -15,6 +15,8 @@ export default function Authentication() {
 
     const [open, setOpen] = useState(false)
     const [openDel, setOpenDel] = useState(false)
+
+    const [isLoading, setLoading] = useState(false)
 
     const editCredentials = [
         {
@@ -53,16 +55,16 @@ export default function Authentication() {
 
                             });
                     }).catch((err) => {
-
+                        console.log(err)
                     });
             }).catch((err) => {
-
+                console.log(err)
             });
     }
 
     return (
         <>
-            <Modal
+            <PopNotif
                 dialogTitle={'Update successfully'}
                 dialogMessage={'Successfully updated your email and password'}
                 isOpen={open}

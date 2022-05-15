@@ -13,11 +13,21 @@ export default function Information() {
     const [post, setPost] = useState({})
     const [fileUrl, setFileUrl] = useState()
     const { isAdmin, isAreaChair } = useFirebase()
+    const [subject, setSubject] = useState()
+
+
 
     useEffect(() => {
         return onValue(ref(database, `/posts/${postId}`), snapshot => {
             if (snapshot.exists()) {
                 setPost(snapshot.val())
+                onValue(ref(database, `subject/${snapshot.val().subjectId}`), snapshot => {
+                    if (snapshot.exists()) {
+                        setSubject(snapshot.val().subjectTitle)
+                    } else {
+                        setSubject('Subject not found')
+                    }
+                })
                 getDownloadURL(storageRef(storage, snapshot.val().postFileUrl))
                     .then((url) => {
                         setFileUrl(url)
@@ -29,7 +39,9 @@ export default function Information() {
         })
     }, [])
 
+    useEffect(() => {
 
+    }, [])
 
 
 
@@ -58,11 +70,7 @@ export default function Information() {
                     </div>
                     <div className='flex flex-row '>
                         Attachements:
-
-                        {/* 
-                        Hours wasted on file preview from firebase storage to browser: 4hrs+
-
-                         */}
+                        {/*  Hours wasted on file preview from firebase storage to browser: 4hrs+ */}
                         <span
                             onClick={() => {
                                 window.open(`https://drive.google.com/viewerng/viewer?embedded=true&url=${encodeURIComponent(fileUrl)}`, '_blank')
@@ -71,8 +79,10 @@ export default function Information() {
                             {post.postFile}
                         </span>
                     </div>
+                    <div className='flex flex-row '>
+                        Subject: <Link to={`/subjects/${post.subjectId}`} className='ml-1 font-medium hover:underline'>{subject}</Link>
+                    </div>
                     <div className='flex flex-row '>{`Posted: ${post.postDate}`}</div>
-
                 </div>
             </div>
         </>

@@ -163,8 +163,7 @@ export default function Posts() {
                                 .map((v, k) =>
                                     <tr key={k}
                                         className='text-xs font-medium hover:bg-zinc-200
-                                         transition-colors border border-zinc-100 text-zinc-700'
-                                    >
+                                         transition-colors border border-zinc-100 text-zinc-700' >
                                         <td className='p-2 text-xs '>
                                             <input type='checkbox' />
                                         </td>

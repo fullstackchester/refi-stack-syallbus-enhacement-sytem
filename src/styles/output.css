@@ -660,16 +660,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 1rem;
 }
 
+.ml-3 {
+  margin-left: 0.75rem;
+}
+
 .mb-5 {
   margin-bottom: 1.25rem;
 }
 
 .mt-1 {
   margin-top: 0.25rem;
-}
-
-.ml-3 {
-  margin-left: 0.75rem;
 }
 
 .mb-1 {
@@ -759,12 +759,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 3rem;
 }
 
-.h-16 {
-  height: 4rem;
+.h-\[calc\(100vh-3rem\)\] {
+  height: calc(100vh - 3rem);
 }
 
-.h-28 {
-  height: 7rem;
+.h-\[90vh\] {
+  height: 90vh;
+}
+
+.h-16 {
+  height: 4rem;
 }
 
 .h-\[300px\] {
@@ -779,32 +783,49 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 80vh;
 }
 
-.h-\[calc\(100vh-3rem\)\] {
-  height: calc(100vh - 3rem);
-}
-
-.h-\[90vh\] {
-  height: 90vh;
-}
-
 .h-\[85vh\] {
   height: 85vh;
+}
+
+.h-max {
+  height: -webkit-max-content;
+  height: max-content;
+}
+
+.h-3 {
+  height: 0.75rem;
+}
+
+.h-32 {
+  height: 8rem;
+}
+
+.h-4 {
+  height: 1rem;
 }
 
 .h-\[\] {
   height: ;
 }
 
-.h-\[60\] {
-  height: 60;
+.h-\[calc\(100\%\)\] {
+  height: calc(100%);
 }
 
-.h-\[600p\] {
-  height: 600p;
+.h-\[calc\(100\%-\)\] {
+  height: calc(100% - );
 }
 
-.h-\[600px\] {
-  height: 600px;
+.h-\[calc\(100\%-3\)\] {
+  height: calc(100% - 3);
+}
+
+.h-\[calc\(100\%-3\.5\)\] {
+  height: calc(100% - 3.5);
+}
+
+.h-\[calc\(100\%-3\.5rem\)\] {
+  height: calc(100% - 3.5rem);
 }
 
 .min-h-\[10rem\] {
@@ -839,12 +860,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   min-height: 20rem;
 }
 
-.min-h-\[400px\] {
-  min-height: 400px;
-}
-
 .min-h-\[250px\] {
   min-height: 250px;
+}
+
+.min-h-\[400px\] {
+  min-height: 400px;
 }
 
 .min-h-\[600px\] {
@@ -883,10 +904,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 15rem;
 }
 
-.w-fit {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+.w-max {
+  width: -webkit-max-content;
+  width: max-content;
 }
 
 .w-5 {
@@ -895,6 +915,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-56 {
   width: 14rem;
+}
+
+.w-fit {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .w-\[400px\] {
@@ -917,16 +943,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 50%;
 }
 
+.w-\[85\%\] {
+  width: 85%;
+}
+
 .w-\[80\%\] {
   width: 80%;
 }
 
-.w-28 {
-  width: 7rem;
-}
-
-.w-2\/3 {
-  width: 66.666667%;
+.w-1\/4 {
+  width: 25%;
 }
 
 .w-1\/6 {
@@ -945,17 +971,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 5rem;
 }
 
-.w-1\/4 {
-  width: 25%;
-}
-
-.w-\[85\%\] {
-  width: 85%;
-}
-
-.w-max {
-  width: -webkit-max-content;
-  width: max-content;
+.w-2 {
+  width: 0.5rem;
 }
 
 .min-w-\[20rem\] {
@@ -1030,13 +1047,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   cursor: pointer;
 }
 
+.cursor-auto {
+  cursor: auto;
+}
+
 .resize-none {
   resize: none;
 }
 
-.appearance-none {
-  -webkit-appearance: none;
-          appearance: none;
+.grid-flow-row-dense {
+  grid-auto-flow: row dense;
 }
 
 .grid-cols-3 {
@@ -1051,6 +1071,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .flex-row {
   flex-direction: row;
 }
@@ -1059,12 +1083,20 @@ Ensure the default browser behavior of the `hidden` attribute.
   flex-direction: column;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .items-start {
   align-items: flex-start;
 }
 
 .items-center {
   align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
 }
 
 .justify-end {
@@ -1079,6 +1111,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   justify-content: space-between;
 }
 
+.justify-items-start {
+  justify-items: start;
+}
+
 .gap-3 {
   gap: 0.75rem;
 }
@@ -1089,6 +1125,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .gap-2 {
   gap: 0.5rem;
+}
+
+.gap-0 {
+  gap: 0px;
 }
 
 .divide-y > :not([hidden]) ~ :not([hidden]) {
@@ -1108,6 +1148,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .overflow-y-auto {
   overflow-y: auto;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll;
 }
 
 .text-ellipsis {
@@ -1155,12 +1203,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-top-width: 1px;
 }
 
-.border-l {
-  border-left-width: 1px;
-}
-
 .border-r {
   border-right-width: 1px;
+}
+
+.border-l {
+  border-left-width: 1px;
 }
 
 .border-red-200 {
@@ -1210,6 +1258,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-gray-200 {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
+}
+
+.border-sky-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(186 230 253 / var(--tw-border-opacity));
+}
+
+.border-green-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(134 239 172 / var(--tw-border-opacity));
 }
 
 .bg-gray-300\/40 {
@@ -1296,6 +1354,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-zinc-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(161 161 170 / var(--tw-bg-opacity));
+}
+
+.bg-slate-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(148 163 184 / var(--tw-bg-opacity));
+}
+
+.bg-green-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(187 247 208 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-70 {
@@ -1636,6 +1704,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
+.ring {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
 .ring-transparent {
   --tw-ring-color: transparent;
 }
@@ -1708,10 +1782,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 
-.default\:ring:default {
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+.last\:border-r:last-child {
+  border-right-width: 1px;
 }
 
 .default\:ring-2:default {
@@ -1780,6 +1852,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(185 28 28 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-zinc-400:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(161 161 170 / var(--tw-bg-opacity));
+}
+
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -1805,6 +1882,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.first-letter\:hover\:bg-zinc-200:hover::first-letter {
+  --tw-bg-opacity: 1;
+  background-color: rgb(228 228 231 / var(--tw-bg-opacity));
 }
 
 .focus\:border-sky-600:focus {
@@ -1865,4 +1947,37 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .focus-visible\:ring-offset-2:focus-visible {
   --tw-ring-offset-width: 2px;
+}
+
+.disabled\:border:disabled {
+  border-width: 1px;
+}
+
+.disabled\:border-transparent:disabled {
+  border-color: transparent;
+}
+
+.disabled\:border-zinc-100:disabled {
+  --tw-border-opacity: 1;
+  border-color: rgb(244 244 245 / var(--tw-border-opacity));
+}
+
+.disabled\:bg-white:disabled {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.disabled\:text-zinc-400:disabled {
+  --tw-text-opacity: 1;
+  color: rgb(161 161 170 / var(--tw-text-opacity));
+}
+
+.disabled\:text-zinc-500:disabled {
+  --tw-text-opacity: 1;
+  color: rgb(113 113 122 / var(--tw-text-opacity));
+}
+
+.disabled\:text-zinc-300:disabled {
+  --tw-text-opacity: 1;
+  color: rgb(212 212 216 / var(--tw-text-opacity));
 }

@@ -29,6 +29,8 @@ import Authentication from './pages/Profile/Authentication'
 import Information from './pages/Syllabus/Information'
 import Comments from './pages/Syllabus/Comments'
 import History from './pages/Syllabus/History'
+import FacultyProfile from './pages/Faculty/FacultyProfile'
+import FacultySyllabus from './pages/Faculty/FacultySyllabus'
 
 export default function App() {
 	return (
@@ -58,7 +60,11 @@ export default function App() {
 							<Route exact path='files/edit/:id' element={<EditFile />} />
 
 							<Route exact path='faculty' element={<Faculty />} />
-							<Route exact path='faculty/:id' element={<FacultyAccount />} />
+							<Route exact path='faculty/:uid' element={<FacultyAccount />} >
+								<Route index element={<FacultyProfile />} />
+								<Route exact path='profile' element={<FacultyProfile />} />
+								<Route exact path='syllabus' element={<FacultySyllabus />} />
+							</Route>
 							<Route exact path='faculty/edit/:id' element={<FacultyEdit />} />
 
 							<Route exact path='subjects' element={<Subjects />} />

@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { get, onValue, orderByChild, orderByValue, query, ref } from 'firebase/database'
+import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAdd, faUser, faUserCog, faSearch } from '@fortawesome/free-solid-svg-icons'
-import Node from '../../components/Node'
 import { Link, useNavigate } from 'react-router-dom'
-import Navbar from '../../components/Navbar'
 
 
 function Faculty() {
 
     const [faculty, setFaculty] = useState([])
     const [search, setSearch] = useState('')
+    const [sortBy, setSort] = useState('name')
     const nav = useNavigate()
 
     useEffect(() => {
@@ -43,12 +40,17 @@ function Faculty() {
                             <tr className='border border-zinc-100'>
                                 {
                                     [{ title: '' },
-                                    { title: 'Name' },
-                                    { title: 'Email' },
-                                    { title: 'Employee Id' },
-                                    { title: 'Department' },]
+                                    { title: 'Name', onClick: () => setSort('name') },
+                                    { title: 'Email', onClick: () => setSort('email') },
+                                    { title: 'Employee Id', onClick: () => setSort('employeeId') },
+                                    { title: 'Department', onClick: () => setSort('department') },]
                                         .map((val, key) =>
-                                            <th key={key} className='p-2 text-xs text-left text-zinc-600'>{val.title}</th>)
+                                            <th
+                                                key={key}
+                                                className='p-2 text-xs text-left text-zinc-600 hover:bg-zinc-200
+                                                 transition-colors cursor-pointer'>
+                                                {val.title}
+                                            </th>)
                                 }
                             </tr>
                         </thead>
@@ -57,8 +59,8 @@ function Faculty() {
                                 faculty
                                     .filter(entry => Object.values(entry).some(val => typeof val === 'string'
                                         && val.toLowerCase().includes(search.toLowerCase())))
-                                    .sort(function (a, b) {
-                                        return a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+                                    .sort((a, b) => {
+                                        a.name.toLowerCase().localeCompare(b.name.toLowerCase())
                                     })
                                     .map((val, key) =>
                                         <tr key={key}
@@ -78,7 +80,6 @@ function Faculty() {
                                             <td className='p-3'>{val.department}</td>
                                         </tr>) : <></>}
                         </tbody>
-
                     </table>
                 </main>
                 <footer className='h-10 border-t border-zinc-100'>

@@ -4,6 +4,9 @@ import { database, storage } from '../../js/Firebase'
 import { useFirebase } from '../../js/FirebaseContext'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 import Modal from '../../components/Modal'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
+import PopNotif from '../../components/PopNotif'
 
 export default function DisplayInformation() {
     const { currentUser, uploadFile } = useFirebase()
@@ -22,6 +25,8 @@ export default function DisplayInformation() {
     const [current, setCurrent] = useState({})
 
     const [isOpen, setOpen] = useState(false)
+
+    const [isLoading, setLoading] = useState(false)
 
     useEffect(() => {
         return onValue(ref(database, `users/${uid}`), snapshot => {
@@ -46,8 +51,6 @@ export default function DisplayInformation() {
                 setPreview(reader.result)
             }
             reader.readAsDataURL(avatar)
-        } else {
-
         }
     }, [avatar])
 
@@ -84,34 +87,40 @@ export default function DisplayInformation() {
 
     function saveInfo(e) {
         e.preventDefault()
-        const updateProfile = {
+        setLoading(true)
+        const newProfile = {
             photoUrl: avatar ? avatar.name : current.photoUrl,
             employeeId: empIdRef.current.value,
             name: nameRef.current.value,
             department: deptRef.current.value
         }
 
-        update(ref(database, `users/${uid}`), updateProfile)
+        update(ref(database, `users/${uid}`), newProfile)
             .then(() => {
-                uploadFile(avatar, `avatars/${uid}/${avatar.name}`)
+                uploadFile(avatar, `avatars/${uid}/${newProfile.photoUrl}`)
                     .then(() => {
+                        setLoading(false)
                         setOpen(true)
                     }).catch((err) => {
-
+                        console.log(err)
+                        setLoading(false)
                     });
             }).catch((err) => {
-
+                console.log(err)
+                setLoading(false)
             });
+        // console.table(updateProfile)
     }
 
     return (
         <>
             <div className='h-14 flex flex-row items-center border-b border-zinc-100 text-sm text-zinc-600 px-5 font-semibold'>Basic Information</div>
-            <Modal
-                dialogTitle={'Update Succesfull'}
-                dialogMessage={'Your profile information updated successfully.'}
+            <PopNotif
                 isOpen={isOpen}
-                handleClose={() => setOpen(false)} />
+                handleClose={() => setOpen(false)}
+                dialogTitle='Update success'
+                dialogMessage='Successfully updated profile'
+            />
             <form
                 onSubmit={saveInfo}
                 id='profile-form' name='profile-form' spellCheck={false} className='w-full flex-1 px-5 py-3'>
@@ -189,13 +198,14 @@ export default function DisplayInformation() {
                     })
                 }
             </form>
-            <footer className='h-14 flex items-center justify-end px-5 border-t border-zinc-100'>
+            <footer className='h-14 flex  items-center justify-end px-5 border-t border-zinc-100'>
                 <button
                     type='submit'
                     form='profile-form'
-                    className='text-xs p-2 border border-transparent rounded-md bg-sky-600 text-white
-                     font-medium hover:bg-sky-700'>
-                    Update Profile</button>
+                    className='p-2 border border-transparent rounded-md text-white bg-sky-600 hover:bg-sky-700 flex flex-row'>
+                    <span className='text-xs font-medium mr-2'>Update Profile</span>
+                    {isLoading && <FontAwesomeIcon icon={faCircleNotch} size='sm' spin />}
+                </button>
             </footer>
         </>
     )

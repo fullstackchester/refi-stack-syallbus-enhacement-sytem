@@ -1,14 +1,29 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import CommentSection from '../../components/CommentSection'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { v4 as uuidv4 } from 'uuid'
+import { onValue, ref, set } from 'firebase/database'
+import { database } from '../../js/Firebase'
+import { useFirebase } from '../../js/FirebaseContext'
 
 
 export default function Comments() {
     const { postId } = useParams()
+    const [user, setUser] = useState()
+    const { currentUser } = useFirebase()
     const commentRef = useRef()
+    const uid = currentUser.uid
+
+    useEffect(() => {
+
+        return onValue(ref(database, `users/${uid}`), snap => {
+            if (snap.exists()) {
+                setUser(snap.val())
+            }
+        })
+    }, [])
 
     function writeComment(e) {
         e.preventDefault()
@@ -17,10 +32,15 @@ export default function Comments() {
             commentId: uuidv4(),
             commentString: commentRef.current.value,
             commentDate: new Date().toLocaleString(),
-            // uid: user ? user.uid : '',
-            // name: user ? user.name : ''
+            uid: user ? user.uid : '',
+            name: user ? user.name : ''
         }
-        console.table(userComment)
+        set(ref(database, `comments/${postId}/${userComment.commentId}`), userComment)
+            .then(() => {
+
+            }).catch((err) => {
+                console.log(err)
+            });
         commentRef.current.value = ''
     }
     return (

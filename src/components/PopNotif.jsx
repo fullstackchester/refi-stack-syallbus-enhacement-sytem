@@ -1,12 +1,11 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-const Modal = (
+export default function PopNotif(
     {
-        handleClose, isOpen, dialogTitle, dialogMessage, buttonTitle, dedicatedFunction, children
+        handleClose, isOpen, dialogTitle, dialogMessage
     }
-) => {
-
+) {
     return (
         <>
             <Transition appear show={isOpen} as={Fragment}>
@@ -55,24 +54,14 @@ const Modal = (
                                         {dialogMessage}
                                     </p>
                                 </div>
-                                {children}
                                 <div className="mt-4 flex justify-end">
                                     <button
                                         type="button"
                                         className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white
                                          bg-sky-600 border border-transparent rounded-md hover:bg-sky-700 focus:outline-none
-                                          focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 mr-3"
-                                        onClick={handleClose} >
-                                        Cancel
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-zinc-900
-                                         bg-zinc-100 border border-transparent rounded-md hover:bg-zinc-200 focus:outline-none
                                           focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                                        onClick={dedicatedFunction} >
-                                        {buttonTitle}
+                                        onClick={handleClose} >
+                                        Close
                                     </button>
                                 </div>
                             </div>
@@ -83,5 +72,3 @@ const Modal = (
         </>
     )
 }
-
-export default Modal
