@@ -21,7 +21,7 @@ function Dashboard() {
 
 
     useEffect(() => {
-        
+
         onValue(ref(database, 'schoolYear'), snapshot => {
             if (snapshot.exists()) {
                 setAY(Object.values(snapshot.val()))
@@ -53,7 +53,7 @@ function Dashboard() {
 
 
     return (
-        <div className='w-full h-auto flex flex-col items-center py-5'>
+        <div className='w-full h-[calc(100vh-3rem)] flex flex-col items-center justify-center'>
             <PopForm
                 isOpen={isOpen}
                 handleClose={() => setOpen(false)}
@@ -114,11 +114,11 @@ function Dashboard() {
                 dialogTitle={'Success'}
                 dialogMessage='Successfully added new School Year' />
 
-            <div className='grid grid-cols-6 gap-2 h-auto w-[85%]'>
+            <div className='grid grid-cols-6 gap-2 h-[90vh] w-[85%] grid-rows-2'>
                 <PostChart />
                 <UserChart />
                 <SubjectChart />
-                <div className='col-span-6 h-auto min-h-[20rem] bg-white rounded-md flex flex-col'>
+                <div className='col-span-6 row-span-1 bg-white rounded-md flex flex-col'>
                     <div className='h-12 flex flex-row items-center justify-end px-3'>
                         <button
                             onClick={() => setOpen(true)}
@@ -127,39 +127,42 @@ function Dashboard() {
                             <FontAwesomeIcon icon={faAdd} size='sm' />
                         </button>
                     </div>
-                    <table className='w-full '>
-                        <thead className='sticky top-0'>
-                            <tr className='border border-zinc-100'>
+                    <div className='flex-1 overflow-y-auto'>
+                        <table className='w-full h-auto table-auto'>
+                            <thead className='sticky top-0 bg-white'>
+                                <tr className='border border-zinc-100'>
+                                    {
+                                        [
+                                            { title: <input type='checkbox' /> },
+                                            { title: 'School Year' },
+                                            { title: 'Start Date' },
+                                            { title: 'End Date' },
+                                            { title: 'Status' }
+                                        ].map((v, k) =>
+                                            <th key={k}
+                                                className='text-xs text-zinc-600 py-2 px-3 text-left'>
+                                                {v.title}
+                                            </th>)
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody className='h-[calc(100%-3rem)]'>
                                 {
-                                    [
-                                        { title: <input type='checkbox' /> },
-                                        { title: 'School Year' },
-                                        { title: 'Start Date' },
-                                        { title: 'End Date' },
-                                        { title: 'Status' }
-                                    ].map((v, k) =>
-                                        <th key={k}
-                                            className='text-xs text-zinc-600 p-3 text-left'>
-                                            {v.title}
-                                        </th>)
+                                    AY && AY.map((v, k) =>
+                                        <tr key={k} className='hover:bg-zinc-200 transition-colors'>
+                                            <td className='text-xs text-zinc-600 p-3'>
+                                                <input type='checkbox' />
+                                            </td>
+                                            <td className='text-xs text-zinc-600 p-3'>{v.syTitle}</td>
+                                            <td className='text-xs text-zinc-600 p-3'>{v.syStart}</td>
+                                            <td className='text-xs text-zinc-600 p-3'>{v.syEnd}</td>
+                                            <td className='text-xs text-zinc-600 p-3'>{v.syStatus}</td>
+                                        </tr>)
                                 }
-                            </tr>
-                        </thead>
-                        <tbody className='h-[calc(100%-3rem)] overflow-y-auto'>
-                            {
-                                AY && AY.map((v, k) =>
-                                    <tr key={k} className='hover:bg-zinc-200 transition-colors'>
-                                        <td className='text-xs text-zinc-600 p-3'>
-                                            <input type='checkbox' />
-                                        </td>
-                                        <td className='text-xs text-zinc-600 p-3'>{v.syTitle}</td>
-                                        <td className='text-xs text-zinc-600 p-3'>{v.syStart}</td>
-                                        <td className='text-xs text-zinc-600 p-3'>{v.syEnd}</td>
-                                        <td className='text-xs text-zinc-600 p-3'>{v.syStatus}</td>
-                                    </tr>)
-                            }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+
+                    </div>
                     <div className='h-10'>
 
                     </div>

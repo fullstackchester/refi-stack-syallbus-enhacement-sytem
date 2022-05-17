@@ -140,9 +140,9 @@ export default function Posts() {
                             </button>)
                     }
                 </header>
-                <main className='flex-1'>
+                <main className='flex-1 overflow-y-auto'>
                     <table className='w-full h-auto table-auto'>
-                        <thead>
+                        <thead className='sticky top-0 bg-white'>
                             <tr className='border border-zinc-100'>
                                 {[
                                     { title: <input type='checkbox' onChange={() => setSelectedAll(true)} /> },

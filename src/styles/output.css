@@ -599,6 +599,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-column: span 1 / span 1;
 }
 
+.row-span-1 {
+  grid-row: span 1 / span 1;
+}
+
 .m-1 {
   margin: 0.25rem;
 }
@@ -778,6 +782,74 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .h-\[calc\(100\%-3\.5rem\)\] {
   height: calc(100% - 3.5rem);
+}
+
+.h-\[0vh\] {
+  height: 0vh;
+}
+
+.h-\[40vh\] {
+  height: 40vh;
+}
+
+.h-\[50vh\] {
+  height: 50vh;
+}
+
+.h-4 {
+  height: 1rem;
+}
+
+.h-0 {
+  height: 0px;
+}
+
+.h-\[20rem\] {
+  height: 20rem;
+}
+
+.h-2 {
+  height: 0.5rem;
+}
+
+.h-24 {
+  height: 6rem;
+}
+
+.h-60 {
+  height: 15rem;
+}
+
+.h-96 {
+  height: 24rem;
+}
+
+.h-9 {
+  height: 2.25rem;
+}
+
+.h-\[\] {
+  height: ;
+}
+
+.h-\[calc\(\)\] {
+  height: calc();
+}
+
+.h-\[calc\(100\)\] {
+  height: calc(100);
+}
+
+.h-\[calc\(100\%-\)\] {
+  height: calc(100% - );
+}
+
+.h-\[calc\(100\%-20\)\] {
+  height: calc(100% - 20);
+}
+
+.h-\[calc\(100\%-20rem\)\] {
+  height: calc(100% - 20rem);
 }
 
 .min-h-\[10rem\] {
@@ -1004,6 +1076,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
+.grid-rows-2 {
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
 .flex-row {
   flex-direction: row;
 }
@@ -1065,6 +1141,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .overflow-x-hidden {
   overflow-x: hidden;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
 }
 
 .text-ellipsis {
@@ -1203,6 +1283,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-sky-600 {
   --tw-border-opacity: 1;
   border-color: rgb(2 132 199 / var(--tw-border-opacity));
+}
+
+.border-white {
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
+}
+
+.border-pink-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(219 39 119 / var(--tw-border-opacity));
 }
 
 .bg-gray-300\/40 {

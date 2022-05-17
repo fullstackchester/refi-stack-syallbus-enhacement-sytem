@@ -5,11 +5,13 @@ import LoadingButton from '../../components/LoadingButton'
 import { database } from '../../js/Firebase'
 import { useFirebase } from '../../js/FirebaseContext'
 import { v4 as uuidv4 } from 'uuid'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
 export default function EditFile() {
     const { uploadFile } = useFirebase()
     const nav = useNavigate()
-    const postId = useParams()
+    const { postId } = useParams()
     const [post, setPost] = useState({})
     const [loading, setLoading] = useState(false)
     const titleRef = useRef()
@@ -19,7 +21,7 @@ export default function EditFile() {
     const inputStyle = 'border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300'
 
     useEffect(() => {
-        return onValue(ref(database, `posts/${postId.id}`), post => {
+        return onValue(ref(database, `posts/${postId}`), post => {
             if (post.exists()) {
                 setPost(post.val())
             }
@@ -66,10 +68,16 @@ export default function EditFile() {
     }
 
     return (
-        <div className='w-full h-auto flex justify-center items-center py-5 px-10'>
-            <div className='w-[80%] h-auto border border-zinc-200 bg-white rounded-md'>
-                <header className='h-12 border-b flex items-center px-10'>
-                    <span className='text-lg text-zinc-700 font-semibold'>{`Edit post`} </span>
+        <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center'>
+            <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>
+                <header className='h-14 flex flex-row items-center justify-left py-2 px-2 
+                border-b border-zinc-100 text-zinc-700'>
+                    <button type='button'
+                        className='h-8 w-8 rounded-full hover:bg-zinc-100'
+                        onClick={() => nav(-1)}>
+                        <FontAwesomeIcon icon={faChevronLeft} size={'sm'} />
+                    </button>
+                    <span className='font-semibold text-lg ml-3'>Edit Post</span>
                 </header>
                 <main className='flex-1 border-b border-zinc-200 flex justify-center'>
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { onValue, ref } from 'firebase/database'
 import { database, storage } from '../../js/Firebase'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
@@ -10,6 +10,7 @@ export default function FileInfo() {
     const [post, setPost] = useState({})
     const [fileUrl, setFileUrl] = useState()
     const [subject, setSubject] = useState()
+    const nav = useNavigate()
 
     useEffect(() => {
         return onValue(ref(database, `/posts/${id}`), snapshot => {
@@ -71,6 +72,14 @@ export default function FileInfo() {
                     </div>
                     <div className='flex flex-row '>{`Posted: ${post.postDate}`}</div>
                 </div>
+            </div>
+            <div className='h-14 flex items-center justify-end px-5 border-t border-zinc-100'>
+                <button
+                    type='button'
+                    onClick={() => nav(`/files/edit-post/${id}`)}
+                    className='p-2 border border-transparent rounded-md text-white bg-sky-600 hover:bg-sky-700 flex flex-row'>
+                    <span className='text-xs font-medium mr-2'>Edit Post</span>
+                </button>
             </div>
         </>
     )

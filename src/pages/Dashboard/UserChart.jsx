@@ -9,11 +9,13 @@ export default function UserChart() {
     const [admin, setAdmin] = useState(0)
     const [areaChair, setAreaChair] = useState(0)
     const [faculty, setFaculty] = useState(0)
+    let total = 0
 
 
     useEffect(() => {
         return onValue(ref(database, 'users/'), snapshot => {
             if (snapshot.exists()) {
+                total = Object.values(snapshot.val()).length
                 Object.values(snapshot.val()).map((v) => {
                     if (v.userType === 'administrator') {
                         setAdmin(prev => prev + 1)
@@ -28,6 +30,18 @@ export default function UserChart() {
             onlyOnce: true,
         })
     }, [])
+    const plugins = [{
+        beforeDraw: function (chart, args, options) {
+            const { ctx, chartArea: { left, right, top, bottom, width, height } } = chart;
+            ctx.save();
+            ctx.font = 'bold 2rem Roboto';
+            ctx.fillStyle = '#52525b'
+            ctx.textAlign = 'center'
+            var text = total;
+            ctx.fillText(text, width / 2, height / 2 + top);
+
+        }
+    }]
 
     const data = {
         labels: ['Admin', 'Area Chair', 'Faculty'],
@@ -39,10 +53,13 @@ export default function UserChart() {
 
 
     return (
-        <div className=' col-span-2 bg-white rounded-md h-80 flex flex-col'>
+        <div className=' col-span-2 row-span-1 bg-white rounded-md flex flex-col'>
             <h1 className='p-3 text-sm font-semibold text-zinc-500'>Users</h1>
             <div className='flex-1 w-full'>
-                <Doughnut data={data} options={{ maintainAspectRatio: false }} />
+                <Doughnut
+                    data={data}
+                    options={{ maintainAspectRatio: false }}
+                    plugins={plugins} />
             </div>
             <div className='h-10'>
 

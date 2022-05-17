@@ -18,11 +18,11 @@ export default function SubjectChart() {
         })
     }, [])
 
-    
+
 
 
     return (
-        <div className=' col-span-2 bg-white rounded-md h-80 flex flex-col'>
+        <div className=' col-span-2 row-span-1 bg-white rounded-md flex flex-col'>
             <div className='p-3 flex justify-between text-zinc-500'>
                 <span className='text-sm font-semibold '>Subjects</span>
                 <FontAwesomeIcon icon={faBook} size='sm' />

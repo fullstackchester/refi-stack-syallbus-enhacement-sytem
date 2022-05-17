@@ -10,8 +10,8 @@ import { faKey, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 export function Profile() {
 
 	return (
-		<div className='w-full h-auto px-10 py-5 flex items-center justify-center'>
-			<div className='w-[80%] h-auto min-h-[85vh] bg-white border border-zinc-200 rounded-md flex flex-row'>
+		<div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center'>
+			<div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-row'>
 				<div className='w-1/4 border-r border-zinc-100'>
 					<div className='h-14 flex items-center justify-left py-2 px-4 font-semibold text-lg text-zinc-600 border-b border-zinc-100'>
 						Account</div>

@@ -34,6 +34,7 @@ import FacultySyllabus from './pages/Faculty/FacultySyllabus'
 import FileInfo from './pages/Files/FileInfo'
 import FileComments from './pages/Files/FileComment'
 import FileHistory from './pages/Files/FileHistory'
+import FileAdd from './pages/Files/FileAdd'
 
 export default function App() {
 	return (
@@ -59,6 +60,8 @@ export default function App() {
 							</Route>
 
 							<Route exact path='files' element={<Files />} />
+							<Route exact path='files/create-post' element={<FileAdd />} />
+							<Route exact path='files/edit-post/:postId' element={<EditFile />} />
 							<Route exact path='files/:id' element={<ViewFile />} >
 								<Route index element={<FileInfo />} />
 								<Route exact path='information' element={<FileInfo />} />

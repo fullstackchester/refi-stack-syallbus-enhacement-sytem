@@ -29,8 +29,8 @@ export default function ViewPost() {
     ]
 
     return (
-        <div className='w-full h-auto flex justify-center items-center py-5 px-10'>
-            <main className='w-[80%] h-[85vh] bg-white  rounded-md flex flex-row'>
+        <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center'>
+            <main className='h-[90vh] w-[85%] bg-white  rounded-md flex flex-row'>
                 <div className='w-1/4 border-r border-zinc-100'>
                     <div className='h-14 flex flex-row items-center justify-left py-2 px-2 border-b
                      border-zinc-100 text-zinc-700'>
