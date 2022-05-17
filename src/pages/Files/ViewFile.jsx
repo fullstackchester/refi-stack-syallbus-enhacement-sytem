@@ -1,82 +1,57 @@
 import { onValue, ref } from 'firebase/database'
 import { getDownloadURL, ref as StorageRef } from 'firebase/storage'
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import Comments from '../../components/CommentSection'
-import History from '../../components/HistorySection'
-import LoadingButton from '../../components/LoadingButton'
-import PostStatus from '../../components/PostStatus'
-import { database, storage } from '../../js/Firebase'
+import { Link, NavLink, Outlet, useNavigate, useParams } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faComment, faHistory, faChevronLeft, faFileAlt } from '@fortawesome/free-solid-svg-icons'
 
 export default function ViewFile() {
 
-    const postId = useParams()
     const nav = useNavigate()
-    const [post, setPost] = useState({})
-    const [commentCount, setCount] = useState(0)
-    useEffect(() => {
-        return onValue(ref(database, `posts/${postId.id}`), post => {
-            if (post.exists()) {
-                setPost(post.val())
-            } else {
-                alert('data not found')
-            }
-        })
-    }, [])
-    useState(() => {
-        return onValue(ref(database, `comments/${postId.id}`), comments => {
-            setCount(comments.size)
-        })
-    }, [])
+    const { id } = useParams()
+    const links = [
+        {
+            title: 'Information',
+            link: `/files/${id}/information`,
+            icon: faFileAlt
+        },
+        {
+            title: 'Comments',
+            link: `/files/${id}/comments`,
+            icon: faComment
+        },
+        {
+            title: 'Edit history',
+            link: `/files/${id}/edit-history`,
+            icon: faHistory
+        }
+    ]
 
-    function downloadFile(e) {
-        e.preventDefault()
-        getDownloadURL(StorageRef(storage, post && post.postFileUrl))
-            .then((url) => {
-                window.open(url)
-            }).catch((err) => {
-                alert(err)
-            });
-    }
     return (
-        <div className='w-full h-auto flex justify-center items-center py-5 px-10'>
-            <main className='w-[80%] h-auto bg-white rounded-md border border-zinc-200 flex flex-col'>
-                <div className='h-auto w-full py-5 px-10'>
-                    <div className={`text-2xl text-zinc-700 font-semibold flex flex-row items-center`}>
-                        {post.postTitle} <PostStatus postStatus={post.postStatus} textSize={`text-xs`} />
+        <div className='w-full h-[calc(100vh-3rem)] flex justify-center items-center'>
+            <main className='w-[85%] h-[90vh] bg-white  rounded-md flex flex-row'>
+                <div className='w-1/4 border-r border-zinc-100'>
+                    <div className='h-14 flex flex-row items-center justify-left py-2 px-2 border-b 
+                    border-zinc-100 text-zinc-700'>
+                        <button type='button'
+                            className='h-8 w-8 rounded-full hover:bg-zinc-100'
+                            onClick={() => nav('/files')}>
+                            <FontAwesomeIcon icon={faChevronLeft} size={'sm'} />
+                        </button>
+                        <span className='font-semibold text-lg ml-3'>Files</span>
                     </div>
-                    <div className={`py-2 text-xs font-semibold text-zinc-600`}>
-                        {`Attachments:`} <span
-                            title={`Download attachment - ${post.postFile}`}
-                            className={`text-sky-600 hover:underline cursor-pointer`}
-                            onClick={downloadFile}>{post.postFile}</span>
-                        <p className={`text-xs text-zinc-500`}>{`Posted: ${post.postDate}`} </p>
-                    </div>
-                    <p className={`text-sm text-zinc-600`}>{post.postDescription} </p>
+                    {links.map((val, key) =>
+                        <NavLink
+                            key={key} to={val.link}
+                            className={({ isActive }) => isActive ? 'text-red-600' : 'text-white'}>
+                            <div className='h-12 border-b border-zinc-100 flex flex-row items-center text-xs
+								 font-medium text-zinc-600 hover:bg-zinc-100 transition-colors px-3'>
+                                <FontAwesomeIcon icon={val.icon} /> <span className='ml-3'>{val.title}</span>
+                            </div>
+                        </NavLink>)}
                 </div>
-                <div className={`h-[300px] grid grid-cols-3 border-t border-zinc-200`}>
-                    <div className={`col-span-1  bg-zinc-50 flex flex-col`}>
-                        <div className={`p-1 text-xs text-zinc-600`}>Edit history</div>
-                        <div className='flex-1 overflow-y-auto'>
-                            <History postId={postId.id} />
-                        </div>
-                    </div>
-                    <div className={`col-span-2 border-l border-zinc-200 overflow-y-auto`}>
-                        <div className={`p-1 text-xs text-zinc-600`}>
-                            {`Comments ${String.fromCharCode(8226)} ${commentCount}`}
-                        </div>
-                        <div className='px-5 '>
-                            <Comments postId={postId.id} />
-                        </div>
-                    </div>
-                </div>
-                <div className={`h-14 border-t border-zinc-200 flex px-5 justify-end items-center`}>
-                    <LoadingButton
-                        title={`Edit post`}
-                        dedicatedFunc={(e) => {
-                            e.preventDefault()
-                            nav(`/files/edit/${postId.id}`)
-                        }} />
+                <div className='w-3/4 flex flex-col'>
+                    <Outlet />
                 </div>
             </main>
         </div>

@@ -57,13 +57,13 @@ function Subjects() {
                             <tr className='border border-zinc-100'>
                                 {
                                     [
-                                        { title: '', },
+                                        { title: <input type='checkbox' />, },
                                         { title: 'Course Code', },
                                         { title: 'Course Title', },
                                         { title: 'Units', },
                                     ].map((val, key) =>
                                         <th key={key}
-                                            className='p-2 text-xs text-left text-zinc-600 hover:bg-zinc-200
+                                            className='p-3 text-xs text-left text-zinc-600 hover:bg-zinc-200
                                                  transition-colors cursor-pointer'>
                                             {val.title}
                                         </th>)

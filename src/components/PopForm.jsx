@@ -52,7 +52,7 @@ export default function PopForm(
                                 <div className="mt-4 flex flex-row justify-end">
                                     <button
                                         type="button"
-                                        className="px-4 py-2 text-xs text-zinc-700 bg-zinc-200 border border-transparent rounded-md
+                                        className="px-4 py-2 text-xs font-medium text-zinc-700 bg-zinc-200 border border-transparent rounded-md
                                          hover:bg-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
                                           focus-visible:ring-blue-500 mr-3"
                                         onClick={handleClose} >
@@ -61,8 +61,8 @@ export default function PopForm(
                                     <button
                                         type="submit"
                                         form={formId}
-                                        className="px-4 py-2 text-xs text-white bg-sky-600 border border-transparent rounded-md hover:bg-sky-700 focus:outline-none
-                                          focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 mr-3" >
+                                        className="px-4 py-2 text-xs font-medium text-white bg-sky-600 border border-transparent rounded-md hover:bg-sky-700 focus:outline-none
+                                          focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 " >
                                         {buttonTitle}
                                     </button>
                                 </div>

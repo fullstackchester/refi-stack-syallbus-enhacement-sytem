@@ -1,24 +1,18 @@
-import { onValue, ref } from 'firebase/database'
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import PostStatus from '../../components/PostStatus'
+import { onValue, ref } from 'firebase/database'
 import { database, storage } from '../../js/Firebase'
-import SetStatus from '../../components/SetStatus'
-import { getBlob, getDownloadURL, ref as storageRef } from 'firebase/storage'
-import { useFirebase } from '../../js/FirebaseContext'
+import { getDownloadURL, ref as storageRef } from 'firebase/storage'
+import PostStatus from '../../components/PostStatus'
 
-export default function Information() {
-
-    const { postId } = useParams()
+export default function FileInfo() {
+    const { id } = useParams()
     const [post, setPost] = useState({})
     const [fileUrl, setFileUrl] = useState()
-    const { isAdmin, isAreaChair } = useFirebase()
     const [subject, setSubject] = useState()
 
-
-
     useEffect(() => {
-        return onValue(ref(database, `/posts/${postId}`), snapshot => {
+        return onValue(ref(database, `/posts/${id}`), snapshot => {
             if (snapshot.exists()) {
                 setPost(snapshot.val())
                 onValue(ref(database, `subject/${snapshot.val().subjectId}`), snapshot => {
@@ -39,13 +33,11 @@ export default function Information() {
         })
     }, [])
 
-
     return (
         <>
             <div className='h-14 flex flex-row items-center border-b border-zinc-100 text-sm
              text-zinc-600 px-5 font-semibold'>
                 Information
-                {!isAdmin && !isAreaChair ? <></> : <SetStatus postId={postId} />}
             </div>
             <div className='flex-1 px-5 pb-3 overflow-y-auto'>
                 <div className='flex flex-row items-start justify-between bg-white py-3 sticky top-0'>

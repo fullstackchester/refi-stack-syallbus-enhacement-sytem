@@ -31,6 +31,9 @@ import Comments from './pages/Syllabus/Comments'
 import History from './pages/Syllabus/History'
 import FacultyProfile from './pages/Faculty/FacultyProfile'
 import FacultySyllabus from './pages/Faculty/FacultySyllabus'
+import FileInfo from './pages/Files/FileInfo'
+import FileComments from './pages/Files/FileComment'
+import FileHistory from './pages/Files/FileHistory'
 
 export default function App() {
 	return (
@@ -56,8 +59,12 @@ export default function App() {
 							</Route>
 
 							<Route exact path='files' element={<Files />} />
-							<Route exact path='files/:id' element={<ViewFile />} />
-							<Route exact path='files/edit/:id' element={<EditFile />} />
+							<Route exact path='files/:id' element={<ViewFile />} >
+								<Route index element={<FileInfo />} />
+								<Route exact path='information' element={<FileInfo />} />
+								<Route exact path='comments' element={<FileComments />} />
+								<Route exact path='edit-history' element={<FileHistory />} />
+							</Route>
 
 							<Route exact path='faculty' element={<Faculty />} />
 							<Route exact path='faculty/:uid' element={<FacultyAccount />} >
