@@ -50,8 +50,6 @@ function Dashboard() {
             });
     }
 
-
-
     return (
         <div className='w-full h-[calc(100vh-3rem)] flex flex-col items-center justify-center'>
             <PopForm

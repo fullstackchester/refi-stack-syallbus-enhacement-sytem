@@ -164,16 +164,25 @@ export default function Posts() {
                                     <tr key={k}
                                         className='text-xs font-medium hover:bg-zinc-200
                                          transition-colors border border-zinc-100 text-zinc-700' >
-                                        <td className='p-2 text-xs '>
-                                            <input type='checkbox' />
+                                        <td className='py-3 px-2 text-xs '>
+                                            <input
+                                                type='checkbox'
+                                                value={v.postId}
+                                                onChange={(e) => {
+                                                    if (e.target.checked) {
+                                                        console.log(e.target.value)
+                                                    }
+                                                }}
+
+                                            />
                                         </td>
-                                        <td className='p-2 text-xs  hover:underline cursor-pointer'
+                                        <td className='py-3 px-2 text-xs  hover:underline cursor-pointer'
                                             onClick={() => {
                                                 nav(`/posts/${v.postId}`)
                                             }}>{v.postTitle}</td>
-                                        <td className='p-2 text-xs '>{v.syId ? `${getSy(v.syId)}` : 'Null'}</td>
-                                        <td className='p-2 text-xs '>{v.postDate}</td>
-                                        <td className='p-2 text-xs '>
+                                        <td className='py-3 px-2 text-xs '>{v.syId ? `${getSy(v.syId)}` : 'Null'}</td>
+                                        <td className='py-3 px-2 text-xs '>{v.postDate}</td>
+                                        <td className='py-3 px-2 text-xs '>
                                             <PostStatus postStatus={v.postStatus} textSize={'text-xs'} />
                                         </td>
                                     </tr>)}

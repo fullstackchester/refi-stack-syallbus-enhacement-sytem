@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
 import { Link, useNavigate } from 'react-router-dom'
+import { motion } from "framer-motion"
 
 
 function Faculty() {
@@ -47,6 +48,7 @@ function Faculty() {
                                         .map((val, key) =>
                                             <th
                                                 key={key}
+                                                onClick={val.onClick}
                                                 className='p-2 text-xs text-left text-zinc-600 hover:bg-zinc-200
                                                  transition-colors cursor-pointer'>
                                                 {val.title}
@@ -60,25 +62,35 @@ function Faculty() {
                                     .filter(entry => Object.values(entry).some(val => typeof val === 'string'
                                         && val.toLowerCase().includes(search.toLowerCase())))
                                     .sort((a, b) => {
-                                        a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+                                        if (sortBy === 'name') {
+                                            return a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+                                        } else if (sortBy === 'email') {
+                                            return a.email.toLowerCase().localeCompare(b.email.toLowerCase())
+                                        } else if (sortBy === 'employeeId') {
+                                            return a.employeeId.toLowerCase().localeCompare(b.employeeId.toLowerCase())
+                                        } else if (sortBy === 'department') {
+                                            return a.department.toLowerCase().localeCompare(b.department.toLowerCase())
+                                        }
                                     })
                                     .map((val, key) =>
-                                        <tr key={key}
+                                        <motion.tr
+                                            key={key}
+                                            animate={{ x: 0 }}
                                             className='border border-zinc-100 text-xs text-zinc-700 font-medium
                                         hover:bg-zinc-200 transition-colors'>
-                                            <td className='p-3'>
+                                            <td className='px-2 py-3'>
                                                 {/* Place the Checkbox here */}
                                                 <input type='checkbox' className=' default:ring-2 checked:bg-sky-300' />
                                             </td>
-                                            <td className='p-3'>
+                                            <td className='px-2 py-3'>
                                                 <Link to={`${val.uid}`} className='hover:underline'>
                                                     {val.name}
                                                 </Link>
                                             </td>
-                                            <td className='p-3'>{val.email}</td>
+                                            <td className='px-2 py-3'>{val.email}</td>
                                             <td>{val.employeeId}</td>
-                                            <td className='p-3'>{val.department}</td>
-                                        </tr>) : <></>}
+                                            <td className='px-2 py-3'>{val.department}</td>
+                                        </motion.tr>) : <></>}
                         </tbody>
                     </table>
                 </main>

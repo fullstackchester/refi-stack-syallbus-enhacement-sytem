@@ -47,7 +47,7 @@ export default function UserChart() {
         labels: ['Admin', 'Area Chair', 'Faculty'],
         datasets: [{
             data: [admin, areaChair, faculty],
-            backgroundColor: ['#16A34A', '#0284C7', '#DC2626']
+            backgroundColor: ['#4ade80', '#38bdf8', '#f87171']
         }]
     }
 

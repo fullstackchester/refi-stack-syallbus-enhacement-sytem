@@ -6,25 +6,18 @@ import { database } from '../../js/Firebase';
 
 export default function PostChart() {
 
-    const [approve, setApprove] = useState(0)
-    const [revise, setRevise] = useState(0)
-    const [review, setReview] = useState(0)
+    const [post, setPost] = useState([])
     let total = 0
+    let approveCount = 0
+    let reviewCount = 0
+    let reviseCount = 0
+
 
     useEffect(() => {
         return onValue(ref(database, 'posts'), snapshot => {
             if (snapshot.exists()) {
-                // setPosts(Object.values(snapshot.val()))
                 total = Object.values(snapshot.val()).length
-                Object.values(snapshot.val()).map((value) => {
-                    if (value.postStatus === 'Approved') {
-                        setApprove((prev) => prev + 1)
-                    } else if (value.postStatus === 'Needs revisions') {
-                        setRevise((prev) => prev + 1)
-                    } else {
-                        setReview((prev) => prev + 1)
-                    }
-                })
+                setPost(Object.values(snapshot.val()))
             } else {
                 console.log('Invalid query')
             }
@@ -32,6 +25,16 @@ export default function PostChart() {
             onlyOnce: true
         })
     }, [])
+
+    post.forEach(a => {
+        if (a.postStatus === 'Approved') {
+            approveCount += 1
+        } else if (a.postStatus === 'Needs reviewing') {
+            reviewCount += 1
+        } else {
+            reviseCount += 1
+        }
+    })
 
     const plugins = [{
         beforeDraw: function (chart, args, options) {
@@ -45,11 +48,12 @@ export default function PostChart() {
 
         }
     }]
+    
     const data = {
         labels: ['Approved', 'Needs Reviews', 'Need Revisions'],
         datasets: [{
-            data: [approve, review, revise],
-            backgroundColor: ['#16A34A', '#0284C7', '#DC2626'],
+            data: [approveCount, reviewCount, reviseCount],
+            backgroundColor: ['#4ade80', '#38bdf8', '#f87171'],
             pointStyle: 'circle'
         }],
         plugins: [plugins]
