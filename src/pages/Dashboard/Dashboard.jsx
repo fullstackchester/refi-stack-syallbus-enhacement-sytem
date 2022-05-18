@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { orderByValue, equalTo, onValue, query, ref, set, limitToFirst } from 'firebase/database'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Route, useNavigate } from 'react-router-dom'
 import { database } from '../../js/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAdd } from '@fortawesome/free-solid-svg-icons'
@@ -10,11 +10,16 @@ import SubjectChart from './SubjectChart'
 import PopNotif from '../../components/PopNotif'
 import PopForm from '../../components/PopForm'
 import { v4 as uuidv4 } from 'uuid'
+import { useFirebase } from '../../js/FirebaseContext'
 
 function Dashboard() {
     const [AY, setAY] = useState([])
     const [isOpen, setOpen] = useState(false)
     const [isSuccess, setSuccess] = useState(false)
+    const [isCheckAll, setCheckAll] = useState(false)
+    const [isCheck, setCheck] = useState([])
+    const { role } = useFirebase()
+
 
     const syStartRef = useRef()
     const syEndRef = useRef()
@@ -48,6 +53,22 @@ function Dashboard() {
             }).catch((err) => {
                 console.log(err)
             });
+    }
+
+    function handleCheckAll() {
+        setCheckAll(!isCheckAll)
+        setCheck(AY.map(item => item.syId))
+        if (isCheckAll) {
+            setCheck([])
+        }
+    }
+
+    function handleCheck(e) {
+        const { checked, value } = e.target
+        setCheck([...isCheck, value])
+        if (!checked) {
+            setCheck(isCheck.filter(item => item !== value))
+        }
     }
 
     return (
@@ -117,7 +138,8 @@ function Dashboard() {
                 <UserChart />
                 <SubjectChart />
                 <div className='col-span-6 row-span-1 bg-white rounded-md flex flex-col'>
-                    <div className='h-12 flex flex-row items-center justify-end px-3'>
+                    <div className='h-12 flex flex-row items-center justify-between px-3'>
+                        <h1 className=' text-sm font-semibold text-zinc-500'>School year</h1>
                         <button
                             onClick={() => setOpen(true)}
                             className={`border border-transparent text-zinc-800 ml-2 flex items-center 
@@ -131,7 +153,12 @@ function Dashboard() {
                                 <tr className='border border-zinc-100'>
                                     {
                                         [
-                                            { title: <input type='checkbox' /> },
+                                            {
+                                                title: <input
+                                                    type='checkbox'
+                                                    onChange={handleCheckAll}
+                                                    checked={isCheckAll} />
+                                            },
                                             { title: 'School Year' },
                                             { title: 'Start Date' },
                                             { title: 'End Date' },
@@ -149,7 +176,11 @@ function Dashboard() {
                                     AY && AY.map((v, k) =>
                                         <tr key={k} className='hover:bg-zinc-200 transition-colors'>
                                             <td className='text-xs text-zinc-600 p-3'>
-                                                <input type='checkbox' />
+                                                <input
+                                                    type='checkbox'
+                                                    onChange={handleCheck}
+                                                    checked={isCheck.includes(v.syId)}
+                                                    value={v.syId} />
                                             </td>
                                             <td className='text-xs text-zinc-600 p-3'>{v.syTitle}</td>
                                             <td className='text-xs text-zinc-600 p-3'>{v.syStart}</td>
@@ -167,7 +198,6 @@ function Dashboard() {
                 </div>
             </div>
         </div>
-
     )
 }
 

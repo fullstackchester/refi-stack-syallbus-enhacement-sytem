@@ -12,7 +12,7 @@ export default function Information() {
     const { postId } = useParams()
     const [post, setPost] = useState({})
     const [fileUrl, setFileUrl] = useState()
-    const { isAdmin, isAreaChair } = useFirebase()
+    const { role } = useFirebase()
     const [subject, setSubject] = useState()
 
 
@@ -45,7 +45,7 @@ export default function Information() {
             <div className='h-14 flex flex-row items-center border-b border-zinc-100 text-sm
              text-zinc-600 px-5 font-semibold'>
                 Information
-                {!isAdmin && !isAreaChair ? <></> : <SetStatus postId={postId} />}
+                {role === 'administrator' || role === 'area chair' ? <SetStatus postId={postId} /> : <></>}
             </div>
             <div className='flex-1 px-5 pb-3 overflow-y-auto'>
                 <div className='flex flex-row items-start justify-between bg-white py-3 sticky top-0'>

@@ -2,12 +2,16 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { faBook, faUserCircle, faFileAlt, faGraduationCap, faSquarePollVertical, faUserTie, faChevronLeft, faChevronRight, faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useFirebase } from '../../js/FirebaseContext'
 
 
 
 function Sidebar() {
 
     const [minimize, setMinimize] = useState()
+    const { role } = useFirebase()
+
+
     return (
         <div className={`${minimize ? 'w-auto' : 'w-[15vw] min-w-[210px]'} h-screen
          bg-zinc-900 flex flex-col sticky top-0 transition-all`}>
@@ -24,16 +28,19 @@ function Sidebar() {
                         title: 'Reports',
                         icon: <FontAwesomeIcon icon={faSquarePollVertical} />,
                         link: '/reports',
+                        restricted: role === 'faculty' ? 'hidden' : ''
                     },
                     {
                         title: 'Syllabus',
                         icon: <FontAwesomeIcon icon={faGraduationCap} />,
                         link: '/posts',
+                        restricted: role === 'faculty' ? 'hidden' : ''
                     },
                     {
                         title: 'Faculty',
                         icon: <FontAwesomeIcon icon={faUserTie} />,
                         link: '/faculty',
+                        restricted: role === 'faculty' ? 'hidden' : ''
                     },
                     {
                         title: 'Subjects',
@@ -55,7 +62,7 @@ function Sidebar() {
                         key={key}
                         to={val.link}
                         className={({ isActive }) => isActive ? 'text-sky-300 bg-zinc-800' : 'text-zinc-200'}>
-                        <div className='flex flex-row h-12 w-full hover:bg-zinc-800 transition-colors'>
+                        <div className={`flex flex-row h-12 w-full hover:bg-zinc-800 transition-colors ${val.restricted}`}>
                             <div className={`h-full w-12 flex justify-center items-center`}>
                                 {val.icon}
                             </div>
@@ -63,7 +70,8 @@ function Sidebar() {
                                 {val.title}
                             </div>}
                         </div>
-                    </NavLink>)}
+                    </NavLink>
+                )}
             </div>
             <button
                 type={`button`}

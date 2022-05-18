@@ -10,6 +10,9 @@ function Faculty() {
     const [faculty, setFaculty] = useState([])
     const [search, setSearch] = useState('')
     const [sortBy, setSort] = useState('name')
+    const [isCheckAll, setCheckAll] = useState(false)
+    const [isCheck, setCheck] = useState([])
+
     const nav = useNavigate()
 
     useEffect(() => {
@@ -20,6 +23,24 @@ function Faculty() {
 
         return getFaculty
     }, [])
+
+    function handleCheckAll() {
+        setCheckAll(!isCheckAll)
+        setCheck(faculty.map(item => item.uid))
+        if (isCheckAll) {
+            setCheck([])
+        }
+    }
+
+    function handleCheck(e) {
+        const { checked, value } = e.target
+        setCheck([...isCheck, value])
+        if (!checked) {
+            setCheck(isCheck.filter(item => item !== value))
+        }
+    }
+
+    console.table(isCheck)
 
     return (
         <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center py-5'>
@@ -40,7 +61,13 @@ function Faculty() {
                         <thead className='sticky top-0 bg-white'>
                             <tr className='border border-zinc-100'>
                                 {
-                                    [{ title: '' },
+                                    [{
+                                        title: <input
+                                            type='checkbox'
+                                            onChange={handleCheckAll}
+                                            checked={isCheckAll}
+                                        />
+                                    },
                                     { title: 'Name', onClick: () => setSort('name') },
                                     { title: 'Email', onClick: () => setSort('email') },
                                     { title: 'Employee Id', onClick: () => setSort('employeeId') },
@@ -75,12 +102,18 @@ function Faculty() {
                                     .map((val, key) =>
                                         <motion.tr
                                             key={key}
-                                            animate={{ x: 0 }}
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ opacity: 0 }}
                                             className='border border-zinc-100 text-xs text-zinc-700 font-medium
                                         hover:bg-zinc-200 transition-colors'>
                                             <td className='px-2 py-3'>
                                                 {/* Place the Checkbox here */}
-                                                <input type='checkbox' className=' default:ring-2 checked:bg-sky-300' />
+                                                <input
+                                                    type='checkbox'
+                                                    onChange={handleCheck}
+                                                    checked={isCheck.includes(val.uid)}
+                                                    value={val.uid} />
                                             </td>
                                             <td className='px-2 py-3'>
                                                 <Link to={`${val.uid}`} className='hover:underline'>

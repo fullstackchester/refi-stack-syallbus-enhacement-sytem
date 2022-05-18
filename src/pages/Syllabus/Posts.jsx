@@ -1,13 +1,14 @@
 import { onValue, ref } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { database } from '../../js/Firebase'
-import Navbar from '../../components/Navbar'
+import { database, storage } from '../../js/Firebase'
 import PostStatus from '../../components/PostStatus'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAdd, faPlusCircle, faFilter, faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
+import { faAdd, faPlusCircle, faFilter, faCalendarAlt, faPrint } from '@fortawesome/free-solid-svg-icons'
 import PopFilter from '../../components/PopFilter'
-
+import print from 'print-js'
+import printJS from 'print-js'
+import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 
 
 
@@ -17,10 +18,14 @@ export default function Posts() {
     const [posts, setPosts] = useState([])
     const [ay, setAy] = useState([])
     const [searchpost, setSearch] = useState('')
-    const [isExpand, setExpand] = useState(false)
     const [isOpen, setOpen] = useState(false)
     const [filterSy, setFilterSy] = useState(false)
-    const [isAllSelected, setSelectedAll] = useState(false)
+
+    const [isCheckAll, setCheckAll] = useState(false)
+    const [isCheck, setCheck] = useState([])
+
+    const [docx, setDocx] = useState([])
+
 
     useEffect(() => {
         onValue(ref(database, 'posts'), posts => {
@@ -47,8 +52,38 @@ export default function Posts() {
         })
     }
 
+    function handleCheckAll() {
+        setCheckAll(!isCheckAll)
+        setCheck(posts.map(item => item.postFileUrl))
+        if (isCheckAll) {
+            setCheck([])
+        }
+    }
+
+    function handleCheck(e) {
+        const { checked, value } = e.target
+        setCheck([...isCheck, value])
+        if (!checked) {
+            setCheck(isCheck.filter(item => item !== value))
+        }
+    }
+
+    const print = () => {
+
+        isCheck.map(fileUrl => {
+            getDownloadURL(storageRef(storage, fileUrl))
+                .then((url) => {
+                    console.log(`https://drive.google.com/viewerng/viewer?embedded=true&url=${encodeURIComponent(url)}`)
+                })
+                .catch((e) => {
+                    console.log(e)
+                });
+        })
+
+    }
+
     return (
-        <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center'>
+        <div className='w-full h-auto min-h-[calc(100vh-3rem)] flex flex-col items-center justify-center'>
             <PopFilter isOpen={isOpen} handleClose={() => setOpen(false)} buttonTitle='Ok' dialogTitle='Filter by' >
                 <div className='flex flex-col'>
                     {
@@ -145,7 +180,12 @@ export default function Posts() {
                         <thead className='sticky top-0 bg-white'>
                             <tr className='border border-zinc-100'>
                                 {[
-                                    { title: <input type='checkbox' onChange={() => setSelectedAll(true)} /> },
+                                    {
+                                        title: <input
+                                            type='checkbox'
+                                            onChange={handleCheckAll}
+                                            checked={isCheckAll} />
+                                    },
                                     { title: 'Post Title' },
                                     { title: 'Academic Year' },
                                     { title: 'Date Posted' },
@@ -167,14 +207,10 @@ export default function Posts() {
                                         <td className='py-3 px-2 text-xs '>
                                             <input
                                                 type='checkbox'
-                                                value={v.postId}
-                                                onChange={(e) => {
-                                                    if (e.target.checked) {
-                                                        console.log(e.target.value)
-                                                    }
-                                                }}
-
-                                            />
+                                                id={v.postId}
+                                                onChange={handleCheck}
+                                                checked={isCheck.includes(v.postFileUrl)}
+                                                value={v.postFileUrl} />
                                         </td>
                                         <td className='py-3 px-2 text-xs  hover:underline cursor-pointer'
                                             onClick={() => {
@@ -191,10 +227,28 @@ export default function Posts() {
                     </table>
 
                 </main>
-                <footer className='h-10 border-t border-zinc-100'>
+                <footer className='h-12 border-t border-zinc-100 flex items-center p-3'>
+                    {isCheck.length !== 0 &&
+                        <button
+                            onClick={print}
+                            type='button'
+                            className='p-1 h-auto w-16 border border-transparent rounded-md
+                         text-white bg-sky-600 hover:bg-sky-700 flex flex-row items-center justify-evenly' >
+                            <span className='text-xs'>Print</span>
+                            <FontAwesomeIcon icon={faPrint} size='xs' />
+                        </button>}
 
                 </footer>
             </div>
+            {/* {
+                isCheck.length !== 0 && isCheck.map((v, k) =>
+                    getDownloadURL(storageRef(storage, v))
+                        .then((url) =>
+                            
+                        .catch((e) => {
+                            console.log(e)
+                        }))
+            } */}
         </div>
     )
 }

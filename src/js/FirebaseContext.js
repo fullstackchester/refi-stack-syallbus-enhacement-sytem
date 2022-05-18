@@ -22,6 +22,7 @@ export function FirebaseProvider({ children }) {
     const [loading, setLoading] = useState(true)
     const [isAdmin, setAdmin] = useState()
     const [isAreaChair, setAreaChair] = useState()
+    const [role, setRole] = useState()
 
     const value = {
         currentUser,
@@ -32,8 +33,7 @@ export function FirebaseProvider({ children }) {
         deleteData,
         uploadAvatar,
         uploadFile,
-        isAdmin,
-        isAreaChair,
+        role
     }
 
     useEffect(() => {
@@ -41,12 +41,9 @@ export function FirebaseProvider({ children }) {
         const unsub = onAuthStateChanged(auth, user => {
             setCurrentUser(user)
             setLoading(false)
-
             onValue(ref(database, `users/${user.uid}`), snapshot => {
-                setAreaChair(snapshot.val().userType === 'area-chair' ? true : false)
-                setAdmin(snapshot.val().userType === 'administrator' ? true : false)
+                setRole(snapshot.val().userType)
             })
-
         })
 
         return unsub

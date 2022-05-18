@@ -48,7 +48,7 @@ export default function PostChart() {
 
         }
     }]
-    
+
     const data = {
         labels: ['Approved', 'Needs Reviews', 'Need Revisions'],
         datasets: [{

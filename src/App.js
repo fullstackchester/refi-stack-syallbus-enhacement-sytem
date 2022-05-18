@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Layout from './components/Template/Layout'
-import { FirebaseProvider } from './js/FirebaseContext'
-import Dashboard from './pages/Dashboard/Dashboard'
+import { FirebaseProvider, useFirebase } from './js/FirebaseContext'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Subjects from './pages/Subjects/Subjects'
@@ -22,8 +21,6 @@ import ViewPost from './pages/Syllabus/ViewPost'
 import FacultyEdit from './pages/Faculty/FacultyEdit'
 import ViewFile from './pages/Files/ViewFile'
 import EditFile from './pages/Files/EditFile'
-import SchoolYearList from './pages/SchoolYear/SchoolYearList'
-import AddSchoolYear from './pages/SchoolYear/AddSchoolYear'
 import DisplayInformation from './pages/Profile/DisplayInformation'
 import Authentication from './pages/Profile/Authentication'
 import Information from './pages/Syllabus/Information'
@@ -35,8 +32,14 @@ import FileInfo from './pages/Files/FileInfo'
 import FileComments from './pages/Files/FileComment'
 import FileHistory from './pages/Files/FileHistory'
 import FileAdd from './pages/Files/FileAdd'
+import Dashboard from './pages/Dashboard/Dashboard'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from './js/Firebase'
+import ProtectedRoute from './components/ProtectedRoute'
 
 export default function App() {
+
+
 	return (
 		<div className='w-full h-auto bg-gray-300/40'>
 			<FirebaseProvider>
@@ -45,11 +48,10 @@ export default function App() {
 						<Route exact path='/' element={<Login />} />
 						<Route path='/signup' element={<Signup />} />
 						<Route path='/' element={<Layout />} >
-							<Route exact path='reports' element={<Dashboard />} />
 
-							<Route exact path='school-year' element={<SchoolYearList />} />
-							<Route exact path='school-year/add' element={<AddSchoolYear />} />
-
+							{/* <ProtectedRoute path='/reports' element={Dashboard} /> */}
+							<Route path='/reports' element={<Dashboard />} />
+							
 							<Route path='posts' element={<Posts />} />
 							<Route path='posts/create-post' element={<CreatePost />} />
 							<Route path='posts/:postId' element={<ViewPost />} >
@@ -59,15 +61,6 @@ export default function App() {
 								<Route path='edit-history' element={<History />} />
 							</Route>
 
-							<Route exact path='files' element={<Files />} />
-							<Route exact path='files/create-post' element={<FileAdd />} />
-							<Route exact path='files/edit-post/:postId' element={<EditFile />} />
-							<Route exact path='files/:id' element={<ViewFile />} >
-								<Route index element={<FileInfo />} />
-								<Route exact path='information' element={<FileInfo />} />
-								<Route exact path='comments' element={<FileComments />} />
-								<Route exact path='edit-history' element={<FileHistory />} />
-							</Route>
 
 							<Route exact path='faculty' element={<Faculty />} />
 							<Route exact path='faculty/:uid' element={<FacultyAccount />} >
@@ -81,6 +74,16 @@ export default function App() {
 							<Route exact path='subjects/add' element={<SubjectAdd />} />
 							<Route exact path='subjects/:id' element={<Subject />} />
 							<Route exact path='subjects/:id/edit' element={<SubjectEdit />} />
+
+							<Route exact path='files' element={<Files />} />
+							<Route exact path='files/create-post' element={<FileAdd />} />
+							<Route exact path='files/edit-post/:postId' element={<EditFile />} />
+							<Route exact path='files/:id' element={<ViewFile />} >
+								<Route index element={<FileInfo />} />
+								<Route exact path='information' element={<FileInfo />} />
+								<Route exact path='comments' element={<FileComments />} />
+								<Route exact path='edit-history' element={<FileHistory />} />
+							</Route>
 
 							<Route path='profile' element={<Profile />}>
 								<Route index element={<DisplayInformation />} />
