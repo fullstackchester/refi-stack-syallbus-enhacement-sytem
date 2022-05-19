@@ -4,12 +4,22 @@ import { onValue, ref } from 'firebase/database'
 import { database, storage } from '../../js/Firebase'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 import PostStatus from '../../components/PostStatus'
+import Button from '../../components/Template/Button'
+import Confirm from '../../components/PopConfirmation'
+import PopNotif from '../../components/PopNotif'
+import { useFirebase } from '../../js/FirebaseContext'
 
 export default function FileInfo() {
     const { id } = useParams()
     const [post, setPost] = useState({})
     const [fileUrl, setFileUrl] = useState()
     const [subject, setSubject] = useState()
+
+    const [isOpen, setOpen] = useState(false)
+    const [actionDone, setActionDone] = useState(false)
+
+    const { deleteFile, deleteData } = useFirebase()
+
     const nav = useNavigate()
 
     useEffect(() => {
@@ -34,8 +44,56 @@ export default function FileInfo() {
         })
     }, [])
 
+    function DeletePost(e) {
+        e.preventDefault()
+
+        deleteFile(post.postFileUrl)
+            .then(() => {
+                deleteData(`history/${id}`)
+                    .then(() => {
+                        deleteData(`comments/${id}`)
+                            .then(() => {
+                                deleteData(`posts/${id}`)
+                                    .then(() => {
+                                        setOpen(false)
+                                        setActionDone(true)
+                                    }).catch((err) => {
+                                        setActionDone(true)
+                                        console.log(err)
+                                    });
+                            }).catch((err) => {
+                                setActionDone(true)
+                                console.log(err)
+                            });
+                    }).catch((err) => {
+                        setActionDone(true)
+                        console.log(err)
+                    });
+            }).catch((err) => {
+                setActionDone(true)
+                console.log(err)
+            });
+    }
+
     return (
         <>
+            <Confirm
+                isOpen={isOpen}
+                dedicatedFunction={DeletePost}
+                handleClose={() => setOpen(false)}
+                dialogTitle='Confirm Delete'
+                dialogMessage={`Are you sure you want to delete Post ${post.postTitle}?`}
+                buttonTitle='Delete' />
+
+            <PopNotif
+                isOpen={actionDone}
+                handleClose={() => {
+                    setActionDone(false)
+                    nav('/files')
+                }}
+                dialogTitle='Delete Successful'
+                dialogMessage='Post deleted successfully' />
+
             <div className='h-14 flex flex-row items-center border-b border-zinc-100 text-sm
              text-zinc-600 px-5 font-semibold'>
                 Information
@@ -67,12 +125,8 @@ export default function FileInfo() {
                 </div>
             </div>
             <div className='h-14 flex items-center justify-end px-5 border-t border-zinc-100'>
-                <button
-                    type='button'
-                    onClick={() => nav(`/files/edit-post/${id}`)}
-                    className='p-2 border border-transparent rounded-md text-white bg-sky-600 hover:bg-sky-700 flex flex-row'>
-                    <span className='text-xs font-medium mr-2'>Edit Post</span>
-                </button>
+                <Button title='Delete' color='red' onClick={() => setOpen(true)} />
+                <Button title='Edit Post' color='sky' onClick={() => nav(`/files/edit-post/${id}`)} />
             </div>
         </>
     )

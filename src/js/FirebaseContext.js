@@ -7,8 +7,8 @@ import {
     signOut
 } from 'firebase/auth'
 
-import { ref, set, onValue, remove } from 'firebase/database'
-import { uploadBytes, ref as StorageRef } from 'firebase/storage';
+import { ref, set, onValue, remove, update } from 'firebase/database'
+import { uploadBytes, ref as StorageRef, deleteObject } from 'firebase/storage';
 
 
 const AuthContext = React.createContext()
@@ -33,6 +33,8 @@ export function FirebaseProvider({ children }) {
         deleteData,
         uploadAvatar,
         uploadFile,
+        updateData,
+        deleteFile,
         role
     }
 
@@ -80,6 +82,14 @@ export function FirebaseProvider({ children }) {
         return uploadBytes(StorageRef(storage, path), file)
     }
 
+    function updateData(path, data) {
+        return update(ref(database, path), data)
+    }
+
+
+    function deleteFile(path) {
+        return deleteObject(StorageRef(storage, path))
+    }
 
 
     return (

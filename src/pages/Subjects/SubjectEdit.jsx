@@ -1,25 +1,28 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import LongInput, { LongTextArea } from '../../components/Inputs/LongInput'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBan, faCheckCircle, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
 import { useFirebase } from '../../js/FirebaseContext'
 import LoadingButton from '../../components/LoadingButton'
+import Confirm from '../../components/PopConfirmation'
+import PopNotif from '../../components/PopNotif'
 
 function SubjectEdit() {
 
-    const id = useParams()
+    const { id } = useParams()
     const [error, setError] = useState()
     const [loading, setLoading] = useState(false)
-    const { writeData } = useFirebase()
+    const { updateData } = useFirebase()
     const [subject, setSubject] = useState({})
     const courseCodeRef = useRef()
     const courseTitleRef = useRef()
     const creditUnitRef = useRef()
     const courseDescriptionRef = useRef()
     const nav = useNavigate()
+
+    const [isOpen, setOpen] = useState(false)
     const EditSubjectData = [
         {
             id: 'course-code',
@@ -65,7 +68,7 @@ function SubjectEdit() {
     const inputClass = 'border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300'
 
     useEffect(() => {
-        const getCurrentData = onValue(ref(database, 'subject/' + id.id), snapshot => {
+        const getCurrentData = onValue(ref(database, 'subject/' + id), snapshot => {
             if (snapshot.exists()) {
                 setSubject(snapshot.val())
             } else {
@@ -79,30 +82,44 @@ function SubjectEdit() {
     function UpdateSubject(e) {
         e.preventDefault()
         setLoading(true)
+        setOpen(true)
+
         const updatedSubject = {
-            subjectId: subject.subjectId,
             courseCode: courseCodeRef.current.value,
             subjectTitle: courseTitleRef.current.value,
             creditUnits: creditUnitRef.current.value,
             subjectDescription: courseDescriptionRef.current.value
         }
-        writeData('subject/', updatedSubject, updatedSubject.subjectId)
+        updateData(`subject/${id}`, updatedSubject)
             .then(() => {
                 setLoading(false)
-                nav(`/subjects/${id.id}`)
+                isOpen(true)
             }).catch((err) => {
-                alert('Failed to update subject')
+                console.log(err)
             });
-
     }
 
     return (
-        <div className='h-auto py-5 px-10 flex justify-center'>
-            <div className='h-auto w-[80%] bg-white shadow-md rounded-md'>
-                <header className='h-16 border-b border-zinc-200 flex items-center px-10'>
-                    <span className='text-2xl text-zinc-700 font-medium'>{`Edit subject`} </span>
+        <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center'>
+            <PopNotif
+                isOpen={isOpen}
+                handleClose={() => {
+                    setOpen(false)
+                    nav(`/subjects/${id}/information`)
+                }}
+                dialogTitle='Update Success'
+                dialogMessage='Subject updated successfully.' />
+
+            <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>
+                <header className='h-14 border-b border-zinc-200 flex items-center px-2'>
+                    <button type='button'
+                        className='h-8 w-8 rounded-full hover:bg-zinc-100'
+                        onClick={() => nav(-1)}>
+                        <FontAwesomeIcon icon={faChevronLeft} size={'sm'} />
+                    </button>
+                    <span className='font-semibold text-lg ml-3'>Edit Subject</span>
                 </header>
-                <main className='h-auto min-h-[500px] px-10 flex flex-col'>
+                <main className='flex-1 px-10 flex flex-col'>
                     <form
                         onSubmit={UpdateSubject}
                         id='edit-subject-form'
@@ -146,7 +163,6 @@ function SubjectEdit() {
                             )
                         })}
                     </form>
-
                 </main>
                 <footer className='h-14 flex items-center justify-end px-10'>
 
@@ -157,9 +173,7 @@ function SubjectEdit() {
                         loadingState={loading} />
 
                 </footer>
-
             </div>
-
         </div>
     )
 }

@@ -3,6 +3,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { useFirebase } from '../../js/FirebaseContext'
 import LoadingButton from '../../components/LoadingButton'
 import { useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import PopNotif from '../../components/PopNotif'
 
 export const SubjectAdd = () => {
     const [courseCode, setCourseCode] = useState()
@@ -12,6 +15,8 @@ export const SubjectAdd = () => {
     const [loadingState, setState] = useState(false)
     const [error, setError] = useState('')
     const { writeData } = useFirebase()
+
+    const [isOpen, setOpen] = useState(false)
     const nav = useNavigate()
     const inputClass = 'border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300'
 
@@ -66,20 +71,33 @@ export const SubjectAdd = () => {
         writeData('subject/', newSubject, newSubject.subjectId)
             .then(() => {
                 setState(false)
-                nav('/subjects')
+                setOpen(true)
             }).catch((e) => {
                 setError(e.message)
-                alert('Subject failed to add.')
             });
 
     }
     return (
-        <div className='h-auto py-5 px-10 flex justify-center'>
-            <div className='h-auto w-[80%] bg-white border border-zinc-200 rounded-md'>
-                <header className='h-16 border-b border-zinc-200 flex items-center px-10'>
-                    <span className='text-base text-zinc-700 font-medium'>{`New subject`} </span>
+        <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center py-5'>
+            <PopNotif
+                isOpen={isOpen}
+                handleClose={() => {
+                    setOpen(false)
+                    nav('/subjects')
+                }}
+                dialogTitle='Add Success'
+                dialogMessage={`Successfully added the subject ${subjectTitle}`} />
+
+            <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>
+                <header className='h-14 border-b border-zinc-200 flex items-center px-2'>
+                    <button type='button'
+                        className='h-8 w-8 rounded-full hover:bg-zinc-100'
+                        onClick={() => nav(-1)}>
+                        <FontAwesomeIcon icon={faChevronLeft} size={'sm'} />
+                    </button>
+                    <span className='font-semibold text-lg ml-3'>Edit Subject</span>
                 </header>
-                <main className='h-auto min-h-[500px] px-10 flex flex-col'>
+                <main className='flex-1 px-10 flex flex-col'>
                     <form
                         onSubmit={addSubject}
                         id='add-subject-form'

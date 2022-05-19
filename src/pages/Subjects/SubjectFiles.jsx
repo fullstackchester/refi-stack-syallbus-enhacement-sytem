@@ -32,13 +32,11 @@ export default function SubjectFiles() {
             <div className='flex-1 overflow-y-auto'>
                 {
                     subjectFiles.map((v, k) =>
-                        <Link to={`/posts/${v.postId}`}>
+                        <Link key={k} to={`/posts/${v.postId}`}>
                             <div
-                                key={k}
                                 className='h-16 border-b border-zinc-200 p-2 hover:underline hover:bg-zinc-100
                                 transition-colors'>
                                 <div className='text-sm text-zinc-700 font-semibold'>{v.postTitle}</div>
-
                             </div>
                         </Link>
                     )

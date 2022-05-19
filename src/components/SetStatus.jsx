@@ -6,7 +6,7 @@ import { ref, update } from 'firebase/database'
 import { database } from '../js/Firebase'
 
 export default function Status({ postId }) {
-    
+
     const { role } = useFirebase()
 
     function changeStatus(UpdateStatus) {
@@ -14,7 +14,7 @@ export default function Status({ postId }) {
     }
 
     return (
-        <div className="w-full text-right z-50">
+        <div className="w-full text-right pz-10">
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button

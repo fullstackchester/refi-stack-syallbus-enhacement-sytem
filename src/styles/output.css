@@ -583,6 +583,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   z-index: 50;
 }
 
+.z-\[999\] {
+  z-index: 999;
+}
+
+.z-20 {
+  z-index: 20;
+}
+
+.-z-10 {
+  z-index: -10;
+}
+
 .col-span-3 {
   grid-column: span 3 / span 3;
 }
@@ -1705,6 +1717,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+
+.first\:mr-2:first-child {
+  margin-right: 0.5rem;
+}
+
+.last\:mr-0:last-child {
+  margin-right: 0px;
 }
 
 .last\:border-r:last-child {

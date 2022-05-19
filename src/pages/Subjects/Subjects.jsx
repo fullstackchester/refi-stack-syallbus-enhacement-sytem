@@ -3,7 +3,8 @@ import { ref, onValue } from 'firebase/database'
 import { database } from '../../js/Firebase'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAdd, faPlusCircle, faFilter, faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { motion } from 'framer-motion'
 
 function Subjects() {
 
@@ -80,7 +81,11 @@ function Subjects() {
                                         .filter(entry => Object.values(entry).some(val => typeof val === 'string'
                                             && val.toLowerCase().includes(search.toLowerCase())))
                                         .map((v, k) =>
-                                            <tr key={k}
+                                            <motion.tr
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                key={k}
                                                 className='border border-zinc-100 text-xs text-zinc-700 font-medium 
                                                 hover:bg-zinc-200 transition-colors'>
                                                 <td className='p-3'>
@@ -91,7 +96,7 @@ function Subjects() {
                                                     onClick={() => nav(`/subjects/${v.subjectId}/information`)}> {v.courseCode} </td>
                                                 <td className='p-3'> {v.subjectTitle} </td>
                                                 <td className='p-3'> {v.creditUnits} </td>
-                                            </tr>) : <></>
+                                            </motion.tr>) : <></>
                             }
                         </tbody>
                     </table>

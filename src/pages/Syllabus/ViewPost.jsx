@@ -36,7 +36,7 @@ export default function ViewPost() {
                      border-zinc-100 text-zinc-700'>
                         <button type='button'
                             className='h-8 w-8 rounded-full hover:bg-zinc-100'
-                            onClick={() => nav('/posts')}>
+                            onClick={() => nav(-1)}>
                             <FontAwesomeIcon icon={faChevronLeft} size={'sm'} />
                         </button>
                         <span className='font-semibold text-lg ml-3'>Post</span>

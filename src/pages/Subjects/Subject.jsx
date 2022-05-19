@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, Outlet, useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGraduationCap, faHistory, faChevronLeft, faFileAlt } from '@fortawesome/free-solid-svg-icons'
+import { faGraduationCap, faChevronLeft, faFileAlt } from '@fortawesome/free-solid-svg-icons'
 
 
 export const Subject = () => {

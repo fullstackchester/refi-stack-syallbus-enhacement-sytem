@@ -54,6 +54,7 @@ export default function EditFile() {
                                 nav(`/files/${post.postId}`)
                             }).catch((err) => {
                                 setLoading(false)
+                                console.log(err)
                             });
                     }).catch((err) => {
                         console.log(err.message)
