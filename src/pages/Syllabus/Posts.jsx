@@ -9,6 +9,7 @@ import PopFilter from '../../components/PopFilter'
 import print from 'print-js'
 import printJS from 'print-js'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
+import { motion } from 'framer-motion'
 
 
 
@@ -201,7 +202,11 @@ export default function Posts() {
                                     && val.toLowerCase().includes(searchpost.toLowerCase())))
                                 .sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime())
                                 .map((v, k) =>
-                                    <tr key={k}
+                                    <motion.tr
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        key={k}
                                         className='text-xs font-medium hover:bg-zinc-200
                                          transition-colors border border-zinc-100 text-zinc-700' >
                                         <td className='py-3 px-2 text-xs '>
@@ -221,7 +226,7 @@ export default function Posts() {
                                         <td className='py-3 px-2 text-xs '>
                                             <PostStatus postStatus={v.postStatus} textSize={'text-xs'} />
                                         </td>
-                                    </tr>)}
+                                    </motion.tr>)}
                         </tbody>
 
                     </table>

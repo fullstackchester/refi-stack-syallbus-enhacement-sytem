@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Layout from './components/Template/Layout'
-import { FirebaseProvider, useFirebase } from './js/FirebaseContext'
+import { FirebaseProvider } from './js/FirebaseContext'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Subjects from './pages/Subjects/Subjects'
 import Files from './pages/Files/Files'
 import Faculty from './pages/Faculty/Faculty'
 import { Profile } from './pages/Profile/Profile'
-import { ProfileEdit } from './pages/Profile/ProfileEdit'
 import NotFound from './pages/404'
 import Settings from './pages/Settings'
 import { Subject } from './pages/Subjects/Subject'
@@ -36,6 +35,9 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './js/Firebase'
 import ProtectedRoute from './components/ProtectedRoute'
+import Restrcited from './components/Restrcited'
+import SubjectInfo from './pages/Subjects/SubjectInfo'
+import SubjectFiles from './pages/Subjects/SubjectFiles'
 
 export default function App() {
 
@@ -47,12 +49,16 @@ export default function App() {
 					<Routes>
 						<Route exact path='/' element={<Login />} />
 						<Route path='/signup' element={<Signup />} />
-						<Route path='/' element={<Layout />} >
+						<Route path='/' element={
+							<ProtectedRoute>
+								<Layout />
+							</ProtectedRoute>
+						} >
+							<Route path='/reports' element={
+								<Restrcited><Dashboard /></Restrcited>
+							} />
 
-							{/* <ProtectedRoute path='/reports' element={Dashboard} /> */}
-							<Route path='/reports' element={<Dashboard />} />
-							
-							<Route path='posts' element={<Posts />} />
+							<Route path='/posts' element={<Posts />} />
 							<Route path='posts/create-post' element={<CreatePost />} />
 							<Route path='posts/:postId' element={<ViewPost />} >
 								<Route index element={<Information />} />
@@ -72,7 +78,11 @@ export default function App() {
 
 							<Route exact path='subjects' element={<Subjects />} />
 							<Route exact path='subjects/add' element={<SubjectAdd />} />
-							<Route exact path='subjects/:id' element={<Subject />} />
+							<Route exact path='subjects/:id' element={<Subject />} >
+								<Route index element={<FacultyProfile />} />
+								<Route exact path='information' element={<SubjectInfo />} />
+								<Route exact path='files' element={<SubjectFiles />} />
+							</Route>
 							<Route exact path='subjects/:id/edit' element={<SubjectEdit />} />
 
 							<Route exact path='files' element={<Files />} />

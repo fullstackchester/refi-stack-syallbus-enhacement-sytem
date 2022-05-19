@@ -89,8 +89,18 @@ export default function FileAdd() {
             subjectId: subjectRef.current.value,
             postAuthor: name,
         }
-
-        console.table(Post)
+        writeData('posts/', Post, Post.postId)
+            .then(() => {
+                uploadFile(fileRef.current.files[0], `syllabus/${Post.postId}/${fileRef.current.files[0].name}`)
+                    .then((snapshot) => {
+                        console.log(snapshot)
+                        nav('/files')
+                    }).catch((err) => {
+                        setError(err.message)
+                    });
+            }).catch((err) => {
+                setError(err.message)
+            });
     }
 
     return (

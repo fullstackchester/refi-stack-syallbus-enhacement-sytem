@@ -56,48 +56,57 @@ export default function Files() {
                     </button>
                 </header>
                 <main className='flex-1 overflow-y-auto'>
-                    <table className='w-full h-auto table-auto'>
-                        <thead className='sticky top-0 bg-white'>
-                            <tr className='border border-zinc-100'>
-                                {
-                                    [
-                                        { title: <input type='checkbox' /> },
-                                        { title: 'Post Title' },
-                                        { title: 'Academic Year' },
-                                        { title: 'Date Posted' },
-                                        { title: 'Status' }
-                                    ].map((v, k) =>
-                                        <th
-                                            key={k}
-                                            className='p-3 text-xs font-medium text-left text-zinc-600'>
-                                            {v.title}
-                                        </th>)
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {myFiles.filter(entry => Object.values(entry).some(val => typeof val === 'string'
-                                && val.toLowerCase().includes(search.toLowerCase())))
-                                .sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime())
-                                .map((v, k) =>
-                                    <tr key={k} className='text-xs font-medium hover:bg-zinc-200 
+                    {myFiles.length !== 0 ?
+                        <table className='w-full h-auto table-auto border border-red-600'>
+                            <thead className='sticky top-0 bg-white'>
+                                <tr className='border border-zinc-100'>
+                                    {
+                                        [
+                                            { title: <input type='checkbox' /> },
+                                            { title: 'Post Title' },
+                                            { title: 'Academic Year' },
+                                            { title: 'Date Posted' },
+                                            { title: 'Status' }
+                                        ].map((v, k) =>
+                                            <th
+                                                key={k}
+                                                className='p-3 text-xs font-medium text-left text-zinc-600'>
+                                                {v.title}
+                                            </th>)
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {myFiles.filter(entry => Object.values(entry).some(val => typeof val === 'string'
+                                    && val.toLowerCase().includes(search.toLowerCase())))
+                                    .sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime())
+                                    .map((v, k) =>
+                                        <tr key={k} className='text-xs font-medium hover:bg-zinc-200 
                                 transition-colors border border-zinc-100 text-zinc-700'>
-                                        <td className='p-3'><input type='checkbox' /></td>
-                                        <td className='p-3'>
-                                            <span
-                                                className='hover:underline cursor-pointer'
-                                                onClick={() => nav(`/files/${v.postId}/information`)}>{v.postTitle}</span>
-                                        </td>
-                                        <td className='p-3'>{ }</td>
-                                        <td className='p-3'>{v.postDate}</td>
-                                        <td className='p-3'>
-                                            <PostStatus postStatus={v.postStatus} textSize='text-xs' />
-                                        </td>
-                                    </tr>)}
-                        </tbody>
+                                            <td className='p-3'><input type='checkbox' /></td>
+                                            <td className='p-3'>
+                                                <span
+                                                    className='hover:underline cursor-pointer'
+                                                    onClick={() => nav(`/files/${v.postId}/information`)}>{v.postTitle}</span>
+                                            </td>
+                                            <td className='p-3'>{ }</td>
+                                            <td className='p-3'>{v.postDate}</td>
+                                            <td className='p-3'>
+                                                <PostStatus postStatus={v.postStatus} textSize='text-xs' />
+                                            </td>
+                                        </tr>)}
+                            </tbody>
+                        </table>
+                        :
+                        <div className='h-full w-full grid place-items-center place-content-center'>
+                            <span className='text-2xl text-zinc-600 font-semibold'>No Files Found</span>
+                            <button
+                                onClick={() => nav('/files/create-post')}
+                                className='flex flex-row text-xs text-zinc-600 font-medium py-1 px-2 
+                                border border-zinc-200 rounded-md outline-none hover:bg-zinc-200
+                                 transition-colors'>Add Files</button>
 
-                    </table>
-
+                        </div>}
                 </main>
                 <footer className='h-10 border-t border-zinc-100'>
 

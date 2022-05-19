@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBook, faFile, faFileAlt, faGraduationCap, faSquarePollVertical, faUserTie } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faFileAlt, faGraduationCap, faSquarePollVertical, faUserTie } from '@fortawesome/free-solid-svg-icons'
 
 
 export default function Layout() {
@@ -46,7 +46,3 @@ export default function Layout() {
         </div>
     )
 }
-
-
-
-

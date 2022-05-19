@@ -1,84 +1,55 @@
-import { onValue, ref } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { database } from '../../js/Firebase'
-import { useFirebase } from '../../js/FirebaseContext'
-import Modal from '../../components/Modal'
-import LoadingButton from '../../components/LoadingButton'
+import { NavLink, Outlet, useNavigate, useParams } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGraduationCap, faHistory, faChevronLeft, faFileAlt } from '@fortawesome/free-solid-svg-icons'
+
 
 export const Subject = () => {
 
-    const subjectId = useParams()
-    const [subject, setSubject] = useState({})
+    const { id } = useParams()
     const nav = useNavigate()
-    const { deleteData } = useFirebase()
-    let [isOpen, setIsOpen] = useState(false)
-    const dialogMessage = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus lectus id tortor sodales, ac scelerisque dolor scelerisque. Vestibulum vitae tellus et mauris eleifend imperdiet.'
 
+    const links = [
+        {
+            title: 'Information',
+            link: `/subjects/${id}/information`,
+            icon: faFileAlt
+        },
+        {
+            title: 'Files',
+            link: `/subjects/${id}/files`,
+            icon: faGraduationCap
+        },
+    ]
 
-    function closeModal() {
-        setIsOpen(false)
-    }
-
-    function openModal() {
-        setIsOpen(true)
-    }
-
-    useEffect(() => {
-
-        const getSubject = onValue(ref(database, 'subject/' + subjectId.id), snapshot => {
-            setSubject(snapshot.val())
-        })
-
-        return getSubject
-    }, [])
-
-
-    function deleteSubject() {
-        // deleteData('subject/' + subject.subjectId)
-        //     .then(() => {
-        //         alert('Subject deleted!')
-        //         nav('/subjects')
-        //     }).catch(() => {
-        //         alert('failed to delete subject!')
-        //     });
-        alert('DELETING SUBJECT')
-        closeModal()
-    }
 
     return (
-        <div className='h-auto p-10 flex justify-center'>
-
-            <div className='w-[80%] bg-white border border-zinc-200 rounded-md'>
-                <main className='h-auto min-h-[500px] flex flex-col p-5'>
-                    <div className='text-4xl font-medium text-zinc-700 text-center '>{subject.courseCode} </div>
-                    <h2 className='text-sm font-medium text-center text-zinc-600 '>{subject.subjectTitle} </h2>
-                    <h2 className='text-sm font-medium text-zinc-600 text-center '>{`Credit units: ${subject.creditUnits}`} </h2>
-                    <p className='text-md text-zinc-600 mt-4  flex-1 text-justify px-10'>{subject.subjectDescription}</p>
-                    <Modal
-                        dialogTitle={`Delete subject?`}
-                        dialogMessage={dialogMessage}
-                        handleClose={closeModal}
-                        buttonTitle={`Delete`}
-                        dedicatedFunction={deleteSubject}
-                        isOpen={isOpen} />
-                </main>
-                <footer className='h-14 flex items-center justify-end px-10'>
-                    <LoadingButton
-                        btnColor={`bg-red-600 hover:bg-red-700`}
-                        dedicatedFunc={openModal}
-                        title={`Delete`} />
-
-                    <LoadingButton
-                        dedicatedFunc={(e) => {
-                            e.preventDefault()
-                            nav(`/subjects/${subject.subjectId}/edit`)
-                        }}
-                        title={`Edit subject`} />
-
-                </footer>
-
-            </div>
+        <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center'>
+            <main className='w-[85%] h-[90vh] bg-white  rounded-md flex flex-row'>
+                <div className='w-1/4 border-r border-zinc-100'>
+                    <div className='h-14 flex flex-row items-center justify-left py-2 px-2 border-b 
+                    border-zinc-100 text-zinc-700'>
+                        <button type='button'
+                            className='h-8 w-8 rounded-full hover:bg-zinc-100'
+                            onClick={() => nav('/subjects')}>
+                            <FontAwesomeIcon icon={faChevronLeft} size={'sm'} />
+                        </button>
+                        <span className='font-semibold text-lg ml-3'>Subject</span>
+                    </div>
+                    {links.map((val, key) =>
+                        <NavLink
+                            key={key} to={val.link}
+                            className={({ isActive }) => isActive ? 'text-red-600' : 'text-white'}>
+                            <div className='h-12 border-b border-zinc-100 flex flex-row items-center text-xs
+								 font-medium text-zinc-600 hover:bg-zinc-100 transition-colors px-3'>
+                                <FontAwesomeIcon icon={val.icon} /> <span className='ml-3'>{val.title}</span>
+                            </div>
+                        </NavLink>)}
+                </div>
+                <div className='w-3/4 flex flex-col'>
+                    <Outlet />
+                </div>
+            </main>
         </div>
     )
 }

@@ -1,5 +1,3 @@
-import { onValue, ref } from 'firebase/database'
-import { getDownloadURL, ref as StorageRef } from 'firebase/storage'
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

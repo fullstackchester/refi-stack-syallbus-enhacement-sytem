@@ -29,8 +29,7 @@ export default function HistorySection({ postId }) {
 
 
     return (
-        <div className={`flex flex-col`}>
-
+        <div className={`flex flex-col flex-1`}>
             {history.length !== 0 ? history
                 .sort((a, b) => new Date(b.historyDate).getTime() - new Date(a.historyDate).getTime())
                 .map((val, key) =>
@@ -46,8 +45,10 @@ export default function HistorySection({ postId }) {
                     </div>
                 )
                 :
-                <div className='h-auto border-red-400 text-xs text-zinc-600 font-medium p-2 text-center'>
-                    No Edit history
+                <div className='flex-1 text-xs text-zinc-600 font-medium p-2 text-center'>
+                    <div className='h-full w-full grid place-items-center place-content-center'>
+                        <span className='text-2xl text-zinc-600 font-semibold'>No Edit History</span>
+                    </div>
                 </div>
             }
             <PopHistory

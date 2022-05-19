@@ -49,16 +49,9 @@ export default function FileInfo() {
                     {post.postDescription}
                 </p>
                 <div className='border-t border-zinc-100 min-h-[15rem] text-sm text-zinc-600 flex flex-col py-3'>
-                    <div className='flex flex-row '>
-                        Author:
-                        <Link to={`/faculty/${post.uid}`}
-                            className='font-medium ml-1 hover:underline'>
-                            {post.postAuthor}
-                        </Link>
-                    </div>
+
                     <div className='flex flex-row '>
                         Attachements:
-                        {/*  Hours wasted on file preview from firebase storage to browser: 4hrs+ */}
                         <span
                             onClick={() => {
                                 window.open(`https://drive.google.com/viewerng/viewer?embedded=true&url=${encodeURIComponent(fileUrl)}`, '_blank')

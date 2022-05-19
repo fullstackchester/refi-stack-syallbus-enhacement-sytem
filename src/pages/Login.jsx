@@ -6,6 +6,7 @@ import { auth } from '../js/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 import { AuthError } from '../js/AuthError'
+import { useFirebase } from '../js/FirebaseContext'
 
 
 export default function Login() {
@@ -16,13 +17,12 @@ export default function Login() {
     const emailRef = useRef()
     const passRef = useRef()
 
-    useEffect(() => {
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                nav('/reports')
-            }
-        })
-    }, [])
+    const { role } = useFirebase()
+    onAuthStateChanged(auth, user => {
+        if (user) {
+            nav('/reports')
+        }
+    })
 
 
     function loginUser(e) {

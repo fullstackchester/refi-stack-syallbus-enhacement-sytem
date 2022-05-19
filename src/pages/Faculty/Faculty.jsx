@@ -40,8 +40,6 @@ function Faculty() {
         }
     }
 
-    console.table(isCheck)
-
     return (
         <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center py-5'>
             <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>

@@ -6,9 +6,8 @@ import { ref, update } from 'firebase/database'
 import { database } from '../js/Firebase'
 
 export default function Status({ postId }) {
-
-    const [status, setStatus] = useState()
-    const { isAdmin, isAreaChair } = useFirebase()
+    
+    const { role } = useFirebase()
 
     function changeStatus(UpdateStatus) {
         update(ref(database, `posts/${postId}`), { postStatus: UpdateStatus, })
@@ -19,7 +18,7 @@ export default function Status({ postId }) {
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button
-                        disabled={!isAreaChair && !isAdmin}
+                        disabled={role === 'faculty' ? true : false}
                         className={`inline-flex justify-center items-center w-full px-2 py-1 text-xs
                         text-white bg-zinc-600 rounded-md hover:bg-zinc-700 focus:outline-none focus-visible:ring-2 
                         focus-visible:ring-white focus-visible:ring-opacity-75`}>

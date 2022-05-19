@@ -88,7 +88,7 @@ function Subjects() {
                                                     <input type='checkbox' className=' default:ring-2 checked:bg-sky-300' />
                                                 </td>
                                                 <td className='p-3 cursor-pointer hover:underline'
-                                                    onClick={() => nav(`/subjects/${v.subjectId}`)}> {v.courseCode} </td>
+                                                    onClick={() => nav(`/subjects/${v.subjectId}/information`)}> {v.courseCode} </td>
                                                 <td className='p-3'> {v.subjectTitle} </td>
                                                 <td className='p-3'> {v.creditUnits} </td>
                                             </tr>) : <></>

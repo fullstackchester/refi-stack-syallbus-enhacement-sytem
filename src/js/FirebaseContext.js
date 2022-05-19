@@ -41,9 +41,11 @@ export function FirebaseProvider({ children }) {
         const unsub = onAuthStateChanged(auth, user => {
             setCurrentUser(user)
             setLoading(false)
-            onValue(ref(database, `users/${user.uid}`), snapshot => {
-                setRole(snapshot.val().userType)
-            })
+            if (user) {
+                onValue(ref(database, `users/${user.uid}`), snapshot => {
+                    setRole(snapshot.val().userType)
+                })
+            }
         })
 
         return unsub
