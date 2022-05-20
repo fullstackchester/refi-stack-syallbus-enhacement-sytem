@@ -67,7 +67,6 @@ export default function App() {
 								<Route path='edit-history' element={<History />} />
 							</Route>
 
-
 							<Route exact path='faculty' element={<Faculty />} />
 							<Route exact path='faculty/:uid' element={<FacultyAccount />} >
 								<Route index element={<FacultyProfile />} />

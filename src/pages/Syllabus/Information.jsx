@@ -1,11 +1,15 @@
-import { onValue, ref } from 'firebase/database'
+import { onValue, ref, remove } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import PostStatus from '../../components/PostStatus'
 import { database, storage } from '../../js/Firebase'
 import SetStatus from '../../components/SetStatus'
-import { getBlob, getDownloadURL, ref as storageRef } from 'firebase/storage'
+import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 import { useFirebase } from '../../js/FirebaseContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons'
+import Confirm from '../../components/PopConfirmation'
+import PopNotif from '../../components/PopNotif'
 
 export default function Information() {
 
@@ -14,6 +18,10 @@ export default function Information() {
     const [fileUrl, setFileUrl] = useState()
     const { role } = useFirebase()
     const [subject, setSubject] = useState()
+    const [openConfirm, setOpen] = useState(false)
+    const [actionDone, setActionDone] = useState(false)
+    const nav = useNavigate()
+
 
 
 
@@ -39,9 +47,37 @@ export default function Information() {
         })
     }, [])
 
+    function deletePost(e) {
+        e.preventDefault()
+        setOpen(false)
+        remove(ref(database, `posts/${postId}`))
+            .then(() => {
+                setActionDone(true)
+            }).catch((err) => {
+                console.log(err)
+            });
+    }
+
 
     return (
         <>
+            <Confirm
+                isOpen={openConfirm}
+                handleClose={() => setOpen(false)}
+                dialogTitle='Confirm Delete'
+                dialogMessage='Are you sure you want to delete these post?'
+                dedicatedFunction={deletePost}
+                buttonTitle='Delete' />
+
+            <PopNotif
+                isOpen={actionDone}
+                handleClose={() => {
+                    setActionDone(false)
+                    nav('/posts')
+                }}
+                dialogTitle='Delete Success'
+                dialogMessage='Successfully delete subjects.' />
+
             <div className='h-14 flex flex-row items-center border-b border-zinc-100 text-sm
              text-zinc-600 px-5 font-semibold'>
                 Information
@@ -79,6 +115,19 @@ export default function Information() {
                     </div>
                     <div className='flex flex-row '>{`Posted: ${post.postDate}`}</div>
                 </div>
+            </div>
+            <div className='h-12 border-t border-zinc-100 flex items-center p-3'>
+                {
+                    role === 'administrator' &&
+                    <button
+                        onClick={() => setOpen(true)}
+                        type='button'
+                        className='p-1 h-auto w-auto border border-transparent rounded-md
+                         text-white bg-red-600 hover:bg-red-700 flex flex-row items-center justify-evenly' >
+                        <span className='text-xs mr-1'>Delete</span>
+                        <FontAwesomeIcon icon={faDeleteLeft} size='xs' />
+                    </button>
+                }
             </div>
         </>
     )

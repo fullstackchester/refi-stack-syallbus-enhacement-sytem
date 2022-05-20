@@ -4,12 +4,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import { database, storage } from '../../js/Firebase'
 import PostStatus from '../../components/PostStatus'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAdd, faPlusCircle, faFilter, faCalendarAlt, faPrint, faDownload } from '@fortawesome/free-solid-svg-icons'
+import { faFolderOpen, faPlusCircle, faFilter, faCalendarAlt, faDeleteLeft, faDownload } from '@fortawesome/free-solid-svg-icons'
 import PopFilter from '../../components/PopFilter'
 import print from 'print-js'
 import printJS from 'print-js'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 import { motion } from 'framer-motion'
+import Confirm from '../../components/PopConfirmation'
 
 
 
@@ -24,6 +25,7 @@ export default function Posts() {
 
     const [isCheckAll, setCheckAll] = useState(false)
     const [isCheck, setCheck] = useState([])
+
 
 
     useEffect(() => {
@@ -125,6 +127,7 @@ export default function Posts() {
                     }
                 </div>
             </PopFilter>
+
             <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>
                 <header className='h-14 flex flex-row justify-end px-5 items-center'>
                     <div className='h-full flex flex-row items-center justify-center'>
@@ -164,72 +167,88 @@ export default function Posts() {
                     }
                 </header>
                 <main className='flex-1 overflow-y-auto'>
-                    <table className='w-full h-auto table-auto'>
-                        <thead className='sticky top-0 bg-white'>
-                            <tr className='border border-zinc-100'>
-                                {[
-                                    {
-                                        title: <input
-                                            type='checkbox'
-                                            onChange={handleCheckAll}
-                                            checked={isCheckAll} />
-                                    },
-                                    { title: 'Post Title' },
-                                    { title: 'Academic Year' },
-                                    { title: 'Date Posted' },
-                                    { title: 'Status' }
-                                ].map((val, key) =>
-                                    <th key={key} className='p-2 text-xs text-left text-zinc-600'>{val.title}</th>
-                                )}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {posts && posts
-                                .filter(entry => Object.values(entry).some(val => typeof val === 'string'
-                                    && val.toLowerCase().includes(searchpost.toLowerCase())))
-                                .sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime())
-                                .map((v, k) =>
-                                    <motion.tr
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        key={k}
-                                        className='text-xs font-medium hover:bg-zinc-200
+                    {
+                        posts.length !== 0 ?
+                            <table className='w-full h-auto table-auto'>
+                                <thead className='sticky top-0 bg-white'>
+                                    <tr className='border border-zinc-100'>
+                                        {[
+                                            {
+                                                title: <input
+                                                    type='checkbox'
+                                                    onChange={handleCheckAll}
+                                                    checked={isCheckAll} />
+                                            },
+                                            { title: 'Post Title' },
+                                            { title: 'Academic Year' },
+                                            { title: 'Date Posted' },
+                                            { title: 'Status' }
+                                        ].map((val, key) =>
+                                            <th key={key} className='p-2 text-xs text-left text-zinc-600'>{val.title}</th>
+                                        )}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {posts && posts
+                                        .filter(entry => Object.values(entry).some(val => typeof val === 'string'
+                                            && val.toLowerCase().includes(searchpost.toLowerCase())))
+                                        .sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime())
+                                        .map((v, k) =>
+                                            <motion.tr
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                key={k}
+                                                className='text-xs font-medium hover:bg-zinc-200
                                          transition-colors border border-zinc-100 text-zinc-700' >
-                                        <td className='py-3 px-2 text-xs '>
-                                            <input
-                                                type='checkbox'
-                                                id={v.postId}
-                                                onChange={handleCheck}
-                                                checked={isCheck.includes(v.postFileUrl)}
-                                                value={v.postFileUrl} />
-                                        </td>
-                                        <td className='py-3 px-2 text-xs  hover:underline cursor-pointer'
-                                            onClick={() => {
-                                                nav(`/posts/${v.postId}`)
-                                            }}>{v.postTitle}</td>
-                                        <td className='py-3 px-2 text-xs '></td>
-                                        <td className='py-3 px-2 text-xs '>{v.postDate}</td>
-                                        <td className='py-3 px-2 text-xs '>
-                                            <PostStatus postStatus={v.postStatus} textSize={'text-xs'} />
-                                        </td>
-                                    </motion.tr>)}
-                        </tbody>
-
-                    </table>
-
+                                                <td className='py-3 px-2 text-xs '>
+                                                    <input
+                                                        type='checkbox'
+                                                        id={v.postId}
+                                                        onChange={handleCheck}
+                                                        checked={isCheck.includes(v.postFileUrl)}
+                                                        value={v.postFileUrl} />
+                                                </td>
+                                                <td className='py-3 px-2 text-xs  hover:underline cursor-pointer'
+                                                    onClick={() => {
+                                                        nav(`/posts/${v.postId}`)
+                                                    }}>{v.postTitle}</td>
+                                                <td className='py-3 px-2 text-xs '></td>
+                                                <td className='py-3 px-2 text-xs '>{v.postDate}</td>
+                                                <td className='py-3 px-2 text-xs '>
+                                                    <PostStatus postStatus={v.postStatus} textSize={'text-xs'} />
+                                                </td>
+                                            </motion.tr>)}
+                                </tbody>
+                            </table>
+                            :
+                            <div className='h-full w-full grid place-items-center place-content-center'>
+                                <div className='text-zinc-600 flex flex-col justify-center items-center'>
+                                    <FontAwesomeIcon icon={faFolderOpen} size='4x' />
+                                    <h1 className='text-lg font-semibold text-center'>No Posted Syllabus</h1>
+                                    <span className='text-sm'>It seems that there is no posted syllabus at the moment</span>
+                                    <button
+                                        onClick={() => nav('/posts/create-post')}
+                                        className='w-max flex flex-row text-xs text-zinc-600 font-medium py-1 px-2 
+                                border border-zinc-200 rounded-md outline-none hover:bg-zinc-200
+                                 transition-colors'>Add Post</button>
+                                </div>
+                            </div>
+                    }
                 </main>
                 <footer className='h-12 border-t border-zinc-100 flex items-center p-3'>
                     {isCheck.length !== 0 &&
-                        <button
-                            onClick={print}
-                            type='button'
-                            className='p-1 h-auto w-auto border border-transparent rounded-md
+                        <>
+                            <button
+                                onClick={print}
+                                type='button'
+                                className='p-1 h-auto w-auto border border-transparent rounded-md
                          text-white bg-sky-600 hover:bg-sky-700 flex flex-row items-center justify-evenly' >
-                            <span className='text-xs mr-1'>Download</span>
-                            <FontAwesomeIcon icon={faDownload} size='xs' />
-                        </button>}
-
+                                <span className='text-xs mr-1'>Download</span>
+                                <FontAwesomeIcon icon={faDownload} size='xs' />
+                            </button>
+                        </>
+                    }
                 </footer>
             </div>
         </div>

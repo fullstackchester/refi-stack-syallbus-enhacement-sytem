@@ -1214,6 +1214,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(219 39 119 / var(--tw-border-opacity));
 }
 
+.border-pink-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(251 207 232 / var(--tw-border-opacity));
+}
+
 .bg-gray-300\/40 {
   background-color: rgb(209 213 219 / 0.4);
 }
@@ -1308,6 +1313,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-pink-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(219 39 119 / var(--tw-bg-opacity));
+}
+
+.bg-pink-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(244 114 182 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-70 {
@@ -1723,6 +1733,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: 0px;
 }
 
+.last\:ml-2:last-child {
+  margin-left: 0.5rem;
+}
+
 .last\:border-r:last-child {
   border-right-width: 1px;
 }
@@ -1893,4 +1907,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .disabled\:text-zinc-400:disabled {
   --tw-text-opacity: 1;
   color: rgb(161 161 170 / var(--tw-text-opacity));
+}
+
+.disabled\:text-zinc-600:disabled {
+  --tw-text-opacity: 1;
+  color: rgb(82 82 91 / var(--tw-text-opacity));
 }

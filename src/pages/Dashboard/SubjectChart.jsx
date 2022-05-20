@@ -3,6 +3,8 @@ import { faBook } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
+import { Doughnut } from 'react-chartjs-2'
+import Chart from 'chart.js/auto';
 
 
 
@@ -18,19 +20,38 @@ export default function SubjectChart() {
         })
     }, [])
 
+    const plugins = [{
+        beforeDraw: function (chart, args, options) {
+            const { ctx, chartArea: { left, right, top, bottom, width, height } } = chart;
+            ctx.save();
+            ctx.font = 'bold 2rem Roboto';
+            ctx.fillStyle = '#52525b'
+            ctx.textAlign = 'center'
+            var text = subCount;
+            ctx.fillText(text, width / 2, height / 2 + top);
 
+        }
+    }]
+
+    const data = {
+        labels: ['Subjects'],
+        datasets: [{
+            data: [subCount],
+            backgroundColor: ['#4ade80', '#38bdf8', '#f87171'],
+            pointStyle: 'circle'
+        }],
+        plugins: [plugins]
+    }
 
 
     return (
         <div className=' col-span-2 row-span-1 bg-white rounded-md flex flex-col'>
-            <div className='p-3 flex justify-between text-zinc-500'>
-                <span className='text-sm font-semibold '>Subjects</span>
-                <FontAwesomeIcon icon={faBook} size='sm' />
-            </div>
+            <h1 className='p-3 text-sm font-semibold text-zinc-500'>Subjects</h1>
             <div className='flex-1 w-full flex flex-col'>
-                <div className='h-20 grid place-items-center'>
-                    <span className='text-4xl text-zinc-700 font-semibold'>{subCount}</span>
-                </div>
+                <Doughnut
+                    data={data}
+                    options={{ maintainAspectRatio: false }}
+                    plugins={plugins} />
             </div>
             <div className='h-10'>
 

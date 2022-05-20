@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import Chart from 'chart.js/auto';
-import { orderByValue, equalTo, onValue, query, ref } from 'firebase/database'
+import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase';
 import { useFirebase } from '../../js/FirebaseContext';
 
@@ -24,8 +24,6 @@ export default function PostChart() {
             if (snapshot.exists()) {
                 total = Object.values(snapshot.val()).length
                 setPost(Object.values(snapshot.val()))
-            } else {
-                console.log('Invalid query')
             }
         })
 

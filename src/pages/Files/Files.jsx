@@ -5,7 +5,7 @@ import PostStatus from '../../components/PostStatus'
 import { database, storage } from '../../js/Firebase'
 import { useFirebase } from '../../js/FirebaseContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle, faDownload } from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle, faDownload, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 
@@ -55,8 +55,6 @@ export default function Files() {
             myFiles.push(file)
         }
     });
-
-    console.table(isCheck)
 
     function downloadFiles(e) {
         e.preventDefault()
@@ -149,14 +147,18 @@ export default function Files() {
                         </table>
                         :
                         <div className='h-full w-full grid place-items-center place-content-center'>
-                            <span className='text-2xl text-zinc-600 font-semibold'>No Files Found</span>
-                            <button
-                                onClick={() => nav('/files/create-post')}
-                                className='flex flex-row text-xs text-zinc-600 font-medium py-1 px-2 
+                            <div className='text-zinc-600 flex flex-col justify-center items-center'>
+                                <FontAwesomeIcon icon={faFolderOpen} size='4x' />
+                                <h1 className='text-lg font-semibold text-center'>No Files Found</h1>
+                                <span className='text-sm'>Your account has no access to these files.</span>
+                                <button
+                                    onClick={() => nav('/files/create-post')}
+                                    className='w-max flex flex-row text-xs text-zinc-600 font-medium py-1 px-2 
                                 border border-zinc-200 rounded-md outline-none hover:bg-zinc-200
                                  transition-colors'>Add Files</button>
-
-                        </div>}
+                            </div>
+                        </div>
+                    }
                 </main>
                 <footer className='h-12 border-t border-zinc-100 flex items-center p-3'>
                     {isCheck.length !== 0 &&

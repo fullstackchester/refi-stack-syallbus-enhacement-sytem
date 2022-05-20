@@ -55,7 +55,7 @@ function Sidebar() {
                     {
                         title: 'Account',
                         icon: <FontAwesomeIcon icon={faUserCircle} />,
-                        link: '/profile',
+                        link: '/profile/display-information',
                     },
                 ].map((val, key) =>
                     <NavLink

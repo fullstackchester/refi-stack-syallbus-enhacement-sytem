@@ -67,10 +67,11 @@ export default function SubjectInfo() {
                 <div className='text-zinc-700 text-sm text-justify mt-5'>{subject.subjectDescription}</div>
             </div>
             <div className='h-14 flex items-center justify-end px-5 border-t border-zinc-100'>
-                {role === 'administrator' && role !== 'area chair' ? <Button
-                    color={'red'}
-                    onClick={() => setOpen(true)}
-                    title='Delete' /> : <></>}
+                {role !== 'faculty' &&
+                    <Button
+                        color={'red'}
+                        onClick={() => setOpen(true)}
+                        title='Delete' />}
                 {role !== 'faculty' &&
                     <Button
                         color={'sky'}

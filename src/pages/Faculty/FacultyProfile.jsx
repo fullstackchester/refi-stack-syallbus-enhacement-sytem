@@ -5,12 +5,13 @@ import { database } from '../../js/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCancel, faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 import PopNotif from '../../components/PopNotif'
+import { useFirebase } from '../../js/FirebaseContext'
 
 export default function FacultyProfile() {
 
     const style = `border border-sky-200 p-2 outline-none
      focus:border-sky-300 rounded-sm w-80 ring-1 ring-transparent focus:ring-sky-300
-      transition-colors disabled:border-zinc-100 disabled:bg-white disabled:text-zinc-400`
+      transition-colors disabled:border-zinc-100 bg-white disabled:bg-white disabled:text-zinc-600`
 
     const [currDept, setCurrDept] = useState()
     const [currType, setCurrType] = useState()
@@ -19,6 +20,8 @@ export default function FacultyProfile() {
     const nameRef = useRef()
     const deptRef = useRef()
     const typeRef = useRef()
+
+    const { role } = useFirebase()
 
 
     const [faculty, setFaculty] = useState({})
@@ -147,15 +150,16 @@ export default function FacultyProfile() {
 
             <div className='h-14 flex flex-row items-center justify-between border-b border-zinc-100 px-5'>
                 <span className='h-max w-max text-sm text-zinc-600 font-semibold '>Profile</span>
-                <button
-                    type='button'
-                    onClick={() => {
-                        edit ? setEdit(false) : setEdit(true)
-                    }}
-                    className='text-xs p-2 border border-transparent rounded-md bg-zinc-600 text-white
+                {role === 'administrator' &&
+                    <button
+                        type='button'
+                        onClick={() => {
+                            edit ? setEdit(false) : setEdit(true)
+                        }}
+                        className='text-xs p-2 border border-transparent rounded-md bg-zinc-600 text-white
                      font-medium hover:bg-zinc-700 ml-3 w-14'>
-                    {edit ? 'Edit' : <FontAwesomeIcon icon={faCancel} size='sm' />}
-                </button>
+                        {edit ? 'Edit' : <FontAwesomeIcon icon={faCancel} size='sm' />}
+                    </button>}
             </div>
             <div className='flex-1 px-5 pb-3 overflow-y-auto '>
                 <form

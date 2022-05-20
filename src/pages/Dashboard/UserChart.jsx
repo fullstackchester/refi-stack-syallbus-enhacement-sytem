@@ -16,11 +16,7 @@ export default function UserChart() {
     const [dept, setDept] = useState()
 
     const uid = currentUser.uid
-
-    console.log(role)
-    console.log(dept)
-
-
+    
     useEffect(() => {
 
         onValue(ref(database, `users/${uid}`), snap => {
