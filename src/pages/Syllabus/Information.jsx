@@ -75,7 +75,7 @@ export default function Information() {
                         </span>
                     </div>
                     <div className='flex flex-row '>
-                        Subject: <Link to={`/subjects/${post.subjectId}`} className='ml-1 font-medium hover:underline'>{subject}</Link>
+                        Subject: <Link to={`/subjects/${post.subjectId}/information`} className='ml-1 font-medium hover:underline'>{subject}</Link>
                     </div>
                     <div className='flex flex-row '>{`Posted: ${post.postDate}`}</div>
                 </div>

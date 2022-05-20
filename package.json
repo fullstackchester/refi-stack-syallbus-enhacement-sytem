@@ -28,6 +28,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "react-time-ago": "^7.1.9",
+    "use-react-router-breadcrumbs": "^3.2.1",
     "uuid": "^8.3.2",
     "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.4"

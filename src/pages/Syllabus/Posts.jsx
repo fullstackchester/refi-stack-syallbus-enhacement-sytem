@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { database, storage } from '../../js/Firebase'
 import PostStatus from '../../components/PostStatus'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAdd, faPlusCircle, faFilter, faCalendarAlt, faPrint } from '@fortawesome/free-solid-svg-icons'
+import { faAdd, faPlusCircle, faFilter, faCalendarAlt, faPrint, faDownload } from '@fortawesome/free-solid-svg-icons'
 import PopFilter from '../../components/PopFilter'
 import print from 'print-js'
 import printJS from 'print-js'
@@ -25,8 +25,6 @@ export default function Posts() {
     const [isCheckAll, setCheckAll] = useState(false)
     const [isCheck, setCheck] = useState([])
 
-    const [docx, setDocx] = useState([])
-
 
     useEffect(() => {
         onValue(ref(database, 'posts'), posts => {
@@ -42,16 +40,6 @@ export default function Posts() {
         })
     }, [])
 
-    function getSy(syId) {
-        onValue(ref(database, `schoolYear/${syId}`), snapshot => {
-            if (snapshot.exists()) {
-
-                return (<span>{snapshot.val().syTitle}</span>)
-            } else {
-                return 'No Sy Found'
-            }
-        })
-    }
 
     function handleCheckAll() {
         setCheckAll(!isCheckAll)
@@ -70,17 +58,16 @@ export default function Posts() {
     }
 
     const print = () => {
-
         isCheck.map(fileUrl => {
             getDownloadURL(storageRef(storage, fileUrl))
                 .then((url) => {
-                    console.log(`https://drive.google.com/viewerng/viewer?embedded=true&url=${encodeURIComponent(url)}`)
+                    // console.log(`https://drive.google.com/viewerng/viewer?embedded=true&url=${encodeURIComponent(url)}`)
+                    window.open(url)
                 })
                 .catch((e) => {
                     console.log(e)
                 });
         })
-
     }
 
     return (
@@ -221,7 +208,7 @@ export default function Posts() {
                                             onClick={() => {
                                                 nav(`/posts/${v.postId}`)
                                             }}>{v.postTitle}</td>
-                                        <td className='py-3 px-2 text-xs '>{v.syId ? `${getSy(v.syId)}` : 'Null'}</td>
+                                        <td className='py-3 px-2 text-xs '></td>
                                         <td className='py-3 px-2 text-xs '>{v.postDate}</td>
                                         <td className='py-3 px-2 text-xs '>
                                             <PostStatus postStatus={v.postStatus} textSize={'text-xs'} />
@@ -237,48 +224,14 @@ export default function Posts() {
                         <button
                             onClick={print}
                             type='button'
-                            className='p-1 h-auto w-16 border border-transparent rounded-md
+                            className='p-1 h-auto w-auto border border-transparent rounded-md
                          text-white bg-sky-600 hover:bg-sky-700 flex flex-row items-center justify-evenly' >
-                            <span className='text-xs'>Print</span>
-                            <FontAwesomeIcon icon={faPrint} size='xs' />
+                            <span className='text-xs mr-1'>Download</span>
+                            <FontAwesomeIcon icon={faDownload} size='xs' />
                         </button>}
 
                 </footer>
             </div>
-            {/* {
-                isCheck.length !== 0 && isCheck.map((v, k) =>
-                    getDownloadURL(storageRef(storage, v))
-                        .then((url) =>
-                            
-                        .catch((e) => {
-                            console.log(e)
-                        }))
-            } */}
         </div>
     )
 }
-
-
-// {posts && posts
-//     .sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime())
-    // .filter(entry => Object.values(entry).some(val => typeof val === 'string'
-    //     && val.toLowerCase().includes(searchpost.toLowerCase())))
-//     .map((val, key) =>
-//         <Link to={`/posts/${val.postId}`}>
-//             <div
-//                 key={key}
-//                 className='col-span-1 h-auto min-h-[200px] bg-white border
-//                  border-gray-200 rounded-md hover:shadow-lg flex flex-col'>
-//                 <div className='h-auto py-3 px-5 flex-1'>
-//                     <Link to={`/posts/${val.postId}`} className='text-base text-zinc-700 font-semibold 
-//                     block hover:underline overflow-hidden text-ellipsis'>
-//                         {val.postTitle}
-//                     </Link>
-//                     <span className='text-xs font-medium text-zinc-500 block'>{`Posted: ${val.postDate}`}</span>
-//                 </div>
-//                 <div className='h-12 flex justify-end items-center px-3'>
-//                     <PostStatus textSize={`text-xs`} postStatus={val.postStatus} />
-//                 </div>
-//             </div>
-//         </Link>
-//     )}

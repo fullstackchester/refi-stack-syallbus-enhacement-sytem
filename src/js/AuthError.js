@@ -35,7 +35,7 @@ export const AuthError = {
     "invalid-oauth-client-id": "The OAuth client ID provided is either invalid or does not match the specified API key.",
     "unauthorized-domain": "This domain is not authorized for OAuth operations for your Firebase project. Edit the list of authorized domains from the Firebase console.",
     "invalid-action-code": "The action code is invalid. This can happen if the code is malformed, expired, or has already been used.",
-    "wrong-password": "The password is invalid",
+    "wrong-password": "The password is incorrect",
     "invalid-persistence-type": "The specified persistence type is invalid. It can only be local, session or none.",
     "invalid-phone-number": "The format of the phone number provided is incorrect. Please enter the phone number in a format that can be parsed into E.164 format. E.164 phone numbers are written in the format [+][country code][subscriber number including area code].",
     "invalid-provider-id": "The specified provider ID is invalid.",

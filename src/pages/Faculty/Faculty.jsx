@@ -3,6 +3,7 @@ import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from "framer-motion"
+import { useFirebase } from '../../js/FirebaseContext'
 
 
 function Faculty() {
@@ -12,17 +13,36 @@ function Faculty() {
     const [sortBy, setSort] = useState('name')
     const [isCheckAll, setCheckAll] = useState(false)
     const [isCheck, setCheck] = useState([])
+    const { role, currentUser } = useFirebase()
+    const [dept, setDept] = useState()
+
+    let filtered = []
 
     const nav = useNavigate()
 
     useEffect(() => {
 
-        const getFaculty = onValue(ref(database, 'users'), snapshot => {
-            return setFaculty(Object.values(snapshot.val()))
+        onValue(ref(database, `users/${currentUser.uid}`), snap => {
+            if (snap.exists()) {
+                setDept(snap.val().department)
+            }
         })
-
-        return getFaculty
+        onValue(ref(database, 'users'), snapshot => {
+            setFaculty(Object.values(snapshot.val()))
+        })
     }, [])
+
+    if (role === 'area chair') {
+        faculty.forEach(user => {
+            if (user.department === dept) {
+                filtered.push(user)
+            }
+        })
+    } else {
+        faculty.forEach(user => {
+            filtered.push(user)
+        })
+    }
 
     function handleCheckAll() {
         setCheckAll(!isCheckAll)
@@ -66,14 +86,15 @@ function Faculty() {
                                             checked={isCheckAll}
                                         />
                                     },
-                                    { title: 'Name', onClick: () => setSort('name') },
-                                    { title: 'Email', onClick: () => setSort('email') },
-                                    { title: 'Employee Id', onClick: () => setSort('employeeId') },
-                                    { title: 'Department', onClick: () => setSort('department') },]
+                                    { title: 'Name', onClick: () => setSort('name'), hover: 'Sort by Name' },
+                                    { title: 'Email', onClick: () => setSort('email'), hover: 'Sort by Email' },
+                                    { title: 'Employee Id', onClick: () => setSort('employeeId'), hover: 'Sort by Id' },
+                                    { title: 'Department', onClick: () => setSort('department'), hover: 'Sort by Department' },]
                                         .map((val, key) =>
                                             <th
                                                 key={key}
                                                 onClick={val.onClick}
+                                                title={val.hover}
                                                 className='p-2 text-xs text-left text-zinc-600 hover:bg-zinc-200
                                                  transition-colors cursor-pointer'>
                                                 {val.title}
@@ -82,8 +103,8 @@ function Faculty() {
                             </tr>
                         </thead>
                         <tbody>
-                            {faculty.length !== 0 ?
-                                faculty
+                            {filtered.length !== 0 ?
+                                filtered
                                     .filter(entry => Object.values(entry).some(val => typeof val === 'string'
                                         && val.toLowerCase().includes(search.toLowerCase())))
                                     .sort((a, b) => {

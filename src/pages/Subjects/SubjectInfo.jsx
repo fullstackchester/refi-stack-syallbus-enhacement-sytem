@@ -71,10 +71,11 @@ export default function SubjectInfo() {
                     color={'red'}
                     onClick={() => setOpen(true)}
                     title='Delete' /> : <></>}
-                <Button
-                    color={'sky'}
-                    onClick={() => nav(`/subjects/${id}/edit`)}
-                    title='Edit Subject' />
+                {role !== 'faculty' &&
+                    <Button
+                        color={'sky'}
+                        onClick={() => nav(`/subjects/${id}/edit`)}
+                        title='Edit Subject' />}
             </div>
         </>
     )

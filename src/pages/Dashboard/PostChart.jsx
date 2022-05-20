@@ -3,6 +3,7 @@ import { Doughnut } from 'react-chartjs-2'
 import Chart from 'chart.js/auto';
 import { orderByValue, equalTo, onValue, query, ref } from 'firebase/database'
 import { database } from '../../js/Firebase';
+import { useFirebase } from '../../js/FirebaseContext';
 
 export default function PostChart() {
 
@@ -12,19 +13,24 @@ export default function PostChart() {
     let reviewCount = 0
     let reviseCount = 0
 
+    const { role, currentUser } = useFirebase()
+    const [dept, setDept] = useState()
+    const uid = currentUser.uid
 
     useEffect(() => {
-        return onValue(ref(database, 'posts'), snapshot => {
+        
+
+        onValue(ref(database, 'posts'), snapshot => {
             if (snapshot.exists()) {
                 total = Object.values(snapshot.val()).length
                 setPost(Object.values(snapshot.val()))
             } else {
                 console.log('Invalid query')
             }
-        }, {
-            onlyOnce: true
         })
+
     }, [])
+
 
     post.forEach(a => {
         if (a.postStatus === 'Approved') {

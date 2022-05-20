@@ -14,7 +14,7 @@ export default function Status({ postId }) {
     }
 
     return (
-        <div className="w-full text-right pz-10">
+        <div className="w-full text-right z-10">
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button

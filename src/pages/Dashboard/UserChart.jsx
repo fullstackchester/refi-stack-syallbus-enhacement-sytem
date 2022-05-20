@@ -3,6 +3,7 @@ import { Doughnut } from 'react-chartjs-2'
 import Chart from 'chart.js/auto';
 import { orderByValue, equalTo, onValue, query, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
+import { useFirebase } from '../../js/FirebaseContext';
 
 
 export default function UserChart() {
@@ -11,9 +12,24 @@ export default function UserChart() {
     const [faculty, setFaculty] = useState(0)
     let total = 0
 
+    const { role, currentUser } = useFirebase()
+    const [dept, setDept] = useState()
+
+    const uid = currentUser.uid
+
+    console.log(role)
+    console.log(dept)
+
 
     useEffect(() => {
-        return onValue(ref(database, 'users/'), snapshot => {
+
+        onValue(ref(database, `users/${uid}`), snap => {
+            if (snap.exists()) {
+                setDept(snap.val().department)
+            }
+        })
+
+        onValue(ref(database, 'users/'), snapshot => {
             if (snapshot.exists()) {
                 total = Object.values(snapshot.val()).length
                 Object.values(snapshot.val()).map((v) => {
@@ -26,10 +42,9 @@ export default function UserChart() {
                     }
                 })
             }
-        }, {
-            onlyOnce: true,
         })
     }, [])
+
     const plugins = [{
         beforeDraw: function (chart, args, options) {
             const { ctx, chartArea: { left, right, top, bottom, width, height } } = chart;

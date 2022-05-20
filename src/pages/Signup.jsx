@@ -41,7 +41,7 @@ function Signup() {
 
                     set(ref(database, `users/${userCredentials.user.uid}`), newAccount)
                         .then(() => {
-                            nav('/dashboard')
+                            nav('/subjects')
                         }).catch((err) => {
                             setErr(err.code)
                         });
@@ -51,7 +51,7 @@ function Signup() {
                     setErr(err.code)
                 });
                 
-        } else {
+        } else {    
             setErr(`Passwords don't match`)
             setloading(false)
         }
@@ -92,7 +92,7 @@ function Signup() {
                             name: 'email',
                             label: 'Email Address',
                             placeholder: 'johnsmith@bulsu.edu.ph',
-                            type: 'text',
+                            type: 'email',
                             required: true,
                             onChange: () => setErr(''),
                             ref: emailRef

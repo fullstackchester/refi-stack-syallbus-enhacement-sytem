@@ -95,7 +95,7 @@ export const SubjectAdd = () => {
                         onClick={() => nav(-1)}>
                         <FontAwesomeIcon icon={faChevronLeft} size={'sm'} />
                     </button>
-                    <span className='font-semibold text-lg ml-3'>Edit Subject</span>
+                    <span className='font-semibold text-lg ml-3'>New Subject</span>
                 </header>
                 <main className='flex-1 px-10 flex flex-col'>
                     <form

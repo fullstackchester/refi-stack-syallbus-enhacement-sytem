@@ -2,10 +2,12 @@ import { equalTo, onValue, query, ref } from 'firebase/database'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PostStatus from '../../components/PostStatus'
-import { database } from '../../js/Firebase'
+import { database, storage } from '../../js/Firebase'
 import { useFirebase } from '../../js/FirebaseContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle, faDownload } from '@fortawesome/free-solid-svg-icons'
+
+import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 
 export default function Files() {
 
@@ -13,6 +15,10 @@ export default function Files() {
     const { currentUser } = useFirebase()
     const [search, setSearch] = useState('')
     const [sortBy, setSort] = useState('postDate')
+
+    const [isCheckAll, setCheckAll] = useState(false)
+    const [isCheck, setCheck] = useState([])
+
 
     const uid = currentUser.uid
     const nav = useNavigate()
@@ -28,11 +34,43 @@ export default function Files() {
         })
     }, [])
 
+    function handleCheckAll() {
+        setCheckAll(!isCheckAll)
+        setCheck(myFiles.map(item => item.postFileUrl))
+        if (isCheckAll) {
+            setCheck([])
+        }
+    }
+
+    function handleCheck(e) {
+        const { checked, value } = e.target
+        setCheck([...isCheck, value])
+        if (!checked) {
+            setCheck(isCheck.filter(item => item !== value))
+        }
+    }
+
     files.forEach(function (file) {
         if (file.uid === uid) {
             myFiles.push(file)
         }
     });
+
+    console.table(isCheck)
+
+    function downloadFiles(e) {
+        e.preventDefault()
+        isCheck.map(fileUrl => {
+            getDownloadURL(storageRef(storage, fileUrl))
+                .then((url) => {
+                    // console.log(`https://drive.google.com/viewerng/viewer?embedded=true&url=${encodeURIComponent(url)}`)
+                    window.open(url)
+                })
+                .catch((e) => {
+                    console.log(e)
+                });
+        })
+    }
 
 
     return (
@@ -62,7 +100,11 @@ export default function Files() {
                                 <tr className='border border-zinc-100'>
                                     {
                                         [
-                                            { title: <input type='checkbox' /> },
+                                            {
+                                                title: <input type='checkbox'
+                                                    onChange={handleCheckAll}
+                                                    checked={isCheckAll} />
+                                            },
                                             { title: 'Post Title' },
                                             { title: 'Academic Year' },
                                             { title: 'Date Posted' },
@@ -83,7 +125,15 @@ export default function Files() {
                                     .map((v, k) =>
                                         <tr key={k} className='text-xs font-medium hover:bg-zinc-200 
                                 transition-colors border border-zinc-100 text-zinc-700'>
-                                            <td className='p-3'><input type='checkbox' /></td>
+                                            <td className='p-3'>
+                                                <input
+                                                    type='checkbox'
+                                                    id={v.postId}
+                                                    onChange={handleCheck}
+                                                    checked={isCheck.includes(v.postFileUrl)}
+                                                    value={v.postFileUrl}
+                                                />
+                                            </td>
                                             <td className='p-3'>
                                                 <span
                                                     className='hover:underline cursor-pointer'
@@ -108,11 +158,18 @@ export default function Files() {
 
                         </div>}
                 </main>
-                <footer className='h-10 border-t border-zinc-100'>
-
+                <footer className='h-12 border-t border-zinc-100 flex items-center p-3'>
+                    {isCheck.length !== 0 &&
+                        <button
+                            onClick={downloadFiles}
+                            type='button'
+                            className='p-1 h-auto w-auto border border-transparent rounded-md
+                         text-white bg-sky-600 hover:bg-sky-700 flex flex-row items-center justify-evenly' >
+                            <span className='text-xs mr-1'>Download</span>
+                            <FontAwesomeIcon icon={faDownload} size='xs' />
+                        </button>}
                 </footer>
             </div>
-
         </div>
     )
 }   

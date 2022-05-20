@@ -5,12 +5,15 @@ import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { motion } from 'framer-motion'
+import { useFirebase } from '../../js/FirebaseContext'
 
 function Subjects() {
 
     const nav = useNavigate()
     const [search, setSearch] = useState('')
     const [subject, setSubject] = useState([])
+    const [sort, setSort] = useState('courseCode')
+    const { role } = useFirebase()
 
 
     useEffect(() => {
@@ -33,10 +36,9 @@ function Subjects() {
                             placeholder='Search'
                             onChange={(e) => setSearch(e.target.value)}
                             className='w-60 border border-zinc-200 text-xs p-2 outline-none rounded-md' />
-
                     </div>
                     {
-                        [
+                        role !== 'faculty' && [
                             {
                                 icon: faPlusCircle,
                                 title: 'New subject',
@@ -50,7 +52,9 @@ function Subjects() {
                                 justify-center hover:bg-zinc-100 w-8 h-8 rounded-full`}
                                 onClick={v.onClick} >
                                 <FontAwesomeIcon icon={v.icon} size='sm' />
-                            </button>)}
+                            </button>
+                        )
+                    }
                 </header>
                 <main className='flex-1 overflow-y-auto'>
                     <table className='w-full h-auto table-auto'>
@@ -58,12 +62,13 @@ function Subjects() {
                             <tr className='border border-zinc-100'>
                                 {
                                     [
-                                        { title: <input type='checkbox' />, },
-                                        { title: 'Course Code', },
-                                        { title: 'Course Title', },
-                                        { title: 'Units', },
+                                        { title: <input type='checkbox' /> },
+                                        { title: 'Course Code', sortBy: () => setSort('couseCode') },
+                                        { title: 'Course Title', sortBy: () => setSort('subjectTitle') },
+                                        { title: 'Units', sortBy: () => setSort('creditUnits') },
                                     ].map((val, key) =>
                                         <th key={key}
+                                            onClick={val.sortBy}
                                             className='p-3 text-xs text-left text-zinc-600 hover:bg-zinc-200
                                                  transition-colors cursor-pointer'>
                                             {val.title}
@@ -76,7 +81,15 @@ function Subjects() {
                                 subject.length !== 0 ?
                                     subject
                                         .sort((a, b) => {
-                                            a.courseCode.toLowerCase().localeCompare(b.courseCode.toLowerCase())
+                                            if (sort === 'courseCode') {
+                                                return a.courseCode.toLowerCase().localeCompare(b.courseCode.toLowerCase())
+                                            } else if (sort === 'subjectTitle') {
+                                                return a.subjectTitle.toLowerCase().localeCompare(b.subjectTitle.toLowerCase())
+                                            } else if (sort === 'creditUnits') {
+                                                return a.creditUnits.toLowerCase().localeCompare(b.creditUnits.toLowerCase())
+                                            } else {
+
+                                            }
                                         })
                                         .filter(entry => Object.values(entry).some(val => typeof val === 'string'
                                             && val.toLowerCase().includes(search.toLowerCase())))
