@@ -5,9 +5,10 @@ import PostStatus from '../../components/PostStatus'
 import { database, storage } from '../../js/Firebase'
 import { useFirebase } from '../../js/FirebaseContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle, faDownload, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
-
+import { faPlusCircle, faDownload, faFolderOpen, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { motion } from 'framer-motion'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
+import Loading from '../../components/Loading'
 
 export default function Files() {
 
@@ -19,6 +20,8 @@ export default function Files() {
     const [isCheckAll, setCheckAll] = useState(false)
     const [isCheck, setCheck] = useState([])
 
+    const [isFetching, setFetching] = useState(true)
+
 
     const uid = currentUser.uid
     const nav = useNavigate()
@@ -27,11 +30,14 @@ export default function Files() {
 
     useEffect(() => {
 
-        return onValue(ref(database, `posts`), snapshot => {
-            if (snapshot.exists()) {
-                setFiles(Object.values(snapshot.val()))
-            }
-        })
+        setTimeout(function () {
+            onValue(ref(database, `posts`), snapshot => {
+                if (snapshot.exists()) {
+                    setFiles(Object.values(snapshot.val()))
+                    setFetching(false)
+                }
+            })
+        }, 500)
     }, [])
 
     function handleCheckAll() {
@@ -91,75 +97,82 @@ export default function Files() {
                         <FontAwesomeIcon icon={faPlusCircle} size='sm' />
                     </button>
                 </header>
-                <main className='flex-1 overflow-y-auto'>
-                    {myFiles.length !== 0 ?
-                        <table className='w-full h-auto table-auto border border-red-600'>
-                            <thead className='sticky top-0 bg-white'>
-                                <tr className='border border-zinc-100'>
-                                    {
-                                        [
-                                            {
-                                                title: <input type='checkbox'
-                                                    onChange={handleCheckAll}
-                                                    checked={isCheckAll} />
-                                            },
-                                            { title: 'Post Title' },
-                                            { title: 'Academic Year' },
-                                            { title: 'Date Posted' },
-                                            { title: 'Status' }
-                                        ].map((v, k) =>
-                                            <th
-                                                key={k}
-                                                className='p-3 text-xs font-medium text-left text-zinc-600'>
-                                                {v.title}
-                                            </th>)
-                                    }
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {myFiles.filter(entry => Object.values(entry).some(val => typeof val === 'string'
-                                    && val.toLowerCase().includes(search.toLowerCase())))
-                                    .sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime())
-                                    .map((v, k) =>
-                                        <tr key={k} className='text-xs font-medium hover:bg-zinc-200 
+                {!isFetching ?
+                    <main className='flex-1 overflow-y-auto'>
+                        {myFiles.length !== 0 ?
+                            <table className='w-full h-auto table-auto border border-red-600'>
+                                <thead className='sticky top-0 bg-white'>
+                                    <tr className='border border-zinc-100'>
+                                        {
+                                            [
+                                                {
+                                                    title: <input type='checkbox'
+                                                        onChange={handleCheckAll}
+                                                        checked={isCheckAll} />
+                                                },
+                                                { title: 'Post Title' },
+                                                { title: 'Academic Year' },
+                                                { title: 'Date Posted' },
+                                                { title: 'Status' }
+                                            ].map((v, k) =>
+                                                <th
+                                                    key={k}
+                                                    className='p-3 text-xs font-medium text-left text-zinc-600'>
+                                                    {v.title}
+                                                </th>)
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {myFiles.filter(entry => Object.values(entry).some(val => typeof val === 'string'
+                                        && val.toLowerCase().includes(search.toLowerCase())))
+                                        .sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime())
+                                        .map((v, k) =>
+                                            <motion.tr
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }} key={k} className='text-xs font-medium hover:bg-zinc-200 
                                 transition-colors border border-zinc-100 text-zinc-700'>
-                                            <td className='p-3'>
-                                                <input
-                                                    type='checkbox'
-                                                    id={v.postId}
-                                                    onChange={handleCheck}
-                                                    checked={isCheck.includes(v.postFileUrl)}
-                                                    value={v.postFileUrl}
-                                                />
-                                            </td>
-                                            <td className='p-3'>
-                                                <span
-                                                    className='hover:underline cursor-pointer'
-                                                    onClick={() => nav(`/files/${v.postId}/information`)}>{v.postTitle}</span>
-                                            </td>
-                                            <td className='p-3'>{ }</td>
-                                            <td className='p-3'>{v.postDate}</td>
-                                            <td className='p-3'>
-                                                <PostStatus postStatus={v.postStatus} textSize='text-xs' />
-                                            </td>
-                                        </tr>)}
-                            </tbody>
-                        </table>
-                        :
-                        <div className='h-full w-full grid place-items-center place-content-center'>
-                            <div className='text-zinc-600 flex flex-col justify-center items-center'>
-                                <FontAwesomeIcon icon={faFolderOpen} size='4x' />
-                                <h1 className='text-lg font-semibold text-center'>No Files Found</h1>
-                                <span className='text-sm'>Your account has no access to these files.</span>
-                                <button
-                                    onClick={() => nav('/files/create-post')}
-                                    className='w-max flex flex-row text-xs text-zinc-600 font-medium py-1 px-2 
+                                                <td className='p-3'>
+                                                    <input
+                                                        type='checkbox'
+                                                        id={v.postId}
+                                                        onChange={handleCheck}
+                                                        checked={isCheck.includes(v.postFileUrl)}
+                                                        value={v.postFileUrl}
+                                                    />
+                                                </td>
+                                                <td className='p-3'>
+                                                    <span
+                                                        className='hover:underline cursor-pointer'
+                                                        onClick={() => nav(`/files/${v.postId}/information`)}>{v.postTitle}</span>
+                                                </td>
+                                                <td className='p-3'>{ }</td>
+                                                <td className='p-3'>{v.postDate}</td>
+                                                <td className='p-3'>
+                                                    <PostStatus postStatus={v.postStatus} textSize='text-xs' />
+                                                </td>
+                                            </motion.tr>)}
+                                </tbody>
+                            </table>
+                            :
+                            <div className='h-full w-full grid place-items-center place-content-center'>
+                                <div className='text-zinc-600 flex flex-col justify-center items-center'>
+                                    <FontAwesomeIcon icon={faFolderOpen} size='4x' />
+                                    <h1 className='text-lg font-semibold text-center'>No Files Found</h1>
+                                    <span className='text-sm'>Your account has no access to these files.</span>
+                                    <button
+                                        onClick={() => nav('/files/create-post')}
+                                        className='w-max flex flex-row text-xs text-zinc-600 font-medium py-1 px-2 
                                 border border-zinc-200 rounded-md outline-none hover:bg-zinc-200
                                  transition-colors'>Add Files</button>
+                                </div>
                             </div>
-                        </div>
-                    }
-                </main>
+                        }
+                    </main>
+                    :
+                    <Loading />
+                }
                 <footer className='h-12 border-t border-zinc-100 flex items-center p-3'>
                     {isCheck.length !== 0 &&
                         <button

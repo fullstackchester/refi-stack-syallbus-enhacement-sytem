@@ -141,7 +141,7 @@ function Signup() {
                         type={`submit`}
                         className={`p-2 bg-zinc-700 text-white text-sm outline-none border border-transparent
                         hover:bg-zinc-800 rounded-md mt-2 flex flex-row items-center justify-center`} >
-                        Login
+                        Create Account
                         {loading && <FontAwesomeIcon icon={faCircleNotch} className={`ml-1`} spin />}
                     </button>
                 </form>

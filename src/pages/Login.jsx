@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../js/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
@@ -11,45 +11,46 @@ import { useFirebase } from '../js/FirebaseContext'
 
 export default function Login() {
 
-    const nav = useNavigate()
     const [err, setErr] = useState()
     const [loading, setLoading] = useState(false)
     const emailRef = useRef()
     const passRef = useRef()
 
-    const { role } = useFirebase()
-    onAuthStateChanged(auth, user => {
-        if (user) {
+    const nav = useNavigate()
+    const { currentUser } = useFirebase()
+
+    useEffect(() => {
+        if (currentUser) {
             nav('/reports')
         }
-    })
-
+    }, [currentUser])
 
     function loginUser(e) {
         e.preventDefault()
-        const email = emailRef.current.value
-        const pass = passRef.current.value
-
         setLoading(true)
+        setTimeout(function () {
+            const email = emailRef.current.value
+            const pass = passRef.current.value
 
-        if (email === '' || pass === '') {
-            setErr('Email and Password and required')
-            setLoading(false)
-        } else {
-            signInWithEmailAndPassword(auth, email, pass)
-                .then(() => {
-                    nav('/reports')
-                    setLoading(false)
-                }).catch((err) => {
-                    for (let key in AuthError) {
-                        if ((err.code).replace('auth/', '') === key) {
-                            setErr(AuthError[key])
-                            setLoading(false)
+            if (email === '' || pass === '') {
+                setErr('Email and Password and required')
+                setLoading(false)
+            } else {
+                signInWithEmailAndPassword(auth, email, pass)
+                    .then(() => {
+                        setLoading(false)
+                    }).catch((err) => {
+                        for (let key in AuthError) {
+                            if ((err.code).replace('auth/', '') === key) {
+                                setErr(AuthError[key])
+                                setLoading(false)
+                            }
                         }
-                    }
-                });
-        }
+                    });
+            }
+        }, 300)
     }
+
 
     return (
         <div className='w-full h-screen  bg-gradient-to-b from-zinc-200 to-white flex justify-center items-center'>
@@ -57,7 +58,7 @@ export default function Login() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className='w-[400px] h-auto bg-white border border-zinc-200 rounded-md p-10'>
+                className='w-[400px] h-auto bg-white rounded-md p-10'>
                 <h1 className={`text-center text-2xl text-zinc-600 font-medium`}>Login</h1>
                 <form
                     spellCheck={false}
@@ -108,7 +109,7 @@ export default function Login() {
                         type={`submit`}
                         className={`p-2 bg-zinc-700 text-white text-sm outline-none border border-transparent
                         hover:bg-zinc-800 rounded-md mt-2 flex flex-row items-center justify-center`} >
-                        Login
+                        <span className='flex-1'>Login</span>
                         {loading && <FontAwesomeIcon icon={faCircleNotch} className={`ml-1`} spin />}
                     </button>
                 </form>

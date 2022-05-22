@@ -25,7 +25,7 @@ export const AuthError = {
     "invalid-cordova-configuration": "The following Cordova plugins must be installed to enable OAuth sign-in: cordova-plugin-buildinfo, cordova-universal-links-plugin, cordova-plugin-browsertab, cordova-plugin-inappbrowser and cordova-plugin-customurlscheme.",
     "invalid-custom-token": "The custom token format is incorrect. Please check the documentation.",
     "invalid-dynamic-link-domain": "The provided dynamic link domain is not configured or authorized for the current project.",
-    "invalid-email": "The email address is badly formatted.",
+    "invalid-email": "Invalid email address.",
     "invalid-api-key": "Your API key is invalid, please check you have copied it correctly.",
     "invalid-cert-hash": "The SHA-1 certificate hash provided is invalid.",
     "invalid-credential": "The supplied auth credential is malformed or has expired.",

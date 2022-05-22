@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Layout from './components/Template/Layout'
 import { FirebaseProvider } from './js/FirebaseContext'
@@ -32,8 +32,6 @@ import FileComments from './pages/Files/FileComment'
 import FileHistory from './pages/Files/FileHistory'
 import FileAdd from './pages/Files/FileAdd'
 import Dashboard from './pages/Dashboard/Dashboard'
-import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from './js/Firebase'
 import ProtectedRoute from './components/ProtectedRoute'
 import Restrcited from './components/Restrcited'
 import SubjectInfo from './pages/Subjects/SubjectInfo'
@@ -43,8 +41,9 @@ export default function App() {
 
 
 	return (
-		<div className='w-full h-auto bg-gray-300/40'>
-			<FirebaseProvider>
+
+		<FirebaseProvider>
+			<div className='w-full h-auto bg-gray-300/40'>
 				<Router>
 					<Routes>
 						<Route exact path='/' element={<Login />} />
@@ -105,7 +104,8 @@ export default function App() {
 						<Route path='*' element={<NotFound />} />
 					</Routes>
 				</Router>
-			</FirebaseProvider>
-		</div>
+			</div>
+
+		</FirebaseProvider>
 	)
 }
