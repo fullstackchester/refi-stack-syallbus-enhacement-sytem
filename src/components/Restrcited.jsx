@@ -6,9 +6,9 @@ export default function Restrcited({ children }) {
 
     const { role } = useFirebase()
 
-    if (role !== 'faculty') {
-        return children
+    if (role === 'faculty') {
+        return <Navigate to='/subjects' replace />
     }
-    
-    return <Navigate to='/subjects' replace />
+
+    return children
 }

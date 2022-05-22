@@ -48,7 +48,7 @@ export default function SubjectFiles() {
                             .map((v, k) =>
                                 <Link key={k} to={`/posts/${v.postId}`}>
                                     <div
-                                        className='h-16 border-b border-zinc-200 p-2 hover:underline hover:bg-zinc-100
+                                        className='h-16 border-b border-zinc-100 p-2 hover:underline hover:bg-zinc-100
                                 transition-colors'>
                                         <div className='text-sm text-zinc-700 font-semibold'>{v.postTitle}</div>
                                     </div>

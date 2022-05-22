@@ -68,7 +68,8 @@ function Faculty() {
     return (
         <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center py-5'>
             <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>
-                <header className='h-14 flex flex-row justify-end px-5 items-center'>
+                <header className='h-14 flex flex-row justify-between px-5 items-center'>
+                    <span className='font-semibold text-zinc-700 text-lg'>Faculty</span>
                     <div>
                         <input
                             type='text'

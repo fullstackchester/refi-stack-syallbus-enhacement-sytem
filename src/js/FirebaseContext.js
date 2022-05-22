@@ -20,8 +20,6 @@ export function useFirebase() {
 export function FirebaseProvider({ children }) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
-    const [isAdmin, setAdmin] = useState()
-    const [isAreaChair, setAreaChair] = useState()
     const [role, setRole] = useState()
 
     const value = {
@@ -42,16 +40,17 @@ export function FirebaseProvider({ children }) {
 
         const unsub = onAuthStateChanged(auth, user => {
             setCurrentUser(user)
-            setLoading(false)
             if (user) {
                 onValue(ref(database, `users/${user.uid}`), snapshot => {
                     setRole(snapshot.val().userType)
                 })
             }
+            setLoading(false)
         })
 
         return unsub
     }, []);
+
 
     function login(email, pass) {
         return signInWithEmailAndPassword(auth, email, pass)

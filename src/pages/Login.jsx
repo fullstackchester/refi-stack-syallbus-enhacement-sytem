@@ -17,11 +17,15 @@ export default function Login() {
     const passRef = useRef()
 
     const nav = useNavigate()
-    const { currentUser } = useFirebase()
+    const { currentUser, role } = useFirebase()
 
     useEffect(() => {
-        if (currentUser) {
-            nav('/reports')
+        if (currentUser !== null) {
+            if (role === 'faculty') {
+                nav('/subjects')
+            } else {
+                nav('/reports')
+            }
         }
     }, [currentUser])
 

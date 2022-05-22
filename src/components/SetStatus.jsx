@@ -1,16 +1,49 @@
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { useFirebase } from '../js/FirebaseContext'
-import { ref, update } from 'firebase/database'
+import { onValue, ref, set, update } from 'firebase/database'
 import { database } from '../js/Firebase'
+import { v4 } from 'uuid'
+import { prodErrorMap } from 'firebase/auth'
+
 
 export default function Status({ postId }) {
 
     const { role } = useFirebase()
+    const [post, setPost] = useState({})
+
+    useEffect(() => {
+        return onValue(ref(database, `posts/${postId}`), snap => {
+            if (snap.exists()) {
+                setPost(snap.val())
+            }
+        })
+    }, [])
 
     function changeStatus(UpdateStatus) {
         update(ref(database, `posts/${postId}`), { postStatus: UpdateStatus, })
+            .then(() => {
+                const id = v4()
+                const notif = {
+                    notificationId: id,
+                    notificationDate: new Date().toLocaleString(),
+                    notificationTitle: `Post Checked`,
+                    notificationMessage: `Your post '${post.postTitle}' was checked: ${UpdateStatus}`,
+                    notificationStatus: 'unread',
+                    notificationType: 'check-post',
+                    postId: post.postId,
+                    uid: post.uid,
+                }
+                set(ref(database, `notifications/${id}`), notif)
+                    .then(() => {
+
+                    }).catch((err) => {
+                        console.log(err)
+                    });
+            }).catch((err) => {
+                console.log(err)
+            });
     }
 
     return (
