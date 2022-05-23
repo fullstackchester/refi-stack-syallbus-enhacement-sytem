@@ -8,6 +8,7 @@ import { useFirebase } from '../../js/FirebaseContext'
 import LoadingButton from '../../components/LoadingButton'
 import Confirm from '../../components/PopConfirmation'
 import PopNotif from '../../components/PopNotif'
+import Input from '../../components/Inputs/Input'
 
 function SubjectEdit() {
 
@@ -25,28 +26,31 @@ function SubjectEdit() {
     const [isOpen, setOpen] = useState(false)
     const EditSubjectData = [
         {
-            id: 'course-code',
-            label: 'Course code',
-            type: 'text',
-            placeholder: 'IT 101',
-            required: true,
-            defaultValue: subject.courseCode,
-            ref: courseCodeRef
-        },
-        {
             id: 'subject-title',
             label: 'Subject title',
             type: 'text',
             placeholder: 'Introduction to computing',
+            width: 'col-span-4',
             required: true,
             defaultValue: subject.subjectTitle,
             ref: courseTitleRef
+        },
+        {
+            id: 'course-code',
+            label: 'Course code',
+            type: 'text',
+            placeholder: 'IT 101',
+            width: 'col-span-2',
+            required: true,
+            defaultValue: subject.courseCode,
+            ref: courseCodeRef
         },
         {
             id: 'credit-unit',
             label: 'Credit units',
             type: 'number',
             placeholder: '3.0',
+            width: 'col-span-2',
             required: true,
             defaultValue: subject.creditUnits,
             ref: creditUnitRef
@@ -57,6 +61,7 @@ function SubjectEdit() {
             label: 'Course description',
             type: 'textarea',
             placeholder: 'Enter your text here...',
+            width: 'col-span-4',
             required: false,
             row: 8,
             defaultValue: subject.subjectDescription,
@@ -109,10 +114,10 @@ function SubjectEdit() {
                 }}
                 dialogTitle='Update Success'
                 dialogMessage='Subject updated successfully.' />
-                
+
             <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center'>
                 <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>
-                    <header className='h-14 border-b border-zinc-200 flex items-center px-2'>
+                    <header className='h-14 border-b border-zinc-100 flex items-center px-2'>
                         <button type='button'
                             className='h-8 w-8 rounded-full hover:bg-zinc-100'
                             onClick={() => nav(-1)}>
@@ -120,27 +125,17 @@ function SubjectEdit() {
                         </button>
                         <span className='font-semibold text-lg ml-3'>Edit Subject</span>
                     </header>
-                    <main className='flex-1 px-10 flex flex-col'>
+                    <main className='flex-1 py-2 px-3 flex flex-col'>
                         <form
                             onSubmit={UpdateSubject}
                             id='edit-subject-form'
                             name='edit-subject-form'
                             spellCheck='false'
-                            className=' flex-1'>
+                            className='flex-1 grid grid-cols-4 gap-1 place-content-start'>
 
-                            {EditSubjectData && EditSubjectData.map((val, key) => {
+                            {EditSubjectData.map((val, key) => {
                                 return (
-                                    <label
-                                        key={key}
-                                        htmlFor={val.id}
-                                        className={`${val.type !== 'textarea' ? ' border-b border-zinc-100' : ''}
-                                    py-5 w-full h-auto flex flex-row`} >
-                                        <span
-                                            className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'
-                                        >
-                                            {val.label}
-                                        </span>
-
+                                    <Input key={key} htmlFor={val.id} width={val.width} label={val.label}>
                                         {val.type !== 'textarea' ?
                                             <input
                                                 id={val.id}
@@ -149,7 +144,8 @@ function SubjectEdit() {
                                                 required={val.required}
                                                 type={val.type}
                                                 defaultValue={val.defaultValue}
-                                                className={inputClass} /> :
+                                                className='h-14 bg-zinc-100 p-3 text-sm outline-none border border-transparent 
+                                                ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all' /> :
                                             <textarea
                                                 id={`course-description`}
                                                 rows={8}
@@ -158,9 +154,9 @@ function SubjectEdit() {
                                                 ref={courseDescriptionRef}
                                                 required={true}
                                                 defaultValue={subject.subjectDescription}
-                                                className={`${inputClass} resize-none`} />}
-                                    </label>
-
+                                                className='h-40 bg-zinc-100 p-3 text-sm outline-none border border-transparent 
+                                                ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all resize-none' />}
+                                    </Input>
                                 )
                             })}
                         </form>

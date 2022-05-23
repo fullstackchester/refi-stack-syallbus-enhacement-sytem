@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { onValue, ref, set } from 'firebase/database'
 import { database } from '../../js/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAdd, faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faAdd, faTrash, faPlusCircle, faPlus } from '@fortawesome/free-solid-svg-icons'
 import PostChart from './PostChart'
 import UserChart from './UserChart'
 import SubjectChart from './SubjectChart'
@@ -154,12 +154,15 @@ function Dashboard() {
                 <div className='col-span-6 row-span-1 bg-white rounded-md flex flex-col'>
                     <div className='h-12 flex flex-row items-center justify-between px-3 border-b border-white'>
                         <h1 className=' text-sm font-semibold text-zinc-500'>School year</h1>
-                        <button
-                            onClick={() => setOpen(true)}
-                            className={`border border-transparent text-zinc-800 ml-2 flex items-center 
+                        {
+                            role === 'administrator' &&
+                            <button
+                                onClick={() => setOpen(true)}
+                                className={`border border-transparent text-zinc-800 ml-2 flex items-center 
                             justify-center hover:bg-zinc-100 w-8 h-8 rounded-full`}>
-                            <FontAwesomeIcon icon={faAdd} size='sm' />
-                        </button>
+                                <FontAwesomeIcon icon={faPlusCircle} size='sm' />
+                            </button>
+                        }
                     </div>
                     <div className='flex-1 overflow-y-auto border border-white'>
                         <table className='w-full h-auto table-auto'>

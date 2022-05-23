@@ -4,7 +4,8 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     onAuthStateChanged,
-    signOut
+    signOut,
+    deleteUser
 } from 'firebase/auth'
 
 import { ref, set, onValue, remove, update } from 'firebase/database'
@@ -34,6 +35,7 @@ export function FirebaseProvider({ children }) {
         uploadFile,
         updateData,
         deleteFile,
+        deleteAccount,
         role,
         loading,
         isFetching
@@ -45,7 +47,9 @@ export function FirebaseProvider({ children }) {
             setCurrentUser(user)
             if (user) {
                 onValue(ref(database, `users/${user.uid}`), snapshot => {
-                    setRole(snapshot.val().userType)
+                    if (snapshot.exists()) {
+                        setRole(snapshot.val().userType)
+                    }
                 })
             }
             setFecthing(false)
@@ -93,6 +97,10 @@ export function FirebaseProvider({ children }) {
 
     function deleteFile(path) {
         return deleteObject(StorageRef(storage, path))
+    }
+
+    function deleteAccount() {
+        return deleteUser(currentUser)
     }
 
 

@@ -6,6 +6,7 @@ import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 import PopNotif from '../../components/PopNotif'
+import avatar from '../../assets/Images/avatar.jpg'
 
 export default function DisplayInformation() {
     const { currentUser, uploadFile } = useFirebase()
@@ -32,7 +33,15 @@ export default function DisplayInformation() {
             if (snapshot.exists()) {
                 setCurrent(snapshot.val())
                 setCurrDept(snapshot.val().department)
-                getDownloadURL(storageRef(storage, `avatars/${uid}/${snapshot.val().photoUrl}`))
+            }
+        })
+        getAccount()
+    }, [])
+
+    useEffect(() => {
+        const getAvatar = () => onValue(ref(database, `users/${uid}/photoUrl`), snapshot => {
+            if (snapshot.exists()) {
+                getDownloadURL(storageRef(storage, `avatars/${uid}/${snapshot.val()}`))
                     .then((url) => {
                         const avatar = document.getElementById('profile-avatar')
                         avatar.setAttribute('src', url)
@@ -41,8 +50,7 @@ export default function DisplayInformation() {
                     })
             }
         })
-
-        getAccount()
+        getAvatar()
     }, [])
 
     useEffect(() => {
@@ -110,7 +118,6 @@ export default function DisplayInformation() {
                 console.log(err)
                 setLoading(false)
             });
-        // console.table(updateProfile)
     }
 
     return (
@@ -126,7 +133,8 @@ export default function DisplayInformation() {
                 onSubmit={saveInfo}
                 id='profile-form' name='profile-form' spellCheck={false} className='w-full flex-1 px-5 py-3'>
                 <div className='h-auto flex flex-row items-center mb-5'>
-                    <img src={preview} id='profile-avatar' className='h-20 w-20 object-cover rounded-full border' />
+                    <img src={!preview && require('../../assets/Images/avatar.png')} id='profile-avatar' className='h-20 w-20 object-cover rounded-full border' />
+
                     <label className='text-xs p-1 text-white bg-zinc-600 hover:bg-zinc-700 rounded-md ml-3 cursor-pointer'>
                         <input
                             onChange={(e) => {

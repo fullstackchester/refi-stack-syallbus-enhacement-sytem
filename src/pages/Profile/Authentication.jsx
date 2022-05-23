@@ -1,6 +1,7 @@
 import { updateEmail, updatePassword } from 'firebase/auth'
 import { ref, update } from 'firebase/database'
 import React, { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Confirm from '../../components/PopConfirmation'
 import PopNotif from '../../components/PopNotif'
 import { database } from '../../js/Firebase'
@@ -10,11 +11,12 @@ export default function Authentication() {
     const emailRef = useRef()
     const passRef = useRef()
 
-    const { currentUser } = useFirebase()
+    const { currentUser, role, deleteAccount, deleteData } = useFirebase()
     const uid = currentUser.uid
 
     const [open, setOpen] = useState(false)
     const [openDel, setOpenDel] = useState(false)
+    const nav = useNavigate()
 
     const [isLoading, setLoading] = useState(false)
 
@@ -62,6 +64,21 @@ export default function Authentication() {
             });
     }
 
+    function DeleteAccount(e) {
+        e.preventDefault()
+        deleteData(`users/${uid}`)
+            .then(() => {
+                deleteAccount()
+                    .then(() => {
+                        nav('/')
+                    }).catch((err) => {
+                        console.log(err)
+                    });
+            }).catch((err) => {
+                console.log(err)
+            });
+    }
+
     return (
         <>
             <PopNotif
@@ -70,7 +87,14 @@ export default function Authentication() {
                 isOpen={open}
                 handleClose={() => setOpen(false)} />
 
-            <Confirm isOpen={openDel} handleClose={() => setOpenDel(false)} />
+            <Confirm
+                isOpen={openDel}
+                handleClose={() => setOpenDel(false)}
+                dialogTitle='Account Deletion'
+                dialogMessage='Are you sure you want to delete your account?'
+                buttonTitle='Delete Account'
+                dedicatedFunction={DeleteAccount}
+            />
 
             <div className='h-14 flex flex-row items-center border-b border-zinc-100 text-sm text-zinc-600 px-5 font-semibold'>Security</div>
             <form
@@ -96,23 +120,23 @@ export default function Authentication() {
                         </label>
                     )
                 })}
-                <div className='border-t border-zinc-100 h-20 py-5'>
-                    <label
-                        className='flex flex-col text-sm text-zinc-700 mb-5'>
-                        <span className='font-medium'>{'Account Deletion'}</span>
-                        <p className='text-xs font-medium mt-1 text-zinc-500'>
-                            {'This will delete all of your data ( basic information, passwords )'}
-                        </p>
-                        <button
-                            onClick={() => setOpenDel(true)}
-                            type='button'
-                            className='w-fit h-fit text-xs border border-transparent outline-none p-2
+                {role !== 'administrator' &&
+                    <div className='border-t border-zinc-100 h-20 py-5'>
+                        <label
+                            className='flex flex-col text-sm text-zinc-700 mb-5'>
+                            <span className='font-medium'>{'Account Deletion'}</span>
+                            <p className='text-xs font-medium mt-1 text-zinc-500'>
+                                {'This will delete all of your data ( basic information, passwords )'}
+                            </p>
+                            <button
+                                onClick={() => setOpenDel(true)}
+                                type='button'
+                                className='w-fit h-fit text-xs border border-transparent outline-none p-2
                              bg-red-600 hover:bg-red-700 text-white rounded-md mt-3'>
-                            Delete Account
-                        </button>
-                    </label>
-
-                </div>
+                                Delete Account
+                            </button>
+                        </label>
+                    </div>}
             </form>
 
             <footer className='h-14 flex items-center justify-end px-5 border-t border-zinc-100'>

@@ -1039,6 +1039,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   resize: none;
 }
 
+.resize {
+  resize: both;
+}
+
 .grid-cols-6 {
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
