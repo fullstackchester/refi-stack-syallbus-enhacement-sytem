@@ -23,8 +23,6 @@ function Sidebar() {
                 setLoading(false)
             }
         })
-
-
     }, []);
 
 

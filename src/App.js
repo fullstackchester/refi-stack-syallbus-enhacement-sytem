@@ -60,7 +60,7 @@ export default function App() {
 							} />
 
 							<Route path='/posts' element={<Posts />} />
-							<Route path='posts/create-post' element={<CreatePost />} />
+							<Route path='posts/create-post' element={<FileAdd />} />
 							<Route path='posts/:postId' element={<ViewPost />} >
 								<Route index element={<Information />} />
 								<Route path='information' element={<Information />} />

@@ -44,7 +44,7 @@ export default function PopForm(
                              align-middle transition-all transform bg-white border border-zinc-200 shadow-xl rounded-lg">
                                 <Dialog.Title
                                     as="h3"
-                                    className="text-lg font-medium leading-6 text-zinc-800" >
+                                    className="text-lg font-semibold leading-6 text-zinc-700" >
                                     {formTitle}
                                 </Dialog.Title>
                                 {children}

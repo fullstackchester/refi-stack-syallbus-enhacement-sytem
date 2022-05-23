@@ -5,20 +5,12 @@ import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
 import { Doughnut } from 'react-chartjs-2'
 import Chart from 'chart.js/auto';
+import { subjects } from '../../js/Data'
 
 
 
 export default function SubjectChart() {
 
-    const [subCount, setCount] = useState(0)
-
-    useEffect(() => {
-        return onValue(ref(database, `subject`), snap => {
-            if (snap.exists()) {
-                setCount(Object.values(snap.val()).length)
-            }
-        })
-    }, [])
 
     const plugins = [{
         beforeDraw: function (chart, args, options) {
@@ -27,7 +19,7 @@ export default function SubjectChart() {
             ctx.font = 'bold 2rem Roboto';
             ctx.fillStyle = '#52525b'
             ctx.textAlign = 'center'
-            var text = subCount;
+            var text = subjects.length.toString();
             ctx.fillText(text, width / 2, height / 2 + top);
 
         }
@@ -36,7 +28,7 @@ export default function SubjectChart() {
     const data = {
         labels: ['Subjects'],
         datasets: [{
-            data: [subCount],
+            data: [subjects.length],
             backgroundColor: ['#4ade80', '#38bdf8', '#f87171'],
             pointStyle: 'circle'
         }],

@@ -13,7 +13,7 @@ export const SubjectAdd = () => {
     const [subjectTitle, setSubjectTitle] = useState()
     const [creditUnit, setCreditUnit] = useState()
     const [courseDescription, setCourseDescription] = useState()
-    const [loadingState, setState] = useState(false)
+    const [isLoading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const { writeData } = useFirebase()
 
@@ -64,7 +64,7 @@ export const SubjectAdd = () => {
 
     function addSubject(e) {
         e.preventDefault()
-        setState(true)
+        setLoading(true)
         const newSubject = {
             subjectId: uuidv4(),
             courseCode: courseCode,
@@ -75,7 +75,7 @@ export const SubjectAdd = () => {
 
         writeData('subject/', newSubject, newSubject.subjectId)
             .then(() => {
-                setState(false)
+                setLoading(false)
                 setOpen(true)
             }).catch((e) => {
                 setError(e.message)
@@ -149,7 +149,7 @@ export const SubjectAdd = () => {
                     <LoadingButton
                         form={`add-subject-form`}
                         buttonType='submit'
-                        loadingState={loadingState}
+                        loadingState={isLoading}
                         title={`Add Subject`} />
                 </footer>
             </div>

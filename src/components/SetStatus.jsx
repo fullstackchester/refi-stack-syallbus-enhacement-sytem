@@ -88,8 +88,7 @@ export default function Status({ postId }) {
                                                      group flex rounded-md items-center w-full px-2 py-2 text-sm`} >
                                             {val.title}
                                         </button>
-                                    )
-                                    }
+                                    )}
                                 </Menu.Item>)}
                         </div>
                     </Menu.Items>

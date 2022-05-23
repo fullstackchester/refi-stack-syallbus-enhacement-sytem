@@ -86,17 +86,18 @@ function Subjects() {
             dialogMessage='Successfully delete subjects.' />
 
         <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>
-            <header className='h-14 flex flex-row justify-end px-5 items-center'>
-                <div>
-                    <input
-                        type='text'
-                        spellCheck={false}
-                        placeholder='Search'
-                        onChange={(e) => setSearch(e.target.value)}
-                        className='w-60 border border-zinc-200 text-xs p-2 outline-none rounded-md' />
-                </div>
-                {
-                    role !== 'faculty' && [
+            <header className='h-14 flex flex-row justify-between px-5 items-center'>
+                <span className='font-semibold text-zinc-700 text-lg'>Files</span>
+                <div className='w-max h-full flex flex-row items-center justify-center'>
+                    <div className='h-full flex flex-row items-center justify-center'>
+                        <input
+                            type='text'
+                            spellCheck={false}
+                            placeholder='Search'
+                            onChange={(e) => setSearch(e.target.value)}
+                            className='w-60 border border-zinc-200 text-xs p-2 outline-none rounded-md' />
+                    </div>
+                    {role !== 'faculty' && [
                         {
                             icon: faPlusCircle,
                             title: 'New subject',
@@ -111,8 +112,8 @@ function Subjects() {
                             onClick={v.onClick} >
                             <FontAwesomeIcon icon={v.icon} size='sm' />
                         </button>
-                    )
-                }
+                    )}
+                </div>
             </header>
             {!isFetching ?
                 <main className='flex-1 overflow-y-auto'>
@@ -166,7 +167,7 @@ function Subjects() {
                                                         exit={{ opacity: 0 }}
                                                         key={k}
                                                         className='border border-zinc-100 text-xs text-zinc-700 font-medium 
-                                            hover:bg-zinc-200 transition-colors'>
+                                            hover:bg-zinc-200 transition-all'>
                                                         <td className='p-3'>
                                                             {/* Place the Checkbox here */}
                                                             <input

@@ -3,6 +3,7 @@ import { database } from "./Firebase"
 
 export let subjects = []
 export let schoolYear = []
+export let posts = []
 
 onValue(ref(database, `subject`), sub => {
     if (sub.exists()) {
@@ -15,3 +16,11 @@ onValue(ref(database, `schoolYear`), sy => {
         schoolYear = Object.values(sy.val())
     }
 })
+
+onValue(ref(database, `posts`), post => {
+    if (post.exists()) {
+        posts = Object.values(post.val())
+    }
+})
+
+

@@ -9,6 +9,7 @@ import { faPlusCircle, faDownload, faFolderOpen, faSpinner } from '@fortawesome/
 import { motion } from 'framer-motion'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 import Loading from '../../components/Loading'
+import { schoolYear } from '../../js/Data'
 
 export default function Files() {
 
@@ -34,10 +35,12 @@ export default function Files() {
             onValue(ref(database, `posts`), snapshot => {
                 if (snapshot.exists()) {
                     setFiles(Object.values(snapshot.val()))
-                    setFetching(false)
+
                 }
             })
+            setFetching(false)
         }, 500)
+
     }, [])
 
     function handleCheckAll() {
@@ -76,31 +79,33 @@ export default function Files() {
         })
     }
 
-
     return (
         <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center'>
             <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>
-                <header className='h-14 flex flex-row justify-end px-5 items-center'>
-                    <div className='h-full flex flex-row items-center justify-center'>
-                        <input
-                            type='search'
-                            spellCheck={false}
-                            placeholder='Search'
-                            onChange={(e) => setSearch(e.target.value)}
-                            className='w-60 border border-zinc-200 text-xs p-2 outline-none rounded-md' />
-                    </div>
-                    <button
-                        title='New post'
-                        className={`border border-transparent text-zinc-800 ml-2 flex items-center 
+                <header className='h-14 flex flex-row justify-between px-5 items-center'>
+                    <span className='font-semibold text-zinc-700 text-lg'>Files</span>
+                    <div className='w-max h-full flex flex-row items-center justify-center'>
+                        <div className='h-full flex flex-row items-center justify-center'>
+                            <input
+                                type='search'
+                                spellCheck={false}
+                                placeholder='Search'
+                                onChange={(e) => setSearch(e.target.value)}
+                                className='w-60 border border-zinc-200 text-xs p-2 outline-none rounded-md' />
+                        </div>
+                        <button
+                            title='New post'
+                            className={`border border-transparent text-zinc-800 ml-2 flex items-center 
                                 justify-center hover:bg-zinc-100 w-8 h-8 rounded-full`}
-                        onClick={() => nav('/files/create-post')} >
-                        <FontAwesomeIcon icon={faPlusCircle} size='sm' />
-                    </button>
+                            onClick={() => nav('/files/create-post')} >
+                            <FontAwesomeIcon icon={faPlusCircle} size='sm' />
+                        </button>
+                    </div>
                 </header>
                 {!isFetching ?
                     <main className='flex-1 overflow-y-auto'>
                         {myFiles.length !== 0 ?
-                            <table className='w-full h-auto table-auto border border-red-600'>
+                            <table className='w-full h-auto table-auto'>
                                 <thead className='sticky top-0 bg-white'>
                                     <tr className='border border-zinc-100'>
                                         {
@@ -147,7 +152,15 @@ export default function Files() {
                                                         className='hover:underline cursor-pointer'
                                                         onClick={() => nav(`/files/${v.postId}/information`)}>{v.postTitle}</span>
                                                 </td>
-                                                <td className='p-3'>{ }</td>
+                                                {(function () {
+                                                    let syTitle = ''
+                                                    schoolYear.forEach(i => {
+                                                        if (i.syId === v.syId) {
+                                                            syTitle = i.syTitle
+                                                        }
+                                                    })
+                                                    return <td className='p-3'>{syTitle}</td>
+                                                })()}
                                                 <td className='p-3'>{v.postDate}</td>
                                                 <td className='p-3'>
                                                     <PostStatus postStatus={v.postStatus} textSize='text-xs' />
@@ -160,7 +173,7 @@ export default function Files() {
                                 <div className='text-zinc-600 flex flex-col justify-center items-center'>
                                     <FontAwesomeIcon icon={faFolderOpen} size='4x' />
                                     <h1 className='text-lg font-semibold text-center'>No Files Found</h1>
-                                    <span className='text-sm'>Your account has no access to these files.</span>
+                                    <span className='text-sm'>Looks like there are no files added.</span>
                                     <button
                                         onClick={() => nav('/files/create-post')}
                                         className='w-max flex flex-row text-xs text-zinc-600 font-medium py-1 px-2 

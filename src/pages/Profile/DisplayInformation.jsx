@@ -28,7 +28,7 @@ export default function DisplayInformation() {
     const [isLoading, setLoading] = useState(false)
 
     useEffect(() => {
-        return onValue(ref(database, `users/${uid}`), snapshot => {
+        const getAccount = () => onValue(ref(database, `users/${uid}`), snapshot => {
             if (snapshot.exists()) {
                 setCurrent(snapshot.val())
                 setCurrDept(snapshot.val().department)
@@ -41,6 +41,8 @@ export default function DisplayInformation() {
                     })
             }
         })
+
+        getAccount()
     }, [])
 
     useEffect(() => {

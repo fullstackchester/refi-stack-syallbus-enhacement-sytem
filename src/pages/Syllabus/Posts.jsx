@@ -12,6 +12,8 @@ import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 import { motion } from 'framer-motion'
 import Confirm from '../../components/PopConfirmation'
 import Loading from '../../components/Loading'
+import { schoolYear } from '../../js/Data'
+import { render } from '@testing-library/react'
 
 
 
@@ -79,6 +81,7 @@ export default function Posts() {
                 });
         })
     }
+
 
     return (
         <div className='w-full h-auto min-h-[calc(100vh-3rem)] flex flex-col items-center justify-center'>
@@ -225,7 +228,17 @@ export default function Posts() {
                                                             onClick={() => {
                                                                 nav(`/posts/${v.postId}`)
                                                             }}>{v.postTitle}</td>
-                                                        <td className='py-3 px-2 text-xs '></td>
+
+                                                        {(function () {
+                                                            let syTitle = ''
+                                                            schoolYear.forEach(i => {
+                                                                if (i.syId === v.syId) {
+                                                                    syTitle = i.syTitle
+                                                                }
+                                                            })
+                                                            return <td className='py-3 px-2 text-xs '>{syTitle}</td>
+                                                        })()}
+
                                                         <td className='py-3 px-2 text-xs '>{v.postDate}</td>
                                                         <td className='py-3 px-2 text-xs '>
                                                             <PostStatus postStatus={v.postStatus} textSize={'text-xs'} />

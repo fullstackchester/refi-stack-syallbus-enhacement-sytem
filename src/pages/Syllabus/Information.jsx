@@ -7,7 +7,7 @@ import SetStatus from '../../components/SetStatus'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 import { useFirebase } from '../../js/FirebaseContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons'
+import { faDeleteLeft, faDownload } from '@fortawesome/free-solid-svg-icons'
 import Confirm from '../../components/PopConfirmation'
 import PopNotif from '../../components/PopNotif'
 
@@ -99,7 +99,7 @@ export default function Information() {
                             {post.postAuthor}
                         </Link>
                     </div>
-                    <div className='flex flex-row '>
+                    <div className='flex flex-row  items-center '>
                         Attachements:
                         {/*  Hours wasted on file preview from firebase storage to browser: 4hrs+ */}
                         <span
@@ -109,6 +109,12 @@ export default function Information() {
                             className='font-medium ml-1 hover:underline cursor-pointer'>
                             {post.postFile}
                         </span>
+                        <button
+                            onClick={() => window.open(fileUrl, '_self')}
+                            title='Download attachment'
+                            className=' text-zinc-700 rounded-md ml-2 h-6'>
+                            <FontAwesomeIcon icon={faDownload} size='xs' />
+                        </button>
                     </div>
                     <div className='flex flex-row '>
                         Subject: <Link to={`/subjects/${post.subjectId}/information`} className='ml-1 font-medium hover:underline'>{subject}</Link>

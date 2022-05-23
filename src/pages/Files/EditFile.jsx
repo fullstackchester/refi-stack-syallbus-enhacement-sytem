@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import LoadingButton from '../../components/LoadingButton'
 import { database } from '../../js/Firebase'
 import { useFirebase } from '../../js/FirebaseContext'
-import { v4 as uuidv4 } from 'uuid'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import Input from '../../components/Inputs/Input'
@@ -17,9 +16,7 @@ export default function EditFile() {
     const [loading, setLoading] = useState(false)
     const titleRef = useRef()
     const descriptionRef = useRef()
-    const authorRef = useRef()
     const fileRef = useRef()
-    const inputStyle = 'border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300'
 
     useEffect(() => {
         return onValue(ref(database, `posts/${postId}`), post => {
@@ -99,7 +96,6 @@ export default function EditFile() {
         //         setLoading(false)
         //     });
 
-
     }
 
     return (
@@ -114,7 +110,7 @@ export default function EditFile() {
                     </button>
                     <span className='font-semibold text-lg ml-3'>Edit Post</span>
                 </header>
-                <main className='flex-1 border-b border-zinc-200 flex justify-center'>
+                <main className='flex-1 border-b border-zinc-100 flex justify-center'>
 
                     <form
                         spellCheck={false}
@@ -122,23 +118,21 @@ export default function EditFile() {
                         name={`edit-post-form`}
                         id={`edit-post-form`}
                         className={`w-full py-2 px-3 grid grid-cols-4 place-content-start`}>
-                        {
-                            editFileInput.map((v, k) => {
-                                return (
-                                    <Input htmlFor={v.id} key={k} label={v.label} width='col-span-2' >
-                                        <input
-                                            id={v.id}
-                                            type={v.type}
-                                            ref={v.ref}
-                                            defaultValue={v.defaultValue}
-                                            required={v.required}
-                                            accept={v.accept && v.accept}
-                                            className='h-14 bg-zinc-100 p-3 text-sm outline-none border border-transparent ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all'
-                                            placeholder={v.placeholder} />
-                                    </Input>
-                                )
-                            })
-                        }
+                        {editFileInput.map((v, k) => {
+                            return (
+                                <Input htmlFor={v.id} key={k} label={v.label} width='col-span-2' >
+                                    <input
+                                        id={v.id}
+                                        type={v.type}
+                                        ref={v.ref}
+                                        defaultValue={v.defaultValue}
+                                        required={v.required}
+                                        accept={v.accept && v.accept}
+                                        className='h-14 bg-zinc-100 p-3 text-sm outline-none border border-transparent ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all'
+                                        placeholder={v.placeholder} />
+                                </Input>
+                            )
+                        })}
                         <Input htmlFor={'post-description'} label={'Description'} width={'col-span-4'}>
                             <textarea
                                 id='post-description'
