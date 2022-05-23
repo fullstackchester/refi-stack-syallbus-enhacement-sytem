@@ -7,6 +7,7 @@ import { useFirebase } from '../../js/FirebaseContext'
 import { v4 as uuidv4 } from 'uuid'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import Input from '../../components/Inputs/Input'
 
 export default function EditFile() {
     const { uploadFile } = useFirebase()
@@ -27,6 +28,38 @@ export default function EditFile() {
             }
         })
     })
+
+    const editFileInput = [
+        {
+            id: 'post-title',
+            label: 'Post title',
+            type: 'text',
+            defaultValue: post.postTitle,
+            placeholder: 'Introduction to Computing Syllabi S.Y.21-22',
+            ref: titleRef,
+            required: true,
+        },
+        {
+            id: 'syllabus-file',
+            label: 'Syllabi File',
+            type: 'file',
+            defaultValue: post.postFile,
+            placeholder: '',
+            ref: fileRef,
+            accept: 'application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            required: true,
+        },
+        // {
+        //     id: 'syllabus-description',
+        //     label: 'Description',
+        //     type: 'textarea',
+        //     defaultValue: post.postDescription,
+        //     placeholder: '',
+        //     ref: descriptionRef,
+        //     required: false,
+        //     rows: 8,
+        // },
+    ]
     function updatePost(e) {
         e.preventDefault()
         setLoading(true)
@@ -39,31 +72,32 @@ export default function EditFile() {
             postDate: new Date().toLocaleString()
         }
         console.table(currentPost)
-        update(ref(database, `posts/${post.postId}`), currentPost)
-            .then(() => {
-                uploadFile(fileRef.current.files[0], `syllabus/${post.postId}/${fileRef.current.files[0].name}`)
-                    .then(() => {
-                        const history = {
-                            historyId: uuidv4(),
-                            historyDate: new Date().toLocaleString(),
-                            previousPost: post
-                        }
-                        set(ref(database, `history/${post.postId}/${history.historyId}`), history)
-                            .then(() => {
-                                setLoading(false)
-                                nav(`/files/${post.postId}`)
-                            }).catch((err) => {
-                                setLoading(false)
-                                console.log(err)
-                            });
-                    }).catch((err) => {
-                        console.log(err.message)
-                        setLoading(false)
-                    });
-            }).catch((err) => {
-                console.log(err.message)
-                setLoading(false)
-            });
+
+        // update(ref(database, `posts/${post.postId}`), currentPost)
+        //     .then(() => {
+        //         uploadFile(fileRef.current.files[0], `syllabus/${post.postId}/${fileRef.current.files[0].name}`)
+        //             .then(() => {
+        //                 const history = {
+        //                     historyId: uuidv4(),
+        //                     historyDate: new Date().toLocaleString(),
+        //                     previousPost: post
+        //                 }
+        //                 set(ref(database, `history/${post.postId}/${history.historyId}`), history)
+        //                     .then(() => {
+        //                         setLoading(false)
+        //                         nav(`/files/${post.postId}`)
+        //                     }).catch((err) => {
+        //                         setLoading(false)
+        //                         console.log(err)
+        //                     });
+        //             }).catch((err) => {
+        //                 console.log(err.message)
+        //                 setLoading(false)
+        //             });
+        //     }).catch((err) => {
+        //         console.log(err.message)
+        //         setLoading(false)
+        //     });
 
 
     }
@@ -87,83 +121,34 @@ export default function EditFile() {
                         onSubmit={updatePost}
                         name={`edit-post-form`}
                         id={`edit-post-form`}
-                        className={`w-full px-10`}>
+                        className={`w-full py-2 px-3 grid grid-cols-4 place-content-start`}>
                         {
-                            [
-                                {
-                                    id: 'post-author',
-                                    label: '',
-                                    type: 'hidden',
-                                    defaultValue: post.postAuthor,
-                                    placeholder: '',
-                                    ref: authorRef,
-                                    required: true,
-                                },
-                                {
-                                    id: 'post-title',
-                                    label: 'Post title',
-                                    type: 'text',
-                                    defaultValue: post.postTitle,
-                                    placeholder: 'Introduction to Computing Syllabi S.Y.21-22',
-                                    ref: titleRef,
-                                    required: true,
-                                },
-                                {
-                                    id: 'syllabus-file',
-                                    label: 'Syllabi File',
-                                    type: 'file',
-                                    defaultValue: post.postFile,
-                                    placeholder: '',
-                                    ref: fileRef,
-                                    accept: 'application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                                    required: true,
-                                },
-                                {
-                                    id: 'syllabus-description',
-                                    label: 'Description',
-                                    type: 'textarea',
-                                    defaultValue: post.postDescription,
-                                    placeholder: '',
-                                    ref: descriptionRef,
-                                    required: false,
-                                    rows: 8,
-                                },
-                            ].map((val, key) =>
-                                <label
-                                    key={key}
-                                    htmlFor={val.id}
-                                    className={`${val.type !== 'hidden' ? 'py-5 border-b border-zinc-100' : ''}
-                                     w-full h-auto flex flex-row`}>
-                                    <span className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'>
-                                        {val.label}
-                                    </span>
-                                    {val.type !== 'textarea' ?
+                            editFileInput.map((v, k) => {
+                                return (
+                                    <Input htmlFor={v.id} key={k} label={v.label} width='col-span-2' >
                                         <input
-                                            id={val.id}
-                                            ref={val.ref}
-                                            required={val.required}
-                                            type={val.type}
-                                            accept={val.accept && val.accept}
-                                            defaultValue={val.defaultValue}
-                                            placeholder={val.placeholder}
-                                            className={`${val.type === 'textarea' ? ' resize-none' : ''} ${inputStyle}`}
-                                        />
-                                        :
-                                        <textarea
-                                            id={val.id}
-                                            ref={val.ref}
-                                            rows={val.rows}
-                                            required={val.required}
-                                            accept={val.accept && val.accept}
-                                            defaultValue={val.defaultValue}
-                                            placeholder={val.placeholder}
-                                            className={`${inputStyle} ${val.type === 'textarea' ? ' resize-none' : ''}`}
-                                        />
-                                    }
-
-                                </label>
-                            )
+                                            id={v.id}
+                                            type={v.type}
+                                            ref={v.ref}
+                                            defaultValue={v.defaultValue}
+                                            required={v.required}
+                                            accept={v.accept && v.accept}
+                                            className='h-14 bg-zinc-100 p-3 text-sm outline-none border border-transparent ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all'
+                                            placeholder={v.placeholder} />
+                                    </Input>
+                                )
+                            })
                         }
+                        <Input htmlFor={'post-description'} label={'Description'} width={'col-span-4'}>
+                            <textarea
+                                id='post-description'
+                                ref={descriptionRef}
+                                rows={8}
+                                defaultValue={post.postDescription}
+                                placeholder='Enter your description...'
+                                className='w-full h-60 bg-zinc-100 p-3 text-sm outline-none border border-transparent
+                                ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all resize-none' />
+                        </Input>
                     </form>
                 </main>
                 <footer className='h-14 flex items-center justify-end px-10'>

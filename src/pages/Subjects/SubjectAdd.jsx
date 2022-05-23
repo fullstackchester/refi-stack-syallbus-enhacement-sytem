@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import PopNotif from '../../components/PopNotif'
+import Input from '../../components/Inputs/Input'
 
 export const SubjectAdd = () => {
     const [courseCode, setCourseCode] = useState()
@@ -22,20 +23,22 @@ export const SubjectAdd = () => {
 
     const AddSubjectData = [
         {
-            name: 'course-code',
-            label: 'Course code',
-            type: 'text',
-            placeholder: 'IT 101',
-            onChange: (e) => setCourseCode(e.target.value),
-            required: true,
-        },
-        {
             name: 'subject-title',
             label: 'Subject title',
             type: 'text',
             placeholder: 'Introduction to computing',
             onChange: (e) => setSubjectTitle(e.target.value),
             required: true,
+            width: 'col-span-4'
+        },
+        {
+            name: 'course-code',
+            label: 'Course code',
+            type: 'text',
+            placeholder: 'IT 101',
+            onChange: (e) => setCourseCode(e.target.value),
+            required: true,
+            width: 'col-span-2'
         },
         {
             name: 'credit-unit',
@@ -44,6 +47,7 @@ export const SubjectAdd = () => {
             placeholder: '3.0',
             onChange: (e) => setCreditUnit(e.target.value),
             required: true,
+            width: 'col-span-2'
         },
         {
             name: 'course-description',
@@ -53,8 +57,8 @@ export const SubjectAdd = () => {
             placeholder: 'Enter your text here...',
             onChange: (e) => setCourseDescription(e.target.value),
             required: true,
+            width: 'col-span-4'
         },
-
     ]
 
 
@@ -68,6 +72,7 @@ export const SubjectAdd = () => {
             creditUnits: creditUnit,
             subjectDescription: courseDescription
         }
+
         writeData('subject/', newSubject, newSubject.subjectId)
             .then(() => {
                 setState(false)
@@ -75,8 +80,9 @@ export const SubjectAdd = () => {
             }).catch((e) => {
                 setError(e.message)
             });
-
     }
+
+
     return (
         <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center py-5'>
             <PopNotif
@@ -89,7 +95,7 @@ export const SubjectAdd = () => {
                 dialogMessage={`Successfully added the subject ${subjectTitle}`} />
 
             <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>
-                <header className='h-14 border-b border-zinc-200 flex items-center px-2'>
+                <header className='h-14 border-b border-zinc-100 flex items-center px-2'>
                     <button type='button'
                         className='h-8 w-8 rounded-full hover:bg-zinc-100'
                         onClick={() => nav(-1)}>
@@ -97,53 +103,54 @@ export const SubjectAdd = () => {
                     </button>
                     <span className='font-semibold text-lg ml-3'>New Subject</span>
                 </header>
-                <main className='flex-1 px-10 flex flex-col'>
+                <main className='flex-1 py-2 px-3 flex flex-col'>
                     <form
                         onSubmit={addSubject}
                         id='add-subject-form'
                         name='add-subject-form'
                         spellCheck='false'
-                        className=' flex-1'>
-                        {AddSubjectData.map((val, key) =>
-                            <label
-                                key={key}
-                                htmlFor={val.id}
-                                className={`${val.type !== 'textarea' ? ' border-b border-zinc-100' : ''}
-                                    py-5 w-full h-auto flex flex-row`} >
-                                <span
-                                    className='w-1/6 text-sm text-zinc-600 font-medium flex items-center' >
-                                    {val.label}
-                                </span>
-                                {val.type !== 'textarea' ?
-                                    <input
-                                        id={val.id}
-                                        onChange={val.onChange}
-                                        label={val.label}
-                                        required={val.required}
-                                        type={val.type}
-                                        placeholder={val.placeholder}
-                                        defaultValue={val.defaultValue}
-                                        className={inputClass} /> :
-                                    <textarea
-                                        id={val.id}
-                                        onChange={val.onChange}
-                                        label={val.label}
-                                        required={val.required}
-                                        placeholder={val.placeholder}
-                                        rows={val.row}
-                                        defaultValue={val.defaultValue}
-                                        className={`resize-none ${inputClass}`} />
+                        className=' flex-1 grid grid-cols-4 gap-1 place-content-start'>
+                        {
+                            AddSubjectData.map((v, k) => {
+                                if (v.type !== 'textarea') {
+                                    return (
+                                        <Input key={k} htmlFor={v.id} label={v.label} width={v.width} >
+                                            <input
+                                                type={v.type}
+                                                id={v.id}
+                                                required={v.required}
+                                                onChange={v.onChange}
+                                                placeholder={v.placeholder}
+                                                className='h-14 bg-zinc-100 p-3 text-sm outline-none border border-transparent 
+                                                ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all'
+                                            />
+                                        </Input>
+                                    )
+                                } else {
+                                    return (
+                                        <Input key={k} htmlFor={v.id} label={v.label} width={v.width} >
+                                            <textarea
+                                                type={v.type}
+                                                id={v.id}
+                                                onChange={v.onChange}
+                                                required={v.required}
+                                                placeholder={v.placeholder}
+                                                className='h-40 bg-zinc-100 p-3 text-sm outline-none border border-transparent 
+                                                ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all resize-none'/>
+                                        </Input>
+                                    )
                                 }
-                            </label>
-                        )}
+                            })
+                        }
+
                     </form>
                 </main>
-                <footer className='h-14 flex items-center justify-end px-10'>
+                <footer className='h-14 flex items-center justify-end px-5'>
                     <LoadingButton
                         form={`add-subject-form`}
                         buttonType='submit'
                         loadingState={loadingState}
-                        title={`Add subject`} />
+                        title={`Add Subject`} />
                 </footer>
             </div>
         </div>

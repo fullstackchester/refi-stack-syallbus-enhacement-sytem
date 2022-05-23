@@ -100,7 +100,7 @@ function SubjectEdit() {
     }
 
     return (
-        <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center'>
+        <>
             <PopNotif
                 isOpen={isOpen}
                 handleClose={() => {
@@ -109,72 +109,75 @@ function SubjectEdit() {
                 }}
                 dialogTitle='Update Success'
                 dialogMessage='Subject updated successfully.' />
+                
+            <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center'>
+                <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>
+                    <header className='h-14 border-b border-zinc-200 flex items-center px-2'>
+                        <button type='button'
+                            className='h-8 w-8 rounded-full hover:bg-zinc-100'
+                            onClick={() => nav(-1)}>
+                            <FontAwesomeIcon icon={faChevronLeft} size={'sm'} />
+                        </button>
+                        <span className='font-semibold text-lg ml-3'>Edit Subject</span>
+                    </header>
+                    <main className='flex-1 px-10 flex flex-col'>
+                        <form
+                            onSubmit={UpdateSubject}
+                            id='edit-subject-form'
+                            name='edit-subject-form'
+                            spellCheck='false'
+                            className=' flex-1'>
 
-            <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>
-                <header className='h-14 border-b border-zinc-200 flex items-center px-2'>
-                    <button type='button'
-                        className='h-8 w-8 rounded-full hover:bg-zinc-100'
-                        onClick={() => nav(-1)}>
-                        <FontAwesomeIcon icon={faChevronLeft} size={'sm'} />
-                    </button>
-                    <span className='font-semibold text-lg ml-3'>Edit Subject</span>
-                </header>
-                <main className='flex-1 px-10 flex flex-col'>
-                    <form
-                        onSubmit={UpdateSubject}
-                        id='edit-subject-form'
-                        name='edit-subject-form'
-                        spellCheck='false'
-                        className=' flex-1'>
-
-                        {EditSubjectData && EditSubjectData.map((val, key) => {
-                            return (
-                                <label
-                                    key={key}
-                                    htmlFor={val.id}
-                                    className={`${val.type !== 'textarea' ? ' border-b border-zinc-100' : ''}
+                            {EditSubjectData && EditSubjectData.map((val, key) => {
+                                return (
+                                    <label
+                                        key={key}
+                                        htmlFor={val.id}
+                                        className={`${val.type !== 'textarea' ? ' border-b border-zinc-100' : ''}
                                     py-5 w-full h-auto flex flex-row`} >
-                                    <span
-                                        className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'
-                                    >
-                                        {val.label}
-                                    </span>
+                                        <span
+                                            className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'
+                                        >
+                                            {val.label}
+                                        </span>
 
-                                    {val.type !== 'textarea' ?
-                                        <input
-                                            id={val.id}
-                                            ref={val.ref}
-                                            label={val.label}
-                                            required={val.required}
-                                            type={val.type}
-                                            defaultValue={val.defaultValue}
-                                            className={inputClass} /> :
-                                        <textarea
-                                            id={`course-description`}
-                                            rows={8}
-                                            type={`text`}
-                                            placeholder={`Enter your text here`}
-                                            ref={courseDescriptionRef}
-                                            required={true}
-                                            defaultValue={subject.subjectDescription}
-                                            className={`${inputClass} resize-none`} />}
-                                </label>
+                                        {val.type !== 'textarea' ?
+                                            <input
+                                                id={val.id}
+                                                ref={val.ref}
+                                                label={val.label}
+                                                required={val.required}
+                                                type={val.type}
+                                                defaultValue={val.defaultValue}
+                                                className={inputClass} /> :
+                                            <textarea
+                                                id={`course-description`}
+                                                rows={8}
+                                                type={`text`}
+                                                placeholder={`Enter your text here`}
+                                                ref={courseDescriptionRef}
+                                                required={true}
+                                                defaultValue={subject.subjectDescription}
+                                                className={`${inputClass} resize-none`} />}
+                                    </label>
 
-                            )
-                        })}
-                    </form>
-                </main>
-                <footer className='h-14 flex items-center justify-end px-10'>
+                                )
+                            })}
+                        </form>
+                    </main>
+                    <footer className='h-14 flex items-center justify-end px-10'>
 
-                    <LoadingButton
-                        form={`edit-subject-form`}
-                        type={`submit`}
-                        title={`Save changes`}
-                        loadingState={loading} />
+                        <LoadingButton
+                            form={`edit-subject-form`}
+                            type={`submit`}
+                            title={`Save changes`}
+                            loadingState={loading} />
 
-                </footer>
+                    </footer>
+                </div>
             </div>
-        </div>
+        </>
+
     )
 }
 

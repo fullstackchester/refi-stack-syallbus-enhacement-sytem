@@ -796,22 +796,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: calc(100% - 3.5rem);
 }
 
-.h-1 {
-  height: 0.25rem;
-}
-
-.h-4 {
-  height: 1rem;
-}
-
-.h-2 {
-  height: 0.5rem;
-}
-
-.h-0 {
-  height: 0px;
-}
-
 .h-60 {
   height: 15rem;
 }
@@ -832,20 +816,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   min-height: 1.5rem;
 }
 
+.min-h-\[5rem\] {
+  min-height: 5rem;
+}
+
 .min-h-\[3rem\] {
   min-height: 3rem;
 }
 
 .min-h-\[20rem\] {
   min-height: 20rem;
-}
-
-.min-h-\[500px\] {
-  min-height: 500px;
-}
-
-.min-h-\[5rem\] {
-  min-height: 5rem;
 }
 
 .min-h-\[15rem\] {
@@ -864,24 +844,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   min-height: 85vh;
 }
 
+.min-h-\[500px\] {
+  min-height: 500px;
+}
+
 .min-h-\[calc\(100vh-3rem\)\] {
   min-height: calc(100vh - 3rem);
-}
-
-.min-h-\[\] {
-  min-height: ;
-}
-
-.min-h-\[5\] {
-  min-height: 5;
-}
-
-.min-h-\[5re\2c \] {
-  min-height: 5re,;
-}
-
-.min-h-\[5re\] {
-  min-height: 5re;
 }
 
 .w-full {
@@ -1043,10 +1011,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   resize: none;
 }
 
-.resize {
-  resize: both;
-}
-
 .grid-cols-6 {
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
@@ -1182,16 +1146,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-radius: 100%;
 }
 
-.rounded {
-  border-radius: 0.25rem;
-}
-
 .border {
   border-width: 1px;
-}
-
-.border-2 {
-  border-width: 2px;
 }
 
 .border-y {
@@ -1354,11 +1310,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(161 161 170 / var(--tw-bg-opacity));
 }
 
-.bg-slate-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
-}
-
 .bg-opacity-70 {
   --tw-bg-opacity: 0.7;
 }
@@ -1456,6 +1407,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .pb-3 {
@@ -1667,10 +1623,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   outline-offset: 2px;
 }
 
-.outline {
-  outline-style: solid;
-}
-
 .outline-1 {
   outline-width: 1px;
 }
@@ -1684,12 +1636,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .ring-2 {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}
-
-.ring {
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
@@ -1862,10 +1808,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.focus\:border:focus {
-  border-width: 1px;
 }
 
 .focus\:border-sky-600:focus {
