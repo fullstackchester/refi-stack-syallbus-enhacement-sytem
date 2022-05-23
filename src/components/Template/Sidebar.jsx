@@ -1,15 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { faBook, faUserCircle, faFileAlt, faGraduationCap, faSquarePollVertical, faUserTie, faChevronLeft, faChevronRight, faFile } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faUserCircle, faFileAlt, faGraduationCap, faSquarePollVertical, faUserTie, faChevronLeft, faChevronRight, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useFirebase } from '../../js/FirebaseContext'
+import { onValue, ref } from 'firebase/database'
+import { database } from '../../js/Firebase'
 
 
 
 function Sidebar() {
 
     const [minimize, setMinimize] = useState()
-    const { role } = useFirebase()
+    const [role, setRole] = useState()
+    const { currentUser } = useFirebase()
+    const [loading, setLoading] = useState(true)
+    const uid = currentUser.uid
+
+    useEffect(() => {
+        onValue(ref(database, `users/${uid}`), snap => {
+            if (snap.exists()) {
+                setRole(snap.val().userType)
+                setLoading(false)
+            }
+        })
+
+
+    }, []);
 
 
     return (
@@ -23,55 +39,61 @@ function Sidebar() {
                 {!minimize ? <h1 className='text-xl font-light headings'>Curriculum</h1> : ''}
             </header>
             <div className='w-full text-sm flex flex-col flex-1'>
-                {[
-                    {
-                        title: 'Reports',
-                        icon: <FontAwesomeIcon icon={faSquarePollVertical} />,
-                        link: '/reports',
-                        restricted: role === 'faculty' ? 'hidden' : ''
-                    },
-                    {
-                        title: 'Syllabus',
-                        icon: <FontAwesomeIcon icon={faGraduationCap} />,
-                        link: '/posts',
-                        restricted: role === 'faculty' ? 'hidden' : ''
-                    },
-                    {
-                        title: 'Faculty',
-                        icon: <FontAwesomeIcon icon={faUserTie} />,
-                        link: '/faculty',
-                        restricted: role === 'faculty' ? 'hidden' : ''
-                    },
-                    {
-                        title: 'Subjects',
-                        icon: <FontAwesomeIcon icon={faBook} />,
-                        link: '/subjects',
-                    },
-                    {
-                        title: 'Files',
-                        icon: <FontAwesomeIcon icon={faFileAlt} />,
-                        link: '/files',
-                    },
-                    {
-                        title: 'Account',
-                        icon: <FontAwesomeIcon icon={faUserCircle} />,
-                        link: '/profile/display-information',
-                    },
-                ].map((val, key) =>
-                    <NavLink
-                        key={key}
-                        to={val.link}
-                        className={({ isActive }) => isActive ? 'text-sky-300 bg-zinc-800' : 'text-zinc-200'}>
-                        <div className={`flex flex-row h-12 w-full hover:bg-zinc-800 transition-colors ${val.restricted}`}>
-                            <div className={`h-full w-12 flex justify-center items-center`}>
-                                {val.icon}
-                            </div>
-                            {!minimize && <div className={`h-full flex-1 flex items-center`}>
-                                {val.title}
-                            </div>}
+                {
+                    !loading ?
+                        [{
+                            title: 'Reports',
+                            icon: <FontAwesomeIcon icon={faSquarePollVertical} />,
+                            link: '/reports',
+                            restricted: role === 'faculty' ? 'hidden' : ''
+                        },
+                        {
+                            title: 'Syllabus',
+                            icon: <FontAwesomeIcon icon={faGraduationCap} />,
+                            link: '/posts',
+                            restricted: role === 'faculty' ? 'hidden' : ''
+                        },
+                        {
+                            title: 'Faculty',
+                            icon: <FontAwesomeIcon icon={faUserTie} />,
+                            link: '/faculty',
+                            restricted: role === 'faculty' ? 'hidden' : ''
+                        },
+                        {
+                            title: 'Subjects',
+                            icon: <FontAwesomeIcon icon={faBook} />,
+                            link: '/subjects',
+                        },
+                        {
+                            title: 'Files',
+                            icon: <FontAwesomeIcon icon={faFileAlt} />,
+                            link: '/files',
+                        },
+                        {
+                            title: 'Account',
+                            icon: <FontAwesomeIcon icon={faUserCircle} />,
+                            link: '/profile/display-information',
+                        },
+                        ].map((val, key) =>
+                            <NavLink
+                                key={key}
+                                to={val.link}
+                                className={({ isActive }) => isActive ? 'text-sky-300 bg-zinc-800' : 'text-zinc-200'}>
+                                <div className={`flex flex-row h-12 w-full hover:bg-zinc-800 transition-colors ${val.restricted}`}>
+                                    <div className={`h-full w-12 flex justify-center items-center`}>
+                                        {val.icon}
+                                    </div>
+                                    {!minimize && <div className={`h-full flex-1 flex items-center`}>
+                                        {val.title}
+                                    </div>}
+                                </div>
+                            </NavLink>
+                        )
+                        :
+                        <div className='w-full h-full grid place-content-center place-items-center text-white'>
+                            <FontAwesomeIcon icon={faSpinner} spin size='2x' />
                         </div>
-                    </NavLink>
-                )}
+                }
             </div>
             <button
                 type={`button`}

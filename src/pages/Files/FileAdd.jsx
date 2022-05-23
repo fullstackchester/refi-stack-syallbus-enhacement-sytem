@@ -7,6 +7,8 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import LoadingButton from '../../components/LoadingButton'
 import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
+import { schoolYear, subjects } from '../../js/Data'
+import Input from '../../components/Inputs/Input'
 
 
 export default function FileAdd() {
@@ -21,8 +23,6 @@ export default function FileAdd() {
     const [name, setName] = useState()
     const [error, setError] = useState()
     const [loading, setLoading] = useState(false)
-    const [schoolyear, setSY] = useState([])
-    const [subs, setSubs] = useState([])
 
     useEffect(() => {
         return onValue(ref(database, `users/${currentUser.uid}`), user => {
@@ -33,21 +33,6 @@ export default function FileAdd() {
             }
         })
     })
-
-    useEffect(() => {
-        onValue(ref(database, `schoolYear`), sy => {
-            if (sy.exists()) {
-                setSY(Object.values(sy.val()))
-            }
-        })
-        onValue(ref(database, `subject`), subjects => {
-            if (subjects.exists()) {
-                setSubs(Object.values(subjects.val()))
-            }
-        })
-    }, [])
-
-
 
     const AddPost = [
         {
@@ -71,11 +56,26 @@ export default function FileAdd() {
         },
     ]
 
+    const seletcs = [
+        {
+            label: 'Subject',
+            id: 'select-subjects',
+            ref: subjectRef,
+            require: true,
+            options: subjects
+        },
+        {
+            label: 'School Year',
+            id: 'select-school-year',
+            ref: acadYearRef,
+            require: true,
+            options: schoolYear
+        },
+    ]
+
     function PublishPost(e) {
         e.preventDefault()
-
         const postId = uuidv4()
-
         const Post = {
             postId: postId,
             postStatus: 'Needs reviewing',
@@ -89,23 +89,25 @@ export default function FileAdd() {
             subjectId: subjectRef.current.value,
             postAuthor: name,
         }
-        writeData('posts/', Post, Post.postId)
-            .then(() => {
-                uploadFile(fileRef.current.files[0], `syllabus/${Post.postId}/${fileRef.current.files[0].name}`)
-                    .then((snapshot) => {
-                        console.log(snapshot)
-                        nav('/files')
-                    }).catch((err) => {
-                        setError(err.message)
-                    });
-            }).catch((err) => {
-                setError(err.message)
-            });
+        // writeData('posts/', Post, Post.postId)
+        //     .then(() => {
+        //         uploadFile(fileRef.current.files[0], `syllabus/${Post.postId}/${fileRef.current.files[0].name}`)
+        //             .then((snapshot) => {
+        //                 console.log(snapshot)
+        //                 nav('/files')
+        //             }).catch((err) => {
+        //                 setError(err.message)
+        //             });
+        //     }).catch((err) => {
+        //         setError(err.message)
+        //     });
+
+        console.table(Post)
     }
 
     return (
         <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center'>
-            <div className='h-[90vh] w-[85%] bg-white rounded-md'>
+            <div className='h-[90vh] w-[85%] bg-white rounded-md flex flex-col'>
                 <header className='h-14 flex flex-row items-center border-b border-zinc-100 text-sm 
                 text-zinc-600 p-2 font-semibold'>
                     <button type='button'
@@ -115,83 +117,53 @@ export default function FileAdd() {
                     </button>
                     <span className='font-semibold text-lg ml-3'>New Post</span>
                 </header>
-                <main className='flex-1 border-b border-zinc-200 flex justify-center'>
+                <main className='flex-1 border-b border-zinc-100 flex justify-center'>
                     <form
                         id='create-post'
                         name='create-post'
                         spellCheck={false}
                         onSubmit={PublishPost}
-                        className='min-h-[500px] w-full px-10'>
-
-                        {AddPost && AddPost.map((val, key) => {
-                            return (
-                                <label
-                                    key={key}
-                                    htmlFor={val.id}
-                                    className={`${val.type !== 'hidden' ? 'py-5 border-b border-zinc-100' : ''}
-                                     w-full h-auto flex flex-row`}>
-                                    <span className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'>
-                                        {val.label}
-                                    </span>
-                                    <input
-                                        id={val.id}
-                                        ref={val.ref}
-                                        required={val.required}
-                                        type={val.type}
-                                        accept={val.accept && val.accept}
-                                        defaultValue={val.defaultValue}
-                                        placeholder={val.placeholder}
-                                        className='border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 
-                                        text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300'/>
-                                </label>
-                            )
-                        })}
-                        <label
-                            className={`py-5 border-b border-zinc-100 w-full h-auto flex flex-row`}
-                            htmlFor='academic-year'>
-                            <span className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'>Academic Year</span>
-                            <select
-                                required={true}
-                                ref={acadYearRef}
-                                className='border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 
-                                text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300' id='academic-year'>
-                                <option value={''} className='text-sm p-1'> Select School Year </option>
-                                {schoolyear && schoolyear.map((val, key) => {
-                                    return (
-                                        <option key={key} value={val.syId} className='text-sm p-1'> {val.syTitle} </option>
-                                    )
-                                })}
-                            </select>
-                        </label>
-                        <label
-                            className={`py-5 border-b border-zinc-100 w-full h-auto flex flex-row`}
-                            htmlFor='academic-year'>
-                            <span className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'>Subject</span>
-                            <select
-                                required={true}
-                                ref={subjectRef}
-                                className='border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 
-                                text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300' id='academic-year'>
-                                <option value={''} className='text-sm p-1'> Select Subject </option>
-                                {subs.length !== 0 ? subs.map((val, key) => {
-                                    return (
-                                        <option key={key} value={val.subjectId} className='text-sm p-1'> {val.subjectTitle} </option>
-                                    )
-                                }) : <option>No Subjects Available</option>}
-                            </select>
-                        </label>
-                        <label
-                            className={`py-5 border-b border-zinc-100 w-full h-auto flex flex-row`}
-                            htmlFor='syllabus-description'>
-                            <span className='w-1/6 text-sm text-zinc-600 font-medium flex items-center'>Description</span>
+                        className='grid grid-cols-4 gap-1 w-full h-full py-2 px-3 place-content-start'>
+                        {AddPost.map((v, k) =>
+                            <Input key={k} htmlFor={v.id} label={v.label} width={'col-span-2'}>
+                                <input
+                                    id={v.id}
+                                    type={v.type}
+                                    ref={v.ref}
+                                    required={v.required}
+                                    accept={v.accept && v.accept}
+                                    className='h-14 bg-zinc-100 p-3 text-sm outline-none border border-transparent
+                                    ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all'
+                                    placeholder={v.placeholder} />
+                            </Input>
+                        )}
+                        {seletcs.map((v, k) =>
+                            <Input key={k} label={v.label} htmlFor={v.id} width={'col-span-2'}>
+                                <select
+                                    id={v.id}
+                                    ref={v.ref}
+                                    required={true}
+                                    className='h-14 bg-zinc-100 p-3 text-sm outline-none border border-transparent 
+                                    ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all'>
+                                    <option value='' className='text-base'>Select</option>
+                                    {v.options.map((val, key) => {
+                                        if ('syId' in val) {
+                                            return <option key={key} value={val.syId} className='text-base'>{val.syTitle}</option>
+                                        } else {
+                                            return <option key={key} value={val.subjectId} className='text-base'>{val.subjectTitle}</option>
+                                        }
+                                    })}
+                                </select>
+                            </Input>)}
+                        <Input htmlFor={'post-description'} label={'Description'} width={'col-span-4'}>
                             <textarea
-                                id='syllabus-description'
+                                id='post-description'
                                 ref={descriptionRef}
                                 rows={8}
                                 placeholder='Enter your description...'
-                                className='border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 
-                                text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300 resize-none' />
-                        </label>
+                                className='w-full h-60 bg-zinc-100 p-3 text-sm outline-none border border-transparent
+                                ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all resize-none' />
+                        </Input>
                     </form>
                 </main>
                 <footer className='h-14 flex items-center justify-end px-10'>

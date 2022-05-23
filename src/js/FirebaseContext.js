@@ -20,6 +20,7 @@ export function useFirebase() {
 export function FirebaseProvider({ children }) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
+    const [isFetching, setFecthing] = useState(true)
     const [role, setRole] = useState()
 
     const value = {
@@ -33,7 +34,9 @@ export function FirebaseProvider({ children }) {
         uploadFile,
         updateData,
         deleteFile,
-        role
+        role,
+        loading,
+        isFetching
     }
 
     useEffect(() => {
@@ -45,7 +48,9 @@ export function FirebaseProvider({ children }) {
                     setRole(snapshot.val().userType)
                 })
             }
+            setFecthing(false)
             setLoading(false)
+
         })
 
         return unsub

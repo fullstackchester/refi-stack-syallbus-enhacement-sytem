@@ -54,7 +54,9 @@ export default function App() {
 							</ProtectedRoute>
 						} >
 							<Route path='/reports' element={
-								<Restrcited><Dashboard /></Restrcited>
+								<Restrcited>
+									<Dashboard />
+								</Restrcited>
 							} />
 
 							<Route path='/posts' element={<Posts />} />

@@ -4,11 +4,14 @@ import { useFirebase } from '../js/FirebaseContext'
 
 export default function ProtectedRoute({ children }) {
 
-    const { currentUser } = useFirebase()
-
-    if (currentUser === null) {
-        return <Navigate to='/' replace />
+    const { currentUser, isFetching } = useFirebase()
+    if (!isFetching) {
+        if (currentUser === null) {
+            return <Navigate to='/' replace />
+        } else {
+            return children
+        }
+    } else {
+        return
     }
-
-    return children
 }

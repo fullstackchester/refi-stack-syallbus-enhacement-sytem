@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useFirebase } from '../../js/FirebaseContext'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWarning } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import LoadingButton from '../../components/LoadingButton'
 import { onValue, ref } from 'firebase/database'
 import { database } from '../../js/Firebase'
@@ -136,10 +136,16 @@ export default function CreatePost() {
 
 
     return (
-        <div className='w-full h-auto py-5 px-10 flex justify-center'>
-            <div className='w-[80%] h-auto min-h-[600px] border border-zinc-200 bg-white rounded-md'>
-                <header className='h-14 border-b flex items-center px-10'>
-                    <span className='text-lg text-zinc-700 font-medium'>{`New post`} </span>
+        <div className='w-full h-[calc(100vh-3rem)] flex items-center justify-center'>
+            <div className='h-[90vh] w-[85%] bg-white rounded-md'>
+                <header className='h-14 flex flex-row items-center border-b border-zinc-100 text-sm 
+                text-zinc-600 p-2 font-semibold'>
+                    <button type='button'
+                        className='h-8 w-8 rounded-full hover:bg-zinc-100'
+                        onClick={() => nav('/posts')}>
+                        <FontAwesomeIcon icon={faChevronLeft} size={'sm'} />
+                    </button>
+                    <span className='font-semibold text-lg ml-3'>New Post</span>
                 </header>
                 <main className='flex-1 border-b border-zinc-200 flex justify-center'>
                     <form
