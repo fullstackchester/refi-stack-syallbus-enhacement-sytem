@@ -91,10 +91,10 @@ export default function Information() {
                     <span className='text-lg text-zinc-700 font-semibold flex-1'>{post?.postTitle}</span>
                     <PostStatus postStatus={post?.postStatus ?? ''} textSize={'text-xs'} />
                 </div>
-                <p className='min-h-[5rem] text-sm text-zinc-600 mt-2 whitespace-pre-line indent-10 mb-5'>
+                <p className='min-h-20 text-sm text-zinc-600 mt-2 whitespace-pre-line indent-10 mb-5'>
                     {post?.postDescription}
                 </p>
-                <div className='border-t border-zinc-100 min-h-[15rem] text-sm text-zinc-600 flex flex-col py-3'>
+                <div className='border-t border-zinc-100 min-h-60 text-sm text-zinc-600 flex flex-col py-3'>
                     <div className='flex flex-row '>
                         Author:
                         <Link to={`/faculty/${post?.uid ?? ''}`}

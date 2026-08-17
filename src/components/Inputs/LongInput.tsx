@@ -26,7 +26,7 @@ export default function LongInput(
         <label
             htmlFor={id}
             className='w-full h-auto border-b border-zinc-100 py-5 flex flex-row px-4 '>
-            <span className='w-auto min-w-[15rem] text-zinc-600 font-medium flex items-center'>{label} </span>
+            <span className='w-auto min-w-60 text-zinc-600 font-medium flex items-center'>{label} </span>
             <input
                 form={form}
                 id={id}
@@ -35,7 +35,7 @@ export default function LongInput(
                 onChange={onChange}
                 required={required}
                 defaultValue={currentData}
-                className=' border border-zinc-300 flex-1 py-2 px-3 outline-none rounded-md text-zinc-700
+                className=' border border-zinc-300 flex-1 py-2 px-3 outline-hidden rounded-md text-zinc-700
                             text-base ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300' />
         </label>
     )
@@ -50,7 +50,7 @@ export function LongTextArea(
         <label
             htmlFor={id}
             className='w-full h-auto border-b border-zinc-100 py-5 flex flex-row'>
-            <span className='w-auto min-w-[15rem] text-zinc-600 font-medium flex items-start'>{label} </span>
+            <span className='w-auto min-w-60 text-zinc-600 font-medium flex items-start'>{label} </span>
             <textarea
                 form={form}
                 id={id}
@@ -59,7 +59,7 @@ export function LongTextArea(
                 onChange={onChange}
                 required={required}
                 defaultValue={currentData}
-                className=' border border-zinc-300 flex-1 py-2 px-3 outline-none rounded-md text-zinc-700 whitespace-pre-line
+                className=' border border-zinc-300 flex-1 py-2 px-3 outline-hidden rounded-md text-zinc-700 whitespace-pre-line
                             text-base ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300 resize-none' />
         </label>
     )

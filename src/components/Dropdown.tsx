@@ -38,7 +38,7 @@ function Dropdown(
                 form={formName}
                 required={required}
                 onChange={onChange}
-                className='outline-none border border-zinc-300 rounded-md p-3
+                className='outline-hidden border border-zinc-300 rounded-md p-3
                 text-zinc-700 text-sm focus:border-sky-600 focus:ring-1 focus:ring-sky-600'>
                 {selectables?.map((val, key) => {
                     return (

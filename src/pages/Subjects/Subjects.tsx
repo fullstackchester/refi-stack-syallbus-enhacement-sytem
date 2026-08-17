@@ -97,7 +97,7 @@ function Subjects() {
                             spellCheck={false}
                             placeholder='Search'
                             onChange={(e) => setSearch(e.target.value)}
-                            className='w-60 border border-zinc-200 text-xs p-2 outline-none rounded-md' />
+                            className='w-60 border border-zinc-200 text-xs p-2 outline-hidden rounded-md' />
                     </div>
                     {role !== 'faculty' && [
                         {
@@ -194,7 +194,7 @@ function Subjects() {
                                     <button
                                         onClick={() => nav('/subjects/add')}
                                         className='w-max flex flex-row text-xs text-zinc-600 font-medium py-1 px-2 
-                            border border-zinc-200 rounded-md outline-none hover:bg-zinc-200
+                            border border-zinc-200 rounded-md outline-hidden hover:bg-zinc-200
                              transition-colors'>Add Subject</button>
                                 </div>
                             </div>

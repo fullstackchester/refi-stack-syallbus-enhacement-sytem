@@ -124,8 +124,8 @@ export const SubjectAdd = () => {
                                                 required={v.required}
                                                 onChange={(event) => v.onChange(event.currentTarget.value)}
                                                 placeholder={v.placeholder}
-                                                className='h-14 bg-zinc-100 p-3 text-sm outline-none border border-transparent 
-                                                ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all'
+                                                className='h-14 bg-zinc-100 p-3 text-sm outline-hidden border border-transparent 
+                                                ring-2 ring-transparent rounded-xs focus:ring-sky-300 transition-all'
                                             />
                                         </Input>
                                     )
@@ -137,8 +137,8 @@ export const SubjectAdd = () => {
                                                 onChange={(event) => v.onChange(event.currentTarget.value)}
                                                 required={v.required}
                                                 placeholder={v.placeholder}
-                                                className='h-40 bg-zinc-100 p-3 text-sm outline-none border border-transparent 
-                                                ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all resize-none'/>
+                                                className='h-40 bg-zinc-100 p-3 text-sm outline-hidden border border-transparent 
+                                                ring-2 ring-transparent rounded-xs focus:ring-sky-300 transition-all resize-none'/>
                                         </Input>
                                     )
                                 }

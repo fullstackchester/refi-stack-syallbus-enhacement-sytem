@@ -129,7 +129,7 @@ export default function EditFile() {
                                         defaultValue={v.defaultValue}
                                         required={v.required}
                                         accept={v.accept && v.accept}
-                                        className='h-14 bg-zinc-100 p-3 text-sm outline-none border border-transparent ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all'
+                                        className='h-14 bg-zinc-100 p-3 text-sm outline-hidden border border-transparent ring-2 ring-transparent rounded-xs focus:ring-sky-300 transition-all'
                                         placeholder={v.placeholder} />
                                 </Input>
                             )
@@ -141,8 +141,8 @@ export default function EditFile() {
                                 rows={8}
                                 defaultValue={post?.postDescription ?? ''}
                                 placeholder='Enter your description...'
-                                className='w-full h-60 bg-zinc-100 p-3 text-sm outline-none border border-transparent
-                                ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all resize-none' />
+                                className='w-full h-60 bg-zinc-100 p-3 text-sm outline-hidden border border-transparent
+                                ring-2 ring-transparent rounded-xs focus:ring-sky-300 transition-all resize-none' />
                         </Input>
                     </form>
                 </main>

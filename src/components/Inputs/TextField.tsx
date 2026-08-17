@@ -35,7 +35,7 @@ export default function TextField(
                 onChange={onChange}
                 required={required}
                 defaultValue={initialValue}
-                className='w-full outline-none border border-zinc-300 rounded-md p-3
+                className='w-full outline-hidden border border-zinc-300 rounded-md p-3
                 text-zinc-700 text-sm focus:border-sky-600 focus:ring-1 focus:ring-sky-600' />
 
         </div>

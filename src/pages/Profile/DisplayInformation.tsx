@@ -142,7 +142,7 @@ export default function DisplayInformation() {
                 onSubmit={saveInfo}
                 id='profile-form' name='profile-form' spellCheck={false} className='w-full flex-1 px-5 py-3'>
                 <div className='h-auto flex flex-row items-center mb-5'>
-                    <img src={preview ?? defaultAvatar} id='profile-avatar' alt='Profile avatar' className='h-20 w-20 object-cover rounded-full border' />
+                    <img src={preview ?? defaultAvatar} id='profile-avatar' alt='Profile avatar' className='h-20 w-20 object-cover rounded-full border border-gray-200' />
 
                     <label className='text-xs p-1 text-white bg-zinc-600 hover:bg-zinc-700 rounded-md ml-3 cursor-pointer'>
                         <input
@@ -177,7 +177,7 @@ export default function DisplayInformation() {
                                         type={val.type}
                                         required={val.isRequired}
                                         defaultValue={val.currentVal}
-                                        className='border border-zinc-200 p-2 outline-none focus:border-sky-300 rounded-sm w-80
+                                        className='border border-zinc-200 p-2 outline-hidden focus:border-sky-300 rounded-xs w-80
                                 ring-1 ring-transparent focus:ring-sky-300 transition-colors' /> :
                                     <select
                                         name={val.name}
@@ -186,7 +186,7 @@ export default function DisplayInformation() {
                                         value={currDept}
                                         onChange={(e) => setCurrDept(e.target.value)}
                                         required={val.isRequired}
-                                        className='border border-zinc-200 p-2 outline-none focus:border-sky-300 rounded-sm w-80 
+                                        className='border border-zinc-200 p-2 outline-hidden focus:border-sky-300 rounded-xs w-80 
                                     ring-1 ring-transparent focus:ring-sky-300 transition-colors'
                                     >
                                         {

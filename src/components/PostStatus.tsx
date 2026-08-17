@@ -3,13 +3,13 @@ import { faCheckCircle, faExclamationCircle, faEye } from '@fortawesome/free-sol
 
 interface PostStatusProps {
     postStatus: string
-    textSize?: string
+    textSize?: 'text-xs'
 }
 
 
 export default function PostStatus(
     {
-        postStatus, textSize
+        postStatus, textSize = 'text-xs'
     }: PostStatusProps
 ) {
     return (

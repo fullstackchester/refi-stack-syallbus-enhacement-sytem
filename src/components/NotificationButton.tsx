@@ -39,7 +39,7 @@ export default function NotificationButton() {
                 </button>
                 {myNotifs.length !== 0 &&
                     <div className='bg-red-600 text-xs rounded-full h-[1.1rem] flex items-center justify-center 
-                        w-[1.1rem] p-1 text-white relative top-[-2rem] right-[-1rem]'>
+                        w-[1.1rem] p-1 text-white relative -top-8 -right-4'>
                         {myNotifs.length}
                     </div>}
             </div>

@@ -36,7 +36,7 @@ function Sidebar() {
     return (
         <div className={`${minimize ? 'w-auto' : 'w-[15vw] min-w-[210px]'} h-screen
          bg-zinc-900 flex flex-col sticky top-0 transition-all`}>
-            <header className='h-auto min-h-[3rem] flex flex-row text-white items-center py-5'>
+            <header className='h-auto min-h-12 flex flex-row text-white items-center py-5'>
                 <img
                     alt='logo'
                     className='h-8 w-auto '

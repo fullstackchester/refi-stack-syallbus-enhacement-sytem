@@ -85,7 +85,7 @@ export default function Files() {
                                 spellCheck={false}
                                 placeholder='Search'
                                 onChange={(e) => setSearch(e.target.value)}
-                                className='w-60 border border-zinc-200 text-xs p-2 outline-none rounded-md' />
+                                className='w-60 border border-zinc-200 text-xs p-2 outline-hidden rounded-md' />
                         </div>
                         <button
                             title='New post'
@@ -171,7 +171,7 @@ export default function Files() {
                                     <button
                                         onClick={() => nav('/files/create-post')}
                                         className='w-max flex flex-row text-xs text-zinc-600 font-medium py-1 px-2 
-                                border border-zinc-200 rounded-md outline-none hover:bg-zinc-200
+                                border border-zinc-200 rounded-md outline-hidden hover:bg-zinc-200
                                  transition-colors'>Add Files</button>
                                 </div>
                             </div>

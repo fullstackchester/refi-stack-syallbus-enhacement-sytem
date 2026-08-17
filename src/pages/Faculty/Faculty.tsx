@@ -80,7 +80,7 @@ function Faculty() {
                             spellCheck={false}
                             placeholder='Search'
                             onChange={(e) => setSearch(e.target.value)}
-                            className='w-60 border border-zinc-200 text-xs p-2 outline-none rounded-md' />
+                            className='w-60 border border-zinc-200 text-xs p-2 outline-hidden rounded-md' />
                     </div>
 
                 </header>

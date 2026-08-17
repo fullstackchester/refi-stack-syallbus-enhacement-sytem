@@ -69,7 +69,7 @@ function Signup() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className='w-[500px] h-auto bg-white border border-zinc-200 rounded-md shadow-sm p-10'>
+                className='w-full sm:w-[500px] h-auto bg-white border border-zinc-200 rounded-md shadow-xs p-10'>
                 <h1 className={`text-center text-2xl text-zinc-700 font-medium mb-4`}>Signup</h1>
                 <form
                     spellCheck={false}
@@ -136,16 +136,16 @@ function Signup() {
                                     placeholder={val.placeholder}
                                     required={val.required}
                                     onChange={val.onChange}
-                                    className={`p-3 border border-zinc-300 ring-1 ring-transparent outline-none 
+                                    className={`p-3 border border-zinc-300 ring-1 ring-transparent outline-hidden 
                                     rounded-md focus:ring-sky-300 focus:border-sky-300 text-sm`}
                                 />
                             </label>
                         )
                     }
-                    <div className={`h-auto min-h-[1.5rem] text-xs text-red-600 font-medium text-right p-1 mt-2`}>{err}</div>
+                    <div className={`h-auto min-h-6 text-xs text-red-600 font-medium text-right p-1 mt-2`}>{err}</div>
                     <button
                         type={`submit`}
-                        className={`p-2 bg-zinc-700 text-white text-sm outline-none border border-transparent
+                        className={`p-2 bg-zinc-700 text-white text-sm outline-hidden border border-transparent
                         hover:bg-zinc-800 rounded-md mt-2 flex flex-row items-center justify-center`} >
                         Create Account
                         {loading && <FontAwesomeIcon icon={faCircleNotch} className={`ml-1`} spin />}

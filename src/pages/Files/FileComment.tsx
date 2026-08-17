@@ -60,7 +60,7 @@ export default function FileComments() {
                     ref={commentRef}
                     placeholder='Enter your comments...'
                     type={'text'}
-                    className='flex-1 outline-none border p-2 text-sm rounded-md' />
+                    className='flex-1 outline-hidden border border-gray-200 p-2 text-sm rounded-md' />
                 <button
                     type='submit'
                     className='h-8 w-8 rounded-full hover:bg-zinc-200 transition-colors ml-2'>

@@ -11,8 +11,8 @@ import type { UserProfile, UserRole } from '../../types/domain'
 
 export default function FacultyProfile() {
 
-    const style = `border border-sky-200 p-2 outline-none
-     focus:border-sky-300 rounded-sm w-80 ring-1 ring-transparent focus:ring-sky-300
+    const style = `border border-sky-200 p-2 outline-hidden
+     focus:border-sky-300 rounded-xs w-80 ring-1 ring-transparent focus:ring-sky-300
       transition-colors disabled:border-zinc-100 bg-white disabled:bg-white disabled:text-zinc-600`
 
     const [currDept, setCurrDept] = useState('')

@@ -133,8 +133,8 @@ function Dashboard() {
                                         type={v.type}
                                         required={v.require}
                                         placeholder={v.placeholder}
-                                        className='h-12 bg-zinc-100 p-2 text-sm outline-none border border-transparent 
-            ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all' />
+                                        className='h-12 bg-zinc-100 p-2 text-sm outline-hidden border border-transparent 
+            ring-2 ring-transparent rounded-xs focus:ring-sky-300 transition-all' />
                                 </Input>
                             )
                         }
@@ -166,7 +166,7 @@ function Dashboard() {
                     </div>
                     <div className='flex-1 overflow-y-auto border border-white'>
                         <table className='w-full h-auto table-auto'>
-                            <thead className='sticky top-[-1px] bg-white border border-white shadow-sm'>
+                            <thead className='sticky -top-px bg-white border border-white shadow-xs'>
                                 <tr className='border border-white sticky top-0'>
                                     {
                                         [
@@ -217,7 +217,7 @@ function Dashboard() {
                                             <td className='h-full'>
                                                 <button
                                                     onClick={() => deleteSy(v)}
-                                                    className='p-1 h-7 w-7 text-white bg-red-600 rounded-md outline-none'>
+                                                    className='p-1 h-7 w-7 text-white bg-red-600 rounded-md outline-hidden'>
                                                     <FontAwesomeIcon icon={faTrash} size='xs' />
                                                 </button>
                                             </td>}

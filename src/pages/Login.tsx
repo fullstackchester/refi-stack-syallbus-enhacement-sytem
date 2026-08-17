@@ -71,12 +71,12 @@ export default function Login() {
         <>
             {
                 !isFetching ?
-                    <div className='w-full h-screen  bg-gradient-to-b from-zinc-200 to-white flex justify-center items-center'>
+                    <div className='w-full h-screen  bg-linear-to-b from-zinc-200 to-white flex justify-center items-center'>
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className='w-[400px] h-auto bg-white rounded-md p-10'>
+                            className='w-full sm:w-[400px] h-auto bg-white rounded-md p-10'>
                             <h1 className={`text-center text-2xl text-zinc-600 font-medium`}>Login</h1>
                             <form
                                 spellCheck={false}
@@ -113,19 +113,19 @@ export default function Login() {
                                             ref={val.ref}
                                             placeholder={val.placeholder}
                                             onChange={val.onChange}
-                                            className={`p-3 border border-zinc-300 ring-1 ring-transparent outline-none
+                                            className={`p-3 border border-zinc-300 ring-1 ring-transparent outline-hidden
                                 rounded-md focus:ring-sky-300 focus:border-sky-300 text-sm`}
                                         />
                                     </label>
                                 )}
 
-                                <div className='h-auto min-h-[1.5rem] w-auto text-xs text-red-500
+                                <div className='h-auto min-h-6 w-auto text-xs text-red-500
                      flex items-center justify-end font-medium p-1 mt-2'>
                                     {err}
                                 </div>
                                 <button
                                     type={`submit`}
-                                    className={`p-2 bg-zinc-700 text-white text-sm outline-none border border-transparent
+                                    className={`p-2 bg-zinc-700 text-white text-sm outline-hidden border border-transparent
                         hover:bg-zinc-800 rounded-md mt-2 flex flex-row items-center justify-center`} >
                                     <span className='flex-1'>Login</span>
                                     {loading && <FontAwesomeIcon icon={faCircleNotch} className={`ml-1`} spin />}
@@ -137,7 +137,7 @@ export default function Login() {
                         </motion.div>
                     </div>
                     :
-                    <div className='w-full h-screen  bg-gradient-to-b from-zinc-200 to-white flex justify-center items-center'>
+                    <div className='w-full h-screen  bg-linear-to-b from-zinc-200 to-white flex justify-center items-center'>
                         <FontAwesomeIcon icon={faSpinner} spin />
                     </div>
             }

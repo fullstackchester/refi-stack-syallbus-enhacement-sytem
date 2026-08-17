@@ -9,11 +9,10 @@ interface LoadingButtonProps {
     form?: string
     buttonType?: ButtonHTMLAttributes<HTMLButtonElement>['type']
     type?: ButtonHTMLAttributes<HTMLButtonElement>['type']
-    btnColor?: string
 }
 
 export default function LoadingButton(
-    { dedicatedFunc, loadingState, title, form, buttonType, type, btnColor = '' }: LoadingButtonProps
+    { dedicatedFunc, loadingState, title, form, buttonType, type }: LoadingButtonProps
 ) {
 
     return (
@@ -21,8 +20,8 @@ export default function LoadingButton(
             form={form}
             type={buttonType ?? type ?? 'button'}
             onClick={dedicatedFunc}
-            className={`rounded-md outline-none border border-transparent py-2 px-3 text-xs ml-2 hover:bg-sky-700
-                bg-sky-600 text-white flex flex-row transition-transform shadow-md shadow-sky-300/50 ${btnColor}`} >
+            className={`rounded-md outline-hidden border border-transparent py-2 px-3 text-xs ml-2 hover:bg-sky-700
+                bg-sky-600 text-white flex flex-row transition-transform shadow-md shadow-sky-300/50`} >
             {title}
             {loadingState ? <FontAwesomeIcon
                 className='text-lg ml-2'

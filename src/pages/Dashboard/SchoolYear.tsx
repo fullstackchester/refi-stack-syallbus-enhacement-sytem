@@ -61,7 +61,7 @@ export default function SchoolYear() {
                         form='add-school-year-form'
                         id='start-year' type='date'
                         className=' outline-1 ring-1 ring-transparent p-2 border border-zinc-200 
-                    focus:outline-none focus:border-sky-300 focus:ring-sky-300 rounded-sm' />
+                    focus:outline-hidden focus:border-sky-300 focus:ring-sky-300 rounded-xs' />
                 </label>
 
                 <label htmlFor='end-year' className='flex flex-col text-xs w-1/2 m-2'>
@@ -72,7 +72,7 @@ export default function SchoolYear() {
                         form='add-school-year-form'
                         id='end-year' type='date'
                         className=' outline-1 ring-1 ring-transparent p-2 border border-zinc-200 
-                    focus:outline-none focus:border-sky-300 focus:ring-sky-300 rounded-sm' />
+                    focus:outline-hidden focus:border-sky-300 focus:ring-sky-300 rounded-xs' />
                 </label>
             </div>
         </form>
@@ -103,7 +103,7 @@ export default function SchoolYear() {
                         <th className='dash-th'>Status</th>
                     </tr>
                 </thead>
-                <tbody className='h-auto min-h-[20rem] border border-transparent'>
+                <tbody className='h-auto min-h-80 border border-transparent'>
                     {sy.map((val, key) => {
                         return (
                             <tr key={key} className={`text-xs font-medium text-zinc-700`}>

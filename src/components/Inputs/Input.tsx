@@ -11,7 +11,7 @@ export default function Input({ htmlFor, label, width = '' , children }: InputPr
     return (
         <label
             htmlFor={htmlFor}
-            className={`h-auto min-h-[5rem] ${width} flex flex-col p-2`}>
+            className={`h-auto min-h-20 ${width} flex flex-col p-2`}>
             <span className='text-sm text-zinc-500 font-semibold'>{label}</span>
             {children}
         </label>

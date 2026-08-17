@@ -23,7 +23,7 @@ export function ProfileEdit() {
     const photoUrlRef = useRef<HTMLInputElement>(null)
     const deptRef = useRef<HTMLSelectElement>(null)
 
-    const inputClass = 'border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300'
+    const inputClass = 'border border-zinc-300 flex-1 py-3 px-3 outline-hidden rounded-md text-zinc-700 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300'
 
 
 

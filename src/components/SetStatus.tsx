@@ -58,8 +58,8 @@ export default function Status({ postId }: StatusProps) {
                     <Menu.Button
                         disabled={role === 'faculty' ? true : false}
                         className={`inline-flex justify-center items-center w-full px-2 py-1 text-xs
-                        text-white bg-zinc-600 rounded-md hover:bg-zinc-700 focus:outline-none focus-visible:ring-2 
-                        focus-visible:ring-white focus-visible:ring-opacity-75`}>
+                        text-white bg-zinc-600 rounded-md hover:bg-zinc-700 focus:outline-hidden focus-visible:ring-2 
+                        focus-visible:ring-white/75`}>
                         Set Status
                         <ChevronDownIcon
                             className="w-5 h-5 text-white"
@@ -75,7 +75,7 @@ export default function Status({ postId }: StatusProps) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95" >
                     <Menu.Items className={`absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100
-                     rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}>
+                     rounded-md shadow-lg ring-1 ring-black/5 focus:outline-hidden`}>
                         <div className="px-1 py-1 ">
                             {[
                                 { title: 'Need reviews', status: 'Needs reviewing', },

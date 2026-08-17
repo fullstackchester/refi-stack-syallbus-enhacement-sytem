@@ -183,7 +183,7 @@ export default function CreatePost() {
                                         accept={val.accept && val.accept}
                                         defaultValue={val.defaultValue}
                                         placeholder={val.placeholder}
-                                        className='border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 
+                                        className='border border-zinc-300 flex-1 py-3 px-3 outline-hidden rounded-md text-zinc-700 
                                         text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300'/>
                                 </label>
                             )
@@ -195,7 +195,7 @@ export default function CreatePost() {
                             <select
                                 required={true}
                                 ref={acadYearRef}
-                                className='border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 
+                                className='border border-zinc-300 flex-1 py-3 px-3 outline-hidden rounded-md text-zinc-700 
                                 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300' id='academic-year'>
                                 <option value={''} className='text-sm p-1'> Select School Year </option>
                                 {schoolyear && schoolyear.map((val, key) => {
@@ -212,7 +212,7 @@ export default function CreatePost() {
                             <select
                                 required={true}
                                 ref={subjectRef}
-                                className='border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 
+                                className='border border-zinc-300 flex-1 py-3 px-3 outline-hidden rounded-md text-zinc-700 
                                 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300' id='academic-year'>
                                 <option value={''} className='text-sm p-1'> Select Subject </option>
                                 {subs.length !== 0 ? subs.map((val, key) => {
@@ -231,7 +231,7 @@ export default function CreatePost() {
                                 ref={descriptionRef}
                                 rows={8}
                                 placeholder='Enter your description...'
-                                className='border border-zinc-300 flex-1 py-3 px-3 outline-none rounded-md text-zinc-700 
+                                className='border border-zinc-300 flex-1 py-3 px-3 outline-hidden rounded-md text-zinc-700 
                                 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300 resize-none' />
                         </label>
                     </form>

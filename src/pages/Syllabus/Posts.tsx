@@ -146,7 +146,7 @@ export default function Posts() {
                             spellCheck={false}
                             placeholder='Search'
                             onChange={(e) => setSearch(e.target.value)}
-                            className='w-60 border border-zinc-200 text-xs p-2 outline-none rounded-md' />
+                            className='w-60 border border-zinc-200 text-xs p-2 outline-hidden rounded-md' />
                         {
                             [
                                 {
@@ -253,7 +253,7 @@ export default function Posts() {
                                             <button
                                                 onClick={() => nav('/posts/create-post')}
                                                 className='w-max flex flex-row text-xs text-zinc-600 font-medium py-1 px-2 
-                                border border-zinc-200 rounded-md outline-none hover:bg-zinc-200
+                                border border-zinc-200 rounded-md outline-hidden hover:bg-zinc-200
                                  transition-colors'>Add Post</button>
                                         </div>
                                     </div>

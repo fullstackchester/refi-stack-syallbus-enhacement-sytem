@@ -65,7 +65,7 @@ export default function PopNotif(
                                     <button
                                         type="button"
                                         className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white
-                                         bg-sky-600 border border-transparent rounded-md hover:bg-sky-700 focus:outline-none
+                                         bg-sky-600 border border-transparent rounded-md hover:bg-sky-700 focus:outline-hidden
                                           focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                                         onClick={handleClose} >
                                         Close

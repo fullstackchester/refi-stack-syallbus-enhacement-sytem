@@ -140,8 +140,8 @@ export default function FileAdd() {
                                     ref={v.ref}
                                     required={v.required}
                                     accept={v.accept && v.accept}
-                                    className='h-14 bg-zinc-100 p-3 text-sm outline-none border border-transparent
-                                    ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all'
+                                    className='h-14 bg-zinc-100 p-3 text-sm outline-hidden border border-transparent
+                                    ring-2 ring-transparent rounded-xs focus:ring-sky-300 transition-all'
                                     placeholder={v.placeholder} />
                             </Input>
                         )}
@@ -151,8 +151,8 @@ export default function FileAdd() {
                                     id={v.id}
                                     ref={v.ref}
                                     required={true}
-                                    className='h-14 bg-zinc-100 p-3 text-sm outline-none border border-transparent 
-                                    ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all'>
+                                    className='h-14 bg-zinc-100 p-3 text-sm outline-hidden border border-transparent 
+                                    ring-2 ring-transparent rounded-xs focus:ring-sky-300 transition-all'>
                                     <option value='' className='text-base'>Select</option>
                                     {v.options.map((val, key) => {
                                         if ('syId' in val) {
@@ -169,8 +169,8 @@ export default function FileAdd() {
                                 ref={descriptionRef}
                                 rows={8}
                                 placeholder='Enter your description...'
-                                className='w-full h-60 bg-zinc-100 p-3 text-sm outline-none border border-transparent
-                                ring-2 ring-transparent rounded-sm focus:ring-sky-300 transition-all resize-none' />
+                                className='w-full h-60 bg-zinc-100 p-3 text-sm outline-hidden border border-transparent
+                                ring-2 ring-transparent rounded-xs focus:ring-sky-300 transition-all resize-none' />
                         </Input>
                     </form>
                 </main>

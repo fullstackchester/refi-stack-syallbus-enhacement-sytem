@@ -1,5 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import 'tailwindcss';
+
+@utility base-container {
+  @apply h-auto w-[80%] bg-white border border-zinc-200 rounded-md;
+}
+
+@utility input-style {
+  @apply border border-zinc-300 flex-1 py-3 px-3 outline-hidden rounded-md text-zinc-700 text-sm ring-2 ring-transparent focus:border-sky-400 focus:ring-sky-300;
+}
+
+@utility base-footer {
+  @apply h-14 border-t border-zinc-200 flex items-center justify-end px-10;
+}
+
+@utility dash-th {
+  @apply p-2 text-zinc-700 text-left text-xs;
+}
 
 *{
   -webkit-font-smoothing: antialiased;
@@ -52,6 +69,3 @@ code {
 ::-webkit-scrollbar-thumb:hover {
   background: #a1a1aa; 
 }
-
-
-

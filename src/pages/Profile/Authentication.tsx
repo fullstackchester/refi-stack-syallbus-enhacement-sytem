@@ -116,7 +116,7 @@ export default function Authentication() {
                                 type={val.type}
                                 required={val.isRequired}
                                 defaultValue={val.currentVal}
-                                className='border border-zinc-200 p-2 outline-none focus:border-sky-300 rounded-sm w-80
+                                className='border border-zinc-200 p-2 outline-hidden focus:border-sky-300 rounded-xs w-80
                                 ring-1 ring-transparent focus:ring-sky-300 transition-colors' />
                             <p className='text-xs font-medium mt-1 text-zinc-500'>{val.description}</p>
                         </label>
@@ -133,7 +133,7 @@ export default function Authentication() {
                             <button
                                 onClick={() => setOpenDel(true)}
                                 type='button'
-                                className='w-fit h-fit text-xs border border-transparent outline-none p-2
+                                className='w-fit h-fit text-xs border border-transparent outline-hidden p-2
                              bg-red-600 hover:bg-red-700 text-white rounded-md mt-3'>
                                 Delete Account
                             </button>
