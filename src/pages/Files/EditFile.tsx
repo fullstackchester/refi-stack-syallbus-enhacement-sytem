@@ -1,13 +1,13 @@
 import { onValue, ref } from 'firebase/database'
 import { useEffect, useState, useRef, type FormEvent } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import LoadingButton from '../../components/LoadingButton'
-import { database } from '../../js/Firebase'
+import LoadingButton from 'components/LoadingButton'
+import { database } from 'clients/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import Input from '../../components/Inputs/Input'
-import { snapshotValue } from '../../js/FirebaseData'
-import type { Post } from '../../types/domain'
+import Input from 'components/Inputs/Input'
+import { snapshotValue } from 'utils/FirebaseData'
+import type { Post } from 'types/domain'
 
 export default function EditFile() {
     const nav = useNavigate()

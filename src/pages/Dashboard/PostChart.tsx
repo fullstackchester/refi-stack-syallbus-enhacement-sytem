@@ -3,9 +3,9 @@ import { Doughnut } from 'react-chartjs-2'
 import 'chart.js/auto'
 import type { Plugin } from 'chart.js'
 import { onValue, ref } from 'firebase/database'
-import { database } from '../../js/Firebase';
-import { snapshotCollection } from '../../js/FirebaseData'
-import type { Post } from '../../types/domain'
+import { database } from 'clients/Firebase';
+import { snapshotCollection } from 'utils/FirebaseData'
+import type { Post } from 'types/domain'
 
 export default function PostChart() {
 

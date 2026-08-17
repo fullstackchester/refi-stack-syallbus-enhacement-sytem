@@ -1,14 +1,14 @@
 import { onValue, ref, update } from 'firebase/database'
 import { useRef, useState, useEffect } from 'react'
-import { database, storage } from '../../js/Firebase'
-import { useFirebase } from '../../js/FirebaseContext'
+import { database, storage } from 'clients/Firebase'
+import { useFirebase } from 'context/FirebaseContext'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
-import PopNotif from '../../components/PopNotif'
+import PopNotif from 'components/PopNotif'
 import defaultAvatar from '../../assets/Images/avatar.png'
-import { snapshotValue } from '../../js/FirebaseData'
-import type { UserProfile } from '../../types/domain'
+import { snapshotValue } from 'utils/FirebaseData'
+import type { UserProfile } from 'types/domain'
 
 export default function DisplayInformation() {
     const { currentUser, uploadFile } = useFirebase()

@@ -1,16 +1,17 @@
 import { useState, useEffect, type ChangeEvent, type MouseEvent } from 'react'
-import { ref, onValue, remove } from 'firebase/database'
-import { database } from '../../js/Firebase'
+import { ref, onValue, remove, DataSnapshot } from 'firebase/database'
+import { database } from 'clients/Firebase'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, faDeleteLeft, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 import { motion } from 'framer-motion'
-import { useFirebase } from '../../js/FirebaseContext'
-import Confirm from '../../components/PopConfirmation'
-import PopNotif from '../../components/PopNotif'
-import Loading from '../../components/Loading'
-import { snapshotCollection } from '../../js/FirebaseData'
-import type { Subject } from '../../types/domain'
+import { useFirebase } from 'context/FirebaseContext'
+import Confirm from 'components/PopConfirmation'
+import PopNotif from 'components/PopNotif'
+import Loading from 'components/Loading'
+import { snapshotCollection } from 'utils/FirebaseData'
+import type { Subject } from 'types/domain'
+import { SUBJECT_REFERENCE } from 'firebase/database-reference'
 
 function Subjects() {
 
@@ -27,6 +28,7 @@ function Subjects() {
     const [actionDone, setActionDone] = useState(false)
 
     const [isFetching, setFetching] = useState(true)
+    const [isError, setError] = useState<Error>()
 
     function handleCheckAll() {
         setCheckAll(!isCheckAll)
@@ -44,16 +46,28 @@ function Subjects() {
         }
     }
 
+    const fetchSubjectsCallback = (snapshot: DataSnapshot) => {
+        if (snapshot.exists()) {
+            setSubject(snapshotCollection<Subject>(snapshot))
+            setFetching(false)
+        }
+    } 
+
+    const cancelCallback = (err: Error) => {
+        if (err) {
+            setError(err)
+        }
+    }
+
+    const fetchSubjects = () => {
+        setFetching(true)
+        onValue(SUBJECT_REFERENCE, fetchSubjectsCallback, cancelCallback, { onlyOnce: true })
+        setFetching(false)
+    }
+
 
     useEffect(() => {
-        setTimeout(function () {
-            onValue(ref(database, 'subject'), snapshot => {
-                if (snapshot.exists()) {
-                    setSubject(snapshotCollection<Subject>(snapshot))
-                    setFetching(false)
-                }
-            })
-        }, 500)
+        return fetchSubjects()
     }, [])
 
 

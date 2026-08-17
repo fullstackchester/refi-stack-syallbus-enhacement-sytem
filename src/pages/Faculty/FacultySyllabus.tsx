@@ -1,11 +1,11 @@
 import { onValue, ref } from 'firebase/database'
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { database } from '../../js/Firebase'
-import { snapshotCollection } from '../../js/FirebaseData'
+import { database } from 'clients/Firebase'
+import { snapshotCollection } from 'utils/FirebaseData'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolderOpen } from '@fortawesome/free-solid-svg-icons'
-import type { Post } from '../../types/domain'
+import type { Post } from 'types/domain'
 
 export default function FacultySyllabus() {
 

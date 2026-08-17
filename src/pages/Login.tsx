@@ -1,15 +1,15 @@
 import { useRef, useState, useEffect, type FormEvent } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
-import { database } from '../js/Firebase'
+import { database } from 'clients/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleNotch, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { AuthError } from '../js/AuthError'
-import { useFirebase } from '../js/FirebaseContext'
+import { useFirebase } from 'context/FirebaseContext'
 import { onValue, ref } from 'firebase/database'
-import { snapshotValue } from '../js/FirebaseData'
+import { snapshotValue } from 'utils/FirebaseData'
 import { getErrorCode, getErrorMessage } from '../js/errors'
-import type { UserProfile } from '../types/domain'
+import type { UserProfile } from 'types/domain'
 
 
 export default function Login() {
@@ -22,7 +22,6 @@ export default function Login() {
 
     const nav = useNavigate()
     const { currentUser, login } = useFirebase()
-
 
     useEffect(() => {
         setFecthing(false)

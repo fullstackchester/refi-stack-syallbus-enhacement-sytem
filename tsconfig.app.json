@@ -1,6 +1,17 @@
 {
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "paths": {
+      "~/*": ["./src/*"],
+      "assets/*": ["./src/assets/*"],
+      "clients/*": ["./src/clients/*"],
+      "components/*": ["./src/components/*"],
+      "context/*": ["./src/context/*"],
+      "firebase/*": ["./src/firebase/*"],
+      "pages/*": ["./src/pages/*"],
+      "types/*": ["./src/types/*"],
+      "utils/*": ["./src/utils/*"]
+    },
     "composite": true,
     "target": "ES2022",
     "useDefineForClassFields": true,

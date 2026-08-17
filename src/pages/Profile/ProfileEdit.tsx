@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
 import { ref, onValue } from 'firebase/database'
-import { database } from '../../js/Firebase'
-import { useFirebase } from '../../js/FirebaseContext'
+import { database } from 'clients/Firebase'
+import { useFirebase } from 'context/FirebaseContext'
 import { useNavigate } from 'react-router-dom'
-import { snapshotValue } from '../../js/FirebaseData'
+import { snapshotValue } from 'utils/FirebaseData'
 import { getErrorMessage } from '../../js/errors'
-import type { UserProfile } from '../../types/domain'
+import type { UserProfile } from 'types/domain'
 import defaultAvatar from '../../assets/Images/avatar.png'
 
 export function ProfileEdit() {

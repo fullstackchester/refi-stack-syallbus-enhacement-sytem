@@ -1,9 +1,9 @@
 import { onValue, ref } from 'firebase/database'
 import { useEffect, useState } from 'react'
-import { database } from '../js/Firebase'
-import { snapshotCollection } from '../js/FirebaseData'
-import { useFirebase } from '../js/FirebaseContext'
-import type { Notification as NotificationRecord } from '../types/domain'
+import { database } from 'clients/Firebase'
+import { snapshotCollection } from 'utils/FirebaseData'
+import { useFirebase } from 'context/FirebaseContext'
+import type { Notification as NotificationRecord } from 'types/domain'
 
 export default function Notification() {
 

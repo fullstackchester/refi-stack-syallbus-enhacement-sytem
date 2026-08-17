@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import HistorySection from '../../components/HistorySection'
+import HistorySection from 'components/HistorySection'
 
 
 export default function FileHistory() {

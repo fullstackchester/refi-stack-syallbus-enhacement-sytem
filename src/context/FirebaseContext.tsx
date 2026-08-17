@@ -23,9 +23,9 @@ import {
   type StorageReference,
   type UploadResult,
 } from 'firebase/storage'
-import { auth, database, storage } from './Firebase'
-import { snapshotValue } from './FirebaseData'
-import type { UserProfile, UserRole } from '../types/domain'
+import { auth, database, storage } from 'clients/Firebase'
+import { snapshotValue } from 'utils/FirebaseData'
+import type { UserProfile, UserRole } from 'types/domain'
 
 export type AuthenticationState =
   | { status: 'loading'; user: null }

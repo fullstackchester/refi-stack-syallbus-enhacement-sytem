@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignOut } from '@fortawesome/free-solid-svg-icons'
 import Modal from '../Modal'
 import { signOut } from 'firebase/auth'
-import { auth } from '../../js/Firebase'
-import { useFirebase } from '../../js/FirebaseContext'
+import { auth } from 'clients/Firebase'
+import { useFirebase } from 'context/FirebaseContext'
 import NotificationButton from '../NotificationButton'
 
 

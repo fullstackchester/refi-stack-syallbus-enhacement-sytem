@@ -1,5 +1,5 @@
-import { snapshotCollection } from './FirebaseData'
-import type { Subject } from '../types/domain'
+import { snapshotCollection } from 'utils/FirebaseData'
+import type { Subject } from 'types/domain'
 
 describe('snapshotCollection', () => {
   it('converts a representative typed Firebase collection', () => {

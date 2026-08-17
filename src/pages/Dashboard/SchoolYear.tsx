@@ -1,14 +1,14 @@
 import { useState, useRef, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAdd } from '@fortawesome/free-solid-svg-icons'
-import PopForm from '../../components/PopForm'
+import PopForm from 'components/PopForm'
 import { v4 as uuidv4 } from 'uuid'
 import { onValue, ref, set } from 'firebase/database'
-import { database } from '../../js/Firebase'
-import { snapshotCollection } from '../../js/FirebaseData'
+import { database } from 'clients/Firebase'
+import { snapshotCollection } from 'utils/FirebaseData'
 import { getErrorMessage } from '../../js/errors'
-import SYStatus from '../../components/SYStatus'
-import type { SchoolYear as SchoolYearRecord } from '../../types/domain'
+import SYStatus from 'components/SYStatus'
+import type { SchoolYear as SchoolYearRecord } from 'types/domain'
 
 
 export default function SchoolYear() {

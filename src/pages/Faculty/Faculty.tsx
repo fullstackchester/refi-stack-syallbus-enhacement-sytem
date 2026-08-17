@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
-import { onValue, ref } from 'firebase/database'
-import { database } from '../../js/Firebase'
+import { Database, DataSnapshot, onValue, ref } from 'firebase/database'
+import { database } from 'clients/Firebase'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from "framer-motion"
-import { useFirebase } from '../../js/FirebaseContext'
-import Loading from '../../components/Loading'
-import { snapshotCollection, snapshotValue } from '../../js/FirebaseData'
-import type { UserProfile } from '../../types/domain'
+import { useFirebase } from 'context/FirebaseContext'
+import Loading from 'components/Loading'
+import { snapshotCollection, snapshotValue } from 'utils/FirebaseData'
+import type { UserProfile } from 'types/domain'
+import { USER_REFERENCE, USER_REF } from 'firebase/database-reference'
 
+const LIST_OPTIONS = { onlyOnce: true }
 
 function Faculty() {
 
@@ -17,40 +19,47 @@ function Faculty() {
     const [isCheckAll, setCheckAll] = useState(false)
     const [isCheck, setCheck] = useState<string[]>([])
     const { role, currentUser } = useFirebase()
-    const [dept, setDept] = useState('')
+    const [department, setDepartment] = useState('')
 
     const [isFetching, setFetching] = useState(true)
+    const [isError, setError] = useState<Error>()
 
     const nav = useNavigate()
 
-    useEffect(() => {
-        if (!currentUser) {
-            nav('/login')
-            return
+    if (!currentUser) {
+        nav('/login')
+        return
+    }
+
+    const fetchFacultyCallback = (snapshot: DataSnapshot) => {
+        setFaculty(snapshotCollection<UserProfile>(snapshot))
+    }
+
+    const fetchCurrentUserDepartmentCallback = (snapshot: DataSnapshot) => {
+        if (snapshot.exists()) {
+            setDepartment(snapshotValue<UserProfile>(snapshot).department)
         }
+    }
 
-        const timeout = window.setTimeout(function () {
-            const unsubscribeUser = onValue(ref(database, `users/${currentUser.uid}`), snap => {
-                if (snap.exists()) {
-                    setDept(snapshotValue<UserProfile>(snap).department)
-                }
-            })
-            const unsubscribeFaculty = onValue(ref(database, 'users'), snapshot => {
-                setFaculty(snapshotCollection<UserProfile>(snapshot))
-            })
-            setFetching(false)
+    const cancelCallback = (err: Error) => {
+        if (err) {
+            setError(err)
+        }
+    }
 
-            return () => {
-                unsubscribeUser()
-                unsubscribeFaculty()
-            }
-        }, 500)
+    const fetchFaculty = () => {
+        setFetching(true)
+        onValue(USER_REF(), fetchFacultyCallback, cancelCallback, LIST_OPTIONS)
+        onValue(USER_REF(currentUser.uid), fetchCurrentUserDepartmentCallback, cancelCallback, LIST_OPTIONS)
+        setFetching(false)
+    }
 
-        return () => window.clearTimeout(timeout)
-    }, [currentUser, nav])
+    useEffect(() => {
+        return fetchFaculty()
+    })
 
     const filtered = role === 'area chair'
-        ? faculty.filter(user => user.department === dept)
+        ? faculty.filter(user => user.department === department)
         : faculty
 
     function handleCheckAll() {

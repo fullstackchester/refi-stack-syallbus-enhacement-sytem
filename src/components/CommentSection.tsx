@@ -1,8 +1,8 @@
 import { onValue, ref } from 'firebase/database'
 import { useState, useEffect } from 'react'
-import { database } from '../js/Firebase'
-import { snapshotCollection } from '../js/FirebaseData'
-import type { Comment } from '../types/domain'
+import { database } from 'clients/Firebase'
+import { snapshotCollection } from 'utils/FirebaseData'
+import type { Comment } from 'types/domain'
 
 interface CommentSectionProps {
     postId: string

@@ -1,17 +1,17 @@
 import { onValue, ref } from 'firebase/database'
 import { useEffect, useState, type ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { database, storage } from '../../js/Firebase'
-import PostStatus from '../../components/PostStatus'
+import { database, storage } from 'clients/Firebase'
+import PostStatus from 'components/PostStatus'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolderOpen, faPlusCircle, faFilter, faCalendarAlt, faDownload } from '@fortawesome/free-solid-svg-icons'
-import PopFilter from '../../components/PopFilter'
+import PopFilter from 'components/PopFilter'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
 import { motion } from 'framer-motion'
-import Loading from '../../components/Loading'
+import Loading from 'components/Loading'
 import { schoolYear } from '../../js/Data'
-import { snapshotCollection } from '../../js/FirebaseData'
-import type { Post, SchoolYear } from '../../types/domain'
+import { snapshotCollection } from 'utils/FirebaseData'
+import type { Post, SchoolYear } from 'types/domain'
 
 
 

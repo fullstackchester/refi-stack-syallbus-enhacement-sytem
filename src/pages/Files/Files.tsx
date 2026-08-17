@@ -1,17 +1,17 @@
-import { onValue, ref } from 'firebase/database'
+import { DataSnapshot, onValue, ref, type DatabaseReference, type ListenOptions, type Unsubscribe } from 'firebase/database'
 import { useState, useEffect, type ChangeEvent, type MouseEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import PostStatus from '../../components/PostStatus'
-import { database, storage } from '../../js/Firebase'
-import { useFirebase } from '../../js/FirebaseContext'
+import PostStatus from 'components/PostStatus'
+import { database, storage } from 'clients/Firebase'
+import { useFirebase } from 'context/FirebaseContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, faDownload, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 import { motion } from 'framer-motion'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
-import Loading from '../../components/Loading'
+import Loading from 'components/Loading'
 import { schoolYear } from '../../js/Data'
-import { snapshotCollection } from '../../js/FirebaseData'
-import type { Post } from '../../types/domain'
+import { snapshotCollection } from 'utils/FirebaseData'
+import type { Post } from 'types/domain'
 
 export default function Files() {
 
@@ -22,23 +22,36 @@ export default function Files() {
     const [isCheck, setCheck] = useState<string[]>([])
 
     const [isFetching, setFetching] = useState(true)
+    const [isError, setError] = useState<Error | null>(null);
 
 
     const uid = currentUser?.uid ?? ''
     const nav = useNavigate()
+    const POST_ENDPOINT = 'forced_error_path';
+    const databaseRef: DatabaseReference = ref(database, POST_ENDPOINT);
+
+    const cancelCallback = (error: Error) => {
+        if (error) {
+            setError(error)
+        }
+    }
+
+    const callBack = (snapshot: DataSnapshot) => {
+        if (snapshot.exists()) {
+            setFiles(snapshotCollection<Post>(snapshot))
+        }
+    }
+
+    const options: ListenOptions = { onlyOnce: true }
+
+    const fetchSyllabusPost = () => {
+        setFetching(true)
+        onValue(databaseRef, callBack, cancelCallback, options)
+        setFetching(false)
+    }
 
     useEffect(() => {
-
-        setTimeout(function () {
-            onValue(ref(database, `posts`), snapshot => {
-                if (snapshot.exists()) {
-                    setFiles(snapshotCollection<Post>(snapshot))
-
-                }
-            })
-            setFetching(false)
-        }, 500)
-
+        return fetchSyllabusPost();
     }, [])
 
     function handleCheckAll() {
@@ -71,6 +84,14 @@ export default function Files() {
                     console.log(e)
                 });
         })
+    }
+
+    if (isError) {
+        return (
+            <h1>
+                Error: {isError.message}
+            </h1>
+        )
     }
 
     return (

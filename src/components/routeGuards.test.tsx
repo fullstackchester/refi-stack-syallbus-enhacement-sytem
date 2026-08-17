@@ -13,7 +13,7 @@ const firebaseState = vi.hoisted(() => ({
   currentUser: null as { uid: string } | null,
 }))
 
-vi.mock('../js/FirebaseContext', () => ({
+vi.mock('context/FirebaseContext', () => ({
   useFirebase: () => firebaseState,
 }))
 

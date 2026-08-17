@@ -1,7 +1,7 @@
 import { onValue, ref } from "firebase/database"
-import { database } from "./Firebase"
-import { snapshotCollection } from './FirebaseData'
-import type { Post, SchoolYear, Subject } from '../types/domain'
+import { database } from "clients/Firebase"
+import { snapshotCollection } from 'utils/FirebaseData'
+import type { Post, SchoolYear, Subject } from 'types/domain'
 
 export let subjects: Subject[] = []
 export let schoolYear: SchoolYear[] = []

@@ -1,15 +1,15 @@
 import { useState, useEffect, type MouseEvent } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { onValue, ref } from 'firebase/database'
-import { database, storage } from '../../js/Firebase'
+import { database, storage } from 'clients/Firebase'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
-import PostStatus from '../../components/PostStatus'
-import Button from '../../components/Template/Button'
-import Confirm from '../../components/PopConfirmation'
-import PopNotif from '../../components/PopNotif'
-import { useFirebase } from '../../js/FirebaseContext'
-import { snapshotValue } from '../../js/FirebaseData'
-import type { Post, Subject } from '../../types/domain'
+import PostStatus from 'components/PostStatus'
+import Button from 'components/Template/Button'
+import Confirm from 'components/PopConfirmation'
+import PopNotif from 'components/PopNotif'
+import { useFirebase } from 'context/FirebaseContext'
+import { snapshotValue } from 'utils/FirebaseData'
+import type { Post, Subject } from 'types/domain'
 
 export default function FileInfo() {
     const { id } = useParams()

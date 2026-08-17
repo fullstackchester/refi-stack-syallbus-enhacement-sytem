@@ -12,5 +12,10 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "rules": {
+    "forced_error_path": {
+      ".read": false
+    }
   }
 }

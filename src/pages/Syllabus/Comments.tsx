@@ -1,14 +1,14 @@
 import { useRef, useState, useEffect, type FormEvent } from 'react'
 import { useParams } from 'react-router-dom'
-import CommentSection from '../../components/CommentSection'
+import CommentSection from 'components/CommentSection'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { v4 as uuidv4 } from 'uuid'
 import { onValue, ref, set } from 'firebase/database'
-import { database } from '../../js/Firebase'
-import { useFirebase } from '../../js/FirebaseContext'
-import { snapshotValue } from '../../js/FirebaseData'
-import type { Comment, UserProfile } from '../../types/domain'
+import { database } from 'clients/Firebase'
+import { useFirebase } from 'context/FirebaseContext'
+import { snapshotValue } from 'utils/FirebaseData'
+import type { Comment, UserProfile } from 'types/domain'
 
 
 export default function Comments() {

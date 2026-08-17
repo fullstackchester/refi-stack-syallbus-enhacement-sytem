@@ -1,11 +1,11 @@
 import { onValue, ref } from 'firebase/database'
 import { useEffect, useState } from 'react'
-import { database, storage } from '../js/Firebase'
+import { database, storage } from 'clients/Firebase'
 import PopHistory from './PopHistory'
 import PostStatus from './PostStatus'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'
-import { snapshotCollection } from '../js/FirebaseData'
-import type { HistoryRecord, Post } from '../types/domain'
+import { snapshotCollection } from 'utils/FirebaseData'
+import type { HistoryRecord, Post } from 'types/domain'
 
 interface HistorySectionProps {
     postId: string

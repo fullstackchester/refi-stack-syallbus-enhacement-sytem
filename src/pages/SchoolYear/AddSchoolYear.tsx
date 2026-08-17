@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import LoadingButton from '../../components/LoadingButton'
+import LoadingButton from 'components/LoadingButton'
 
 export default function AddSchoolYear() {
     const [loading, setLoading] = useState(false)

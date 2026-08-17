@@ -1,12 +1,12 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useState, useEffect } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
-import { useFirebase } from '../js/FirebaseContext'
+import { useFirebase } from 'context/FirebaseContext'
 import { onValue, ref, set, update } from 'firebase/database'
-import { database } from '../js/Firebase'
-import { snapshotValue } from '../js/FirebaseData'
+import { database } from 'clients/Firebase'
+import { snapshotValue } from 'utils/FirebaseData'
 import { v4 } from 'uuid'
-import type { Post } from '../types/domain'
+import type { Post } from 'types/domain'
 
 interface StatusProps {
     postId: string

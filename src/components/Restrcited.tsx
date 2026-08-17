@@ -1,10 +1,10 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Navigate } from 'react-router-dom'
 import { onValue, ref } from 'firebase/database'
-import { database } from '../js/Firebase'
-import { snapshotValue } from '../js/FirebaseData'
-import { useFirebase } from '../js/FirebaseContext'
-import type { UserProfile, UserRole } from '../types/domain'
+import { database } from 'clients/Firebase'
+import { snapshotValue } from 'utils/FirebaseData'
+import { useFirebase } from 'context/FirebaseContext'
+import type { UserProfile, UserRole } from 'types/domain'
 
 interface RestrictedProps {
   children: ReactNode

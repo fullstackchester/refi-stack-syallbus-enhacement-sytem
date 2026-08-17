@@ -1,13 +1,13 @@
 import { onValue, ref } from 'firebase/database'
 import { useEffect, useState, type MouseEvent } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import Confirm from '../../components/PopConfirmation'
-import PopNotif from '../../components/PopNotif'
-import Button from '../../components/Template/Button'
-import { database } from '../../js/Firebase'
-import { snapshotValue } from '../../js/FirebaseData'
-import { useFirebase } from '../../js/FirebaseContext'
-import type { Subject } from '../../types/domain'
+import Confirm from 'components/PopConfirmation'
+import PopNotif from 'components/PopNotif'
+import Button from 'components/Template/Button'
+import { database } from 'clients/Firebase'
+import { snapshotValue } from 'utils/FirebaseData'
+import { useFirebase } from 'context/FirebaseContext'
+import type { Subject } from 'types/domain'
 
 export default function SubjectInfo() {
 

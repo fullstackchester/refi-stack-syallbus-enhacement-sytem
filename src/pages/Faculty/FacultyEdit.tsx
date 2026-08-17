@@ -1,11 +1,11 @@
 import { onValue, ref, update } from 'firebase/database'
 import { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import LoadingButton from '../../components/LoadingButton'
-import { database } from '../../js/Firebase'
-import { snapshotValue } from '../../js/FirebaseData'
+import LoadingButton from 'components/LoadingButton'
+import { database } from 'clients/Firebase'
+import { snapshotValue } from 'utils/FirebaseData'
 import { getErrorMessage } from '../../js/errors'
-import type { UserProfile, UserRole } from '../../types/domain'
+import type { UserProfile, UserRole } from 'types/domain'
 
 export default function FacultyEdit() {
     const [isLoading, setLoading] = useState(false)

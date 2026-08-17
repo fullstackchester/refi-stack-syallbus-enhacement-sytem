@@ -2,12 +2,12 @@ import { useState, useRef, type FormEvent } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { ref, set } from 'firebase/database'
-import { database } from '../js/Firebase'
+import { database } from 'clients/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleNotch, faAsterisk } from '@fortawesome/free-solid-svg-icons'
-import { useFirebase } from '../js/FirebaseContext'
+import { useFirebase } from 'context/FirebaseContext'
 import { getErrorCode } from '../js/errors'
-import type { UserProfile } from '../types/domain'
+import type { UserProfile } from 'types/domain'
 
 
 function Signup() {

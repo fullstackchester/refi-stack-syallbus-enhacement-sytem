@@ -2,10 +2,10 @@ import { updateEmail, updatePassword } from 'firebase/auth'
 import { ref, update } from 'firebase/database'
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Confirm from '../../components/PopConfirmation'
-import PopNotif from '../../components/PopNotif'
-import { database } from '../../js/Firebase'
-import { useFirebase } from '../../js/FirebaseContext'
+import Confirm from 'components/PopConfirmation'
+import PopNotif from 'components/PopNotif'
+import { database } from 'clients/Firebase'
+import { useFirebase } from 'context/FirebaseContext'
 
 export default function Authentication() {
     const emailRef = useRef<HTMLInputElement>(null)

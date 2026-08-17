@@ -1,13 +1,13 @@
 import { onValue, ref, update } from 'firebase/database'
 import { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import { database } from '../../js/Firebase'
+import { database } from 'clients/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCancel, faCircleNotch } from '@fortawesome/free-solid-svg-icons'
-import PopNotif from '../../components/PopNotif'
-import { useFirebase } from '../../js/FirebaseContext'
-import { snapshotValue } from '../../js/FirebaseData'
-import type { UserProfile, UserRole } from '../../types/domain'
+import PopNotif from 'components/PopNotif'
+import { useFirebase } from 'context/FirebaseContext'
+import { snapshotValue } from 'utils/FirebaseData'
+import type { UserProfile, UserRole } from 'types/domain'
 
 export default function FacultyProfile() {
 

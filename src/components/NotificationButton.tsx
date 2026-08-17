@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell } from '@fortawesome/free-solid-svg-icons'
 import { onValue, ref, update } from 'firebase/database'
-import { database } from '../js/Firebase'
-import { snapshotCollection } from '../js/FirebaseData'
-import { useFirebase } from '../js/FirebaseContext'
+import { database } from 'clients/Firebase'
+import { snapshotCollection } from 'utils/FirebaseData'
+import { useFirebase } from 'context/FirebaseContext'
 import Notification from './Notification'
 import NotificationModal from './NotificationModal'
-import type { Notification as NotificationRecord } from '../types/domain'
+import type { Notification as NotificationRecord } from 'types/domain'
 
 export default function NotificationButton() {
 

@@ -1,15 +1,15 @@
 import { useState, useRef, useEffect, type FormEvent } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { useFirebase } from '../../js/FirebaseContext'
+import { useFirebase } from 'context/FirebaseContext'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import LoadingButton from '../../components/LoadingButton'
+import LoadingButton from 'components/LoadingButton'
 import { onValue, ref } from 'firebase/database'
-import { database } from '../../js/Firebase'
-import { snapshotCollection, snapshotValue } from '../../js/FirebaseData'
+import { database } from 'clients/Firebase'
+import { snapshotCollection, snapshotValue } from 'utils/FirebaseData'
 import { getErrorMessage } from '../../js/errors'
-import type { Post, SchoolYear, Subject, UserProfile } from '../../types/domain'
+import type { Post, SchoolYear, Subject, UserProfile } from 'types/domain'
 
 export default function CreatePost() {
 

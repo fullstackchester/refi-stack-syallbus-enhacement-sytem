@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { faBook, faUserCircle, faFileAlt, faGraduationCap, faSquarePollVertical, faUserTie, faChevronLeft, faChevronRight, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useFirebase } from '../../js/FirebaseContext'
+import { useFirebase } from 'context/FirebaseContext'
 import { onValue, ref } from 'firebase/database'
-import { database } from '../../js/Firebase'
-import { snapshotValue } from '../../js/FirebaseData'
+import { database } from 'clients/Firebase'
+import { snapshotValue } from 'utils/FirebaseData'
 import logo from '../../assets/Images/logo.svg'
-import type { UserProfile, UserRole } from '../../types/domain'
+import type { UserProfile, UserRole } from 'types/domain'
 
 
 

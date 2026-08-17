@@ -1,14 +1,14 @@
 import { useState, type FormEvent } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { useFirebase } from '../../js/FirebaseContext'
-import LoadingButton from '../../components/LoadingButton'
+import { useFirebase } from 'context/FirebaseContext'
+import LoadingButton from 'components/LoadingButton'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import PopNotif from '../../components/PopNotif'
-import Input from '../../components/Inputs/Input'
+import PopNotif from 'components/PopNotif'
+import Input from 'components/Inputs/Input'
 import { getErrorMessage } from '../../js/errors'
-import type { Subject } from '../../types/domain'
+import type { Subject } from 'types/domain'
 
 export const SubjectAdd = () => {
     const [courseCode, setCourseCode] = useState('')
