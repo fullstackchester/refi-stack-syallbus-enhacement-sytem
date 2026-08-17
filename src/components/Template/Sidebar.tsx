@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router'
 import { faBook, faUserCircle, faFileAlt, faGraduationCap, faSquarePollVertical, faUserTie, faChevronLeft, faChevronRight, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useFirebase } from 'context/FirebaseContext'

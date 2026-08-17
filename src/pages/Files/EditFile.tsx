@@ -1,6 +1,6 @@
 import { onValue, ref } from 'firebase/database'
 import { useEffect, useState, useRef, type FormEvent } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router'
 import LoadingButton from 'components/LoadingButton'
 import { database } from 'clients/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

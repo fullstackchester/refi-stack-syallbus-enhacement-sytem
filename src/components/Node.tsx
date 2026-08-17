@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 
 interface NodeProps {

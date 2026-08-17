@@ -1,6 +1,6 @@
 import { onValue, ref, update } from 'firebase/database'
 import { useState, useRef, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import LoadingButton from 'components/LoadingButton'
 import { database } from 'clients/Firebase'
 import { snapshotValue } from 'utils/FirebaseData'

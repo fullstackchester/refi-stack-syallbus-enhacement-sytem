@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate, useParams } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate, useParams } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faHistory, faChevronLeft, faFileAlt } from '@fortawesome/free-solid-svg-icons'
 

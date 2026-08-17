@@ -1,6 +1,6 @@
 import { onValue, ref } from 'firebase/database'
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router'
 import { database } from 'clients/Firebase'
 import { snapshotCollection } from 'utils/FirebaseData'
 import { useFirebase } from 'context/FirebaseContext'

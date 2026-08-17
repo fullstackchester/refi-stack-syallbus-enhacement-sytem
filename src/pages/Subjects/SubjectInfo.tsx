@@ -1,6 +1,6 @@
 import { onValue, ref } from 'firebase/database'
 import { useEffect, useState, type MouseEvent } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router'
 import Confirm from 'components/PopConfirmation'
 import PopNotif from 'components/PopNotif'
 import Button from 'components/Template/Button'

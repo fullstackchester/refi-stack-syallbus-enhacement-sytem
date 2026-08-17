@@ -1,6 +1,6 @@
 import { onValue, ref } from 'firebase/database'
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router'
 import { database } from 'clients/Firebase'
 import { snapshotCollection } from 'utils/FirebaseData'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

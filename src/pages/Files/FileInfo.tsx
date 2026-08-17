@@ -1,5 +1,5 @@
 import { useState, useEffect, type MouseEvent } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router'
 import { onValue, ref } from 'firebase/database'
 import { database, storage } from 'clients/Firebase'
 import { getDownloadURL, ref as storageRef } from 'firebase/storage'

@@ -1,7 +1,7 @@
 import { useState, useEffect, type ChangeEvent, type MouseEvent } from 'react'
 import { ref, onValue, remove, DataSnapshot } from 'firebase/database'
 import { database } from 'clients/Firebase'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, faDeleteLeft, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 import { motion } from 'framer-motion'

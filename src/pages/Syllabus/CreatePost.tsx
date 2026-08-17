@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, type FormEvent } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { useFirebase } from 'context/FirebaseContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import LoadingButton from 'components/LoadingButton'

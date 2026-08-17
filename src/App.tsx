@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router'
 import Layout from 'components/Template/Layout'
 import { FirebaseProvider } from 'context/FirebaseContext'
 import Login from 'pages/Login'
@@ -42,7 +42,8 @@ export default function App() {
 
 		<FirebaseProvider>
 			<div className='w-full h-auto bg-gray-300/40'>
-				<Router>
+				<Router
+				>
 					<Routes>
 						<Route path='/' element={<Login />} />
 						<Route path='/signup' element={<Signup />} />

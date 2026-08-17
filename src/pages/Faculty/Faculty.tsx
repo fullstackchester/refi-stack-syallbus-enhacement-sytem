@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Database, DataSnapshot, onValue, ref } from 'firebase/database'
 import { database } from 'clients/Firebase'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { motion } from "framer-motion"
 import { useFirebase } from 'context/FirebaseContext'
 import Loading from 'components/Loading'

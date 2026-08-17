@@ -1,12 +1,14 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useState, useEffect } from 'react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+// import { ChevronDownIcon } from '@heroicons/react/solid'
 import { useFirebase } from 'context/FirebaseContext'
 import { onValue, ref, set, update } from 'firebase/database'
 import { database } from 'clients/Firebase'
 import { snapshotValue } from 'utils/FirebaseData'
 import { v4 } from 'uuid'
 import type { Post } from 'types/domain'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 interface StatusProps {
     postId: string
@@ -61,9 +63,7 @@ export default function Status({ postId }: StatusProps) {
                         text-white bg-zinc-600 rounded-md hover:bg-zinc-700 focus:outline-hidden focus-visible:ring-2 
                         focus-visible:ring-white/75`}>
                         Set Status
-                        <ChevronDownIcon
-                            className="w-5 h-5 text-white"
-                            aria-hidden="true" />
+                        <FontAwesomeIcon icon={faChevronDown} size={`sm`} />
                     </Menu.Button>
                 </div>
                 <Transition

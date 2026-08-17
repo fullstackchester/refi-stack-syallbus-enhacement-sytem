@@ -1,6 +1,6 @@
 import { DataSnapshot, onValue, ref, type DatabaseReference, type ListenOptions, type Unsubscribe } from 'firebase/database'
 import { useState, useEffect, type ChangeEvent, type MouseEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import PostStatus from 'components/PostStatus'
 import { database, storage } from 'clients/Firebase'
 import { useFirebase } from 'context/FirebaseContext'

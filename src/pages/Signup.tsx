@@ -1,6 +1,6 @@
 import { useState, useRef, type FormEvent } from 'react'
 import { motion } from 'framer-motion'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { ref, set } from 'firebase/database'
 import { database } from 'clients/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

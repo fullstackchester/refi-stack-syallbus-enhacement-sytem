@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, type FormEvent } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import CommentSection from 'components/CommentSection'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'

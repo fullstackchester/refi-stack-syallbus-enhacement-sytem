@@ -1,7 +1,7 @@
 import { updateEmail, updatePassword } from 'firebase/auth'
 import { ref, update } from 'firebase/database'
 import { useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import Confirm from 'components/PopConfirmation'
 import PopNotif from 'components/PopNotif'
 import { database } from 'clients/Firebase'

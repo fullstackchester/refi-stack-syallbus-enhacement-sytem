@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router'
 import { onValue, ref } from 'firebase/database'
 import { database } from 'clients/Firebase'
 import { snapshotValue } from 'utils/FirebaseData'

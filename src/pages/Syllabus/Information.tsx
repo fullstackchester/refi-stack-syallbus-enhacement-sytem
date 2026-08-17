@@ -1,6 +1,6 @@
 import { onValue, ref, remove } from 'firebase/database'
 import { useEffect, useState, type MouseEvent } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router'
 import PostStatus from 'components/PostStatus'
 import { database, storage } from 'clients/Firebase'
 import SetStatus from 'components/SetStatus'

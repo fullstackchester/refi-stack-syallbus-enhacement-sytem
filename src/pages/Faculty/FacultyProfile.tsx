@@ -1,6 +1,6 @@
 import { onValue, ref, update } from 'firebase/database'
 import { useEffect, useState, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { database } from 'clients/Firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCancel, faCircleNotch } from '@fortawesome/free-solid-svg-icons'

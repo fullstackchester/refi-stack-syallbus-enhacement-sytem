@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import HistorySection from 'components/HistorySection'
 
 export default function History() {
