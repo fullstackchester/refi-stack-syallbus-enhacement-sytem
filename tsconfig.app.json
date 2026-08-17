@@ -7,6 +7,7 @@
       "clients/*": ["./src/clients/*"],
       "components/*": ["./src/components/*"],
       "context/*": ["./src/context/*"],
+      "enums/*": ["./src/enums/*"],
       "firebase/*": ["./src/firebase/*"],
       "pages/*": ["./src/pages/*"],
       "types/*": ["./src/types/*"],

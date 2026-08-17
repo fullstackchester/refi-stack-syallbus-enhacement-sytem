@@ -1,4 +1,4 @@
-import { onValue, ref } from 'firebase/database'
+import { DataSnapshot, onValue, ref } from 'firebase/database'
 import { useEffect, useState, type ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { database, storage } from 'clients/Firebase'
@@ -12,7 +12,9 @@ import Loading from 'components/Loading'
 import { schoolYear } from '../../js/Data'
 import { snapshotCollection } from 'utils/FirebaseData'
 import type { Post, SchoolYear } from 'types/domain'
+import { POST_REFERENCE, SCHOOL_YEAR_REFERENCE } from 'firebase/database-reference'
 
+const LIST_OPTIONS = { onlyOnce: true }
 
 
 export default function Posts() {
@@ -23,31 +25,38 @@ export default function Posts() {
     const [searchpost, setSearch] = useState('')
     const [isOpen, setOpen] = useState(false)
     const [filterSy, setFilterSy] = useState(false)
-
     const [isCheckAll, setCheckAll] = useState(false)
     const [isCheck, setCheck] = useState<string[]>([])
-
     const [isFetching, setFetching] = useState(true)
+    const [isError, setError] = useState<Error>()
 
+    const fetchSyllabusCallback = (snapshot: DataSnapshot) => {
+        if (snapshot.exists()) {
+            setPosts(snapshotCollection<Post>(snapshot))
+        }
+    }
 
+    const fetchSchoolYearCallback = (snapshot: DataSnapshot) => {
+        if (snapshot.exists()) {
+            setAy(snapshotCollection<SchoolYear>(snapshot))
+        }
+    }
+
+    const cancelCallback = (err: Error) => {
+        if (err) {
+            setError(err)
+        }
+    }
+
+    const fetchSyllabus = () => {
+        setFetching(true)
+        onValue(POST_REFERENCE(), fetchSyllabusCallback, cancelCallback, LIST_OPTIONS)
+        onValue(SCHOOL_YEAR_REFERENCE, fetchSchoolYearCallback, cancelCallback, LIST_OPTIONS)
+        setFetching(false)
+    }
 
     useEffect(() => {
-        setTimeout(function () {
-            onValue(ref(database, 'posts'), postsSnapshot => {
-                if (postsSnapshot.exists()) {
-                    setPosts(snapshotCollection<Post>(postsSnapshot))
-
-                }
-            })
-
-            onValue(ref(database, 'schoolYear'), sy => {
-                if (sy.exists()) {
-                    setAy(snapshotCollection<SchoolYear>(sy))
-                }
-            })
-
-            setFetching(false)
-        }, 500)
+        return fetchSyllabus()
     }, [])
 
 
