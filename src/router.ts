@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router";
 import Shell from "./shared/Shell";
-import Faculty from "pages/Faculty/Faculty";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard/Dashboard";
+import Faculty from "~/pages/faculty/Faculty";
+import Login from "./pages/auth/Login";
+import Dashboard from "./pages/dashboard/Dashboard";
 import { Showcase } from "./shared/Showcase";
 import ComponentRoutes from "./components/routes";
 
