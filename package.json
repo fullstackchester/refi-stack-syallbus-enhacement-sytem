@@ -7,11 +7,14 @@
     "node": "^20.19.0 || >=22.12.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@fancyapps/fancybox": "^3.5.7",
     "@fortawesome/free-regular-svg-icons": "^7.3.1",
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
     "@fortawesome/react-fontawesome": "^3.5.0",
     "@headlessui/react": "^2.2.10",
+    "@mui/material": "^9.3.1",
     "chart.js": "^4.5.1",
     "firebase": "^9.6.10",
     "framer-motion": "^13.1.0",
