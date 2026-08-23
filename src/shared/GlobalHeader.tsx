@@ -1,0 +1,59 @@
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSignOut } from '@fortawesome/free-solid-svg-icons'
+import Modal from 'components/Modal'
+import { signOut } from 'firebase/auth'
+import { auth } from 'clients/Firebase'
+import { useFirebase } from 'context/FirebaseContext'
+import NotificationButton from 'components/NotificationButton'
+
+
+
+export default function GlobalHeader() {
+    const nav = useNavigate()
+    const [logout, setLogout] = useState(false)
+    const { currentUser } = useFirebase()
+
+
+    useEffect(() => {
+        if (currentUser === null) {
+            nav('/')
+        }
+    }, [currentUser, nav])
+
+
+    function logoutUser() {
+        signOut(auth)
+    }
+
+
+    return (
+        <>
+            <div className='h-12 w-full bg-zinc-800 shadow-xs sticky top-0 flex flex-row py-1 px-4 justify-end z-50 '>
+
+                <div className='h-full w-auto min-w-32 flex flex-row items-center'>
+
+                    <NotificationButton />
+
+                    <div className='flex-1 h-full flex flex-row items-center'>
+                        <button onClick={() => setLogout(true)} title='Logout'
+                            className='text-white h-8 w-8 flex items-center justify-center 
+         hover:bg-zinc-700 rounded-full transition-colors'>
+                            <FontAwesomeIcon icon={faSignOut} size={`sm`} />
+                        </button>
+
+                    </div>
+                </div>
+                <Modal isOpen={logout}
+                    handleClose={() => setLogout(false)}
+                    dialogTitle={`Logout Account?`}
+                    dialogMessage={`Are you sure you want to logout?`}
+                    buttonTitle={`Logout`}
+                    dedicatedFunction={logoutUser} />
+            </div>
+        </>
+    )
+}
+
+{/* <HiCog className='text-xl text-zinc-700 cursor-pointer hover:text-zinc-500' onClick={(e) => navigate(e, 'settings')} /> */ }

@@ -11,7 +11,7 @@ import type { UserProfile, UserRole } from 'types/domain'
 
 
 
-function Sidebar() {
+function LegacySidebar() {
 
     const [minimize, setMinimize] = useState(false)
     const [role, setRole] = useState<UserRole | null>(null)
@@ -110,4 +110,4 @@ function Sidebar() {
     )
 }
 
-export default Sidebar
+export default LegacySidebar
