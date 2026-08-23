@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 
 export default function Shell() {
     return (
-        <div className='w-full h-auto flex flex-row border-4 border-red-600'>
+        <div className='w-full h-auto flex flex-row'>
             <Sidebar/>
             <div className='h-auto flex-1'>
                 <GlobalHeader></GlobalHeader> 
